@@ -12,12 +12,15 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
+    "*.{ts,tsx}": [
+      "prettier --write .",
       "eslint --ext .ts packages/*/**.ts",
       "eslint --ext .ts packages/*/**.ts --fix"
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "eslint": "^8.22.0",
