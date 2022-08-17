@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "packages/**/*.{ts,tsx}": [
+    "*.{js,jsx,vue,ts,tsx}": [
       "prettier --write .",
       "eslint --ext .ts packages/*/**.ts",
       "eslint --ext .ts packages/*/**.ts --fix"
