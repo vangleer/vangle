@@ -4,6 +4,7 @@
   "description": "这篇文章会带着你从零搭建一个基于vue3的组件库",
   "main": "index.js",
   "scripts": {
+    "play": "pnpm dev --filter ./play",
     "prettier": "prettier --write .",
     "lint": "eslint --ext .ts packages/*/**.ts",
     "lint:fix": "eslint --ext .ts packages/*/**.ts --fix"
@@ -12,23 +13,25 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
-      "prettier --write .",
-      "eslint --ext .ts packages/*/**.ts",
-      "eslint --ext .ts packages/*/**.ts --fix"
-    ]
+    "*.{vue,js,ts,jsx,tsx,md,json}": "prettier --write ."
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
+    "@vangle/components": "workspace:*",
+    "@vue/tsconfig": "^0.1.3",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.3.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "unplugin-vue-define-options": "^0.10.0",
+    "vite": "^3.0.8",
+    "vue": "^3.2.37"
   }
 }

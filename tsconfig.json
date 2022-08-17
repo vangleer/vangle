@@ -7,7 +7,12 @@
     "esModuleInterop": true,
     "strict": true,
     "jsx": "preserve",
-    "types": ["node"],
-    "rootDir": "."
+    "lib": ["esnext", "dom"],
+    "types": ["node", "unplugin-vue-define-options"],
+    "rootDir": ".",
+    "moduleResolution": "node",
+    "paths": {
+      "@valgle/*": ["packages/*"]
+    }
   }
 }

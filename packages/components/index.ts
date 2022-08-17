@@ -1,2 +1,1 @@
-const words = 'hello'
-console.log(words)
+export * from './button'
