@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2016",
+    "sourceMap": false,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "strict": true,
+    "jsx": "preserve",
+    "types": ["node"],
+    "rootDir": "."
+  }
+}
