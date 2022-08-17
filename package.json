@@ -1,0 +1,12 @@
+{
+  "name": "vangle",
+  "version": "1.0.0",
+  "description": "这篇文章会带着你从零搭建一个基于vue3的组件库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
