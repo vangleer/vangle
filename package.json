@@ -20,6 +20,7 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@vangle/components": "workspace:*",
     "@vangle/eslint-config": "workspace:*",
+    "@vangle/utils": "workspace:*",
     "@vue/tsconfig": "^0.1.3",
     "eslint": "^8.22.0",
     "husky": "^8.0.1",
