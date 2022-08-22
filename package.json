@@ -6,6 +6,7 @@
   "scripts": {
     "play": "pnpm dev --filter ./play",
     "docs:dev": "pnpm docs:dev --filter ./packages/docs",
+    "docs:build": "pnpm docs:build --filter ./packages/docs",
     "prettier": "prettier --write .",
     "lint": "eslint --ext .ts packages/*/**.ts",
     "lint:fix": "eslint --ext .ts packages/*/**.ts --fix"
