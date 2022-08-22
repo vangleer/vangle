@@ -12,19 +12,19 @@ jobs:
       - name: Checkout 🛎️ # 将代码拉取到虚拟机
         uses: actions/checkout@v3
 
-      - name: Install pnpm
-        run: npm i pnpm@6 -g
+      # - name: Install pnpm
+      #   run: npm i pnpm@6 -g
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'pnpm'
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16'
+      #     cache: 'pnpm'
 
-      - name: Install and Build 🔧 # 安装依赖、打包，如果提前已打包好无需这一步
-        run: |
-          set -e
-          pnpm install
-          pnpm run docs:build
+      # - name: Install and Build 🔧 # 安装依赖、打包，如果提前已打包好无需这一步
+      #   run: |
+      #     set -e
+      #     pnpm install
+      #     pnpm run docs:build
 
       - name: Copy dist to root 🔧 # 安装依赖、打包，如果提前已打包好无需这一步
         run: |
