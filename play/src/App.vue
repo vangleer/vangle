@@ -1,21 +1,9 @@
 <template>
-  <VangleButton>啦啦啦啦</VangleButton>
+  <VanButton type="primary">啦啦啦啦</VanButton>
 </template>
 
 <script setup lang="ts">
-import { VangleButton } from '@vangle/components'
+import { VanButton } from '@vangle/components'
 </script>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
