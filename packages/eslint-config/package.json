@@ -1,0 +1,24 @@
+{
+  "name": "@vangle/eslint-config",
+  "version": "1.0.0",
+  "description": "eslint config of vangle",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "eslint",
+    "tslint",
+    "config",
+    "vangle"
+  ],
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/parser": "^5.33.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.3.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
