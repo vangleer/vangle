@@ -7,6 +7,8 @@
 - 编写一个 Button 组件
 - 使用 vitepress 为组件编写文档
 
+在线预览
+
 ## 抽离 eslint-config
 
 一般市面上的组件库都会将 eslint-config 单独抽离出来，今天我们也来照猫画虎学习一下吧
@@ -276,7 +278,7 @@ features:
 }
 ```
 
-[首页图片]
+![Home]('./images/home.jpg')
 
 - 给 vitepress 添加配置，docs 目录下创建 .vitepress/config.ts，关于配置详情请参考官网
 
@@ -321,6 +323,8 @@ export const config: UserConfig = {
 export default config
 ```
 
-- 创建 guide 和 component 目录，在 component 目录下编写组件文档
+- 创建 guide 和 component 目录，在 component 目录下编写组件文档，button.md
+
+![Home]('./images/button.jpg')
 
 > 注意：文件的目录结构需要和 sidebar 的配置相对应
