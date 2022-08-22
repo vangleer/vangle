@@ -8,14 +8,14 @@
 
 ```html
 <template>
-  <var-space :size="[10, 10]">
-    <var-button>默认按钮</var-button>
-    <var-button type="primary">主要按钮</var-button>
-    <var-button type="info">信息按钮</var-button>
-    <var-button type="success">成功按钮</var-button>
-    <var-button type="warning">警告按钮</var-button>
-    <var-button type="danger">危险按钮</var-button>
-  </var-space>
+  <van-space :size="[10, 10]">
+    <van-button>默认按钮</van-button>
+    <van-button type="primary">主要按钮</van-button>
+    <van-button type="info">信息按钮</van-button>
+    <van-button type="success">成功按钮</van-button>
+    <van-button type="warning">警告按钮</van-button>
+    <van-button type="danger">危险按钮</van-button>
+  </van-space>
 </template>
 ```
 
@@ -23,10 +23,10 @@
 
 ```html
 <template>
-  <var-space :size="[10, 10]">
-    <var-button text outline type="primary">外边框按钮</var-button>
-    <var-button text type="primary">纯文字按钮</var-button>
-  </var-space>
+  <van-space :size="[10, 10]">
+    <van-button text outline type="primary">外边框按钮</van-button>
+    <van-button text type="primary">纯文字按钮</van-button>
+  </van-space>
 </template>
 ```
 
@@ -34,31 +34,11 @@
 
 ```html
 <template>
-  <var-space :size="[10, 10]">
-    <var-button disabled>禁用状态</var-button>
-    <var-button disabled text outline>禁用状态</var-button>
-    <var-button disabled text>禁用状态</var-button>
-  </var-space>
-</template>
-```
-
-### 加载状态
-
-```html
-<template>
-  <var-space :size="[10, 10]">
-    <var-button loading type="primary"> 加载状态 </var-button>
-    <var-button loading type="info" loading-type="rect"> 加载状态 </var-button>
-    <var-button loading type="success" loading-type="disappear">
-      加载状态
-    </var-button>
-    <var-button loading type="danger" loading-type="cube">
-      加载状态
-    </var-button>
-    <var-button loading type="warning" loading-type="wave">
-      加载状态
-    </var-button>
-  </var-space>
+  <van-space :size="[10, 10]">
+    <van-button disabled>禁用状态</van-button>
+    <van-button disabled text outline>禁用状态</van-button>
+    <van-button disabled text>禁用状态</van-button>
+  </van-space>
 </template>
 ```
 
@@ -66,12 +46,12 @@
 
 ```html
 <template>
-  <var-space align="center" :size="[10, 10]">
-    <var-button type="primary">常规按钮</var-button>
-    <var-button type="success" size="small">小型按钮</var-button>
-    <var-button type="warning" size="mini">迷你按钮</var-button>
-    <var-button type="danger" size="large">大型按钮</var-button>
-  </var-space>
+  <van-space align="center" :size="[10, 10]">
+    <van-button type="primary">常规按钮</van-button>
+    <van-button type="success" size="small">小型按钮</van-button>
+    <van-button type="warning" size="mini">迷你按钮</van-button>
+    <van-button type="danger" size="large">大型按钮</van-button>
+  </van-space>
 </template>
 ```
 
@@ -79,7 +59,7 @@
 
 ```html
 <template>
-  <var-button block type="primary">块级按钮</var-button>
+  <van-button block type="primary">块级按钮</van-button>
 </template>
 ```
 
@@ -87,15 +67,15 @@
 
 ```html
 <template>
-  <var-space :size="[10, 10]">
-    <var-button color="#69dbaa" text-color="#eee">背景/文字</var-button>
-    <var-button
+  <van-space :size="[10, 10]">
+    <van-button color="#69dbaa" text-color="#eee">背景/文字</van-button>
+    <van-button
       color="linear-gradient(to right, #69dbaa, #3a7afe)"
       text-color="#fff"
     >
       使用渐变
-    </var-button>
-  </var-space>
+    </van-button>
+  </van-space>
 </template>
 ```
 
@@ -103,23 +83,23 @@
 
 ```html
 <template>
-  <var-space :size="[10, 10]">
-    <var-button type="primary" round>
-      <var-icon name="plus" />
-    </var-button>
-    <var-button type="info" round>
-      <var-icon name="information" />
-    </var-button>
-    <var-button type="success" round>
-      <var-icon name="check" />
-    </var-button>
-    <var-button type="warning" round>
-      <var-icon name="warning" />
-    </var-button>
-    <var-button type="danger" round>
-      <var-icon name="window-close" />
-    </var-button>
-  </var-space>
+  <van-space :size="[10, 10]">
+    <van-button type="primary" round>
+      <van-icon name="plus" />
+    </van-button>
+    <van-button type="info" round>
+      <van-icon name="information" />
+    </van-button>
+    <van-button type="success" round>
+      <van-icon name="check" />
+    </van-button>
+    <van-button type="warning" round>
+      <van-icon name="warning" />
+    </van-button>
+    <van-button type="danger" round>
+      <van-icon name="window-close" />
+    </van-button>
+  </van-space>
 </template>
 ```
 
@@ -145,13 +125,13 @@
 </script>
 
 <template>
-  <var-space :size="[10, 10]">
-    <var-button type="success" @click="handleClick">点击</var-button>
-    <var-button type="success" @touchstart="handleTouchstart">触摸</var-button>
-    <var-button type="success" auto-loading @click="handleAutoLoadingClick">
+  <van-space :size="[10, 10]">
+    <van-button type="success" @click="handleClick">点击</van-button>
+    <van-button type="success" @touchstart="handleTouchstart">触摸</van-button>
+    <van-button type="success" auto-loading @click="handleAutoLoadingClick">
       自动 loading
-    </var-button>
-  </var-space>
+    </van-button>
+  </van-space>
 </template>
 ```
 

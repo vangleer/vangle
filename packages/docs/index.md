@@ -5,6 +5,9 @@ hero:
   name: Vangle
   text:
   tagline: 基于 Vue 3，面向设计师和开发者的组件库
+  image:
+    src: /images/vite.svg
+    alt: Vangle
   actions:
     - theme: brand
       text: Why Vangle
