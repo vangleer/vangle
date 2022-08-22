@@ -7,7 +7,7 @@
 - 编写一个 Button 组件
 - 使用 vitepress 为组件编写文档
 
-在线预览
+[在线预览](https://vangleer.github.io/vangle)
 
 ## 抽离 eslint-config
 
@@ -325,7 +325,7 @@ export default config
 
 - 创建 guide 和 component 目录，在 component 目录下编写组件文档，button.md
 
-![Home]('./images/button.jpg')
+![Button]('./images/button.jpg')
 
 > 注意：文件的目录结构需要和 sidebar 的配置相对应
 
@@ -340,6 +340,16 @@ export default config
 编写组件大家肯定都会，所以在第三部分我直接贴的代码。
 
 第四部分是编写组件库文档，对于项目搭建和 congig 的配置 可以直接参考 vitepress 官网。
+
+
+
+## 结束语
+
+到这里就是本篇文章的全部内容了，如果对大家有用，希望多多支持一下，你们的支持就是我的动力呀 (●'◡'●)
+
+下期准备写一个完整的组件，并详细介绍如何为组件编写文档。组件文档使用 vitepress
+
+下一篇会写一下组件是如何打包的
 
 
 
