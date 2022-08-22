@@ -1,6 +1,6 @@
 # 手把手从零搭建一个 vue3 组件库 (一)
 
-这篇文章会带着你从零搭建一个基于 vue3 的组件库，github 地址：https://github.com/vangleer/vangle。
+这篇文章会带着你从零搭建一个基于 vue3 的组件库，[github 地址](https://github.com/vangleer/vangle)。
 
 话不多说，开搞
 
