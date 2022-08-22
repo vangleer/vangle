@@ -5,7 +5,6 @@ lang: en-US
 
 # Design Disciplines
 
-<design-guide />
 
 ## Consistency
 
