@@ -1,6 +1,7 @@
 import type { UserConfig } from 'vitepress'
 
 export const config: UserConfig = {
+  base: 'https://vangleer.github.io/vangle/',
   title: 'Vangle',
   description: 'a Vue 3 based component library for designers and developers',
   themeConfig: {
