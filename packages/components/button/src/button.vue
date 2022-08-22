@@ -7,3 +7,9 @@ defineOptions({
   name: 'VangleButton'
 })
 </script>
+
+<style>
+button {
+  color: var(--color-primary);
+}
+</style>
