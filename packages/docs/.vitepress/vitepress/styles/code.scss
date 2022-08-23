@@ -30,6 +30,8 @@ html:not(.dark) {
   --prism-url-decoration: #67cdcc;
   --prism-symbol: green;
   --prism-selector: #0b8235;
+
+  --code-bg-color: #f5f7fa;
 }
 
 html.dark {
@@ -89,10 +91,10 @@ code .token.inserted {
   color: var(--c-brand);
 }
 
-div[class*='language-'] {
+.vp-doc div[class*='language-'] {
   position: relative;
   margin: 1rem -1.5rem;
-  background-color: var(--code-bg-color);
+  background-color: var(--code-bg-color) !important;
   overflow-x: auto;
 }
 

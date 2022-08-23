@@ -71,20 +71,61 @@ function toggleSourceVisible() {
 }
 </script>
 
-<style>
+<style lang="scss">
 :root {
   --border-color: #dcdfe6;
+  --bg-color: #fff;
+  --van-text-color-secondary: #909399;
+}
+.example-showcase {
+  padding: 0.8rem;
+  margin: 0.5px;
+  background-color: var(--bg-color);
 }
 .example {
   border: 1px solid var(--border-color);
   border-radius: 3px;
+  .op-btns {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 2.5rem;
+  }
+  .example-float-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+    height: 44px;
+    box-sizing: border-box;
+    background-color: var(--bg-color, #fff);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-top: -1px;
+    color: var(--color-secondary-text);
+    cursor: pointer;
+    position: sticky;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+  .example-source-wrapper .language-vue {
+    margin: 0;
+    border-radius: 0;
+  }
 }
 
 .van-divider {
   display: block;
   height: 1px;
   width: 100%;
-  margin: 24px 0;
+  margin: 0px 0;
   border-top: 1px solid var(--border-color);
 }
 </style>
