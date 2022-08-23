@@ -5,7 +5,6 @@ lang: en-US
 
 # Design Disciplines
 
-
 ## Consistency
 
 - **Consistent with real life:** in line with the process and logic of real life,
