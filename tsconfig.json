@@ -6,6 +6,7 @@
     "module": "esnext",
     "esModuleInterop": true,
     "strict": true,
+    "allowJs": true,
     "jsx": "preserve",
     "lib": ["esnext", "dom"],
     "types": ["node", "unplugin-vue-define-options"],

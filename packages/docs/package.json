@@ -12,6 +12,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vitepress": "^1.0.0-alpha.9"
+    "fast-glob": "^3.2.11",
+    "sass": "^1.54.5",
+    "vitepress": "^1.0.0-alpha.9",
+    "vitepress-theme-demoblock": "^1.4.2"
+  },
+  "dependencies": {
+    "markdown-it-container": "^3.0.0",
+    "prism-theme-vars": "^0.2.4",
+    "prismjs": "^1.28.0"
   }
 }

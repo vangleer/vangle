@@ -1,7 +1,8 @@
 import type { UserConfig } from 'vitepress'
+import { mdPlugin } from './config/plugins'
 
 export const config: UserConfig = {
-  base: '/vangle/',
+  // base: '/vangle/',
   title: 'Vangle',
   description: 'a Vue 3 based component library for designers and developers',
   themeConfig: {
@@ -33,6 +34,9 @@ export const config: UserConfig = {
         }
       ]
     }
+  },
+  markdown: {
+    config: md => mdPlugin(md)
   }
 }
 
