@@ -1,0 +1,31 @@
+name: Sync to Gitee
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          # 在 Settings->Secrets
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+        with:
+          # GitHub 源仓库地址
+          source-repo: git@github.com:vangleer/vangle.git
+          # Gitee 目标仓库地址
+          destination-repo: git@gitee.com:huangwantong/vangle.git
+
+      # - name: Build Gitee Pages # 部署 gitee pages
+      #   uses: yanglbme/gitee-pages-action@master
+      #   with:
+      #     # 注意替换为你的 Gitee 用户名
+      #     gitee-username: huangwantong
+      #     # 注意在 Settings->Secrets 配置 GITEE_PASSWORD
+      #     gitee-password: ${{ secrets.GITEE_PASSWORD }}
+      #     # 注意替换为你的 Gitee 仓库
+      #     gitee-repo: vue3-vite-vant-h5-template
+      #     branch: gh-pages
