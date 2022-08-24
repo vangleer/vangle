@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "*.{vue,js,ts,jsx,tsx,md,json}": "prettier --write ."
+    "packages/**/*.{vue,js,ts,jsx,tsx,md,json}": "prettier --write ."
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",

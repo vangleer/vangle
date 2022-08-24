@@ -110,9 +110,11 @@ function toggleSourceVisible() {
       color: var(--color-primary);
     }
   }
-  .example-source-wrapper .language-vue {
-    margin: 0;
-    border-radius: 0;
+  .example-source-wrapper {
+    .example-source.language-vue {
+      margin: 0;
+      border-radius: 0;
+    }
   }
 }
 

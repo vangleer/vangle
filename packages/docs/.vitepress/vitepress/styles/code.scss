@@ -99,7 +99,7 @@ html.dark {
   div[class*='language-'] {
     position: relative;
     margin: 1rem -1.5rem;
-    background-color: var(--code-bg-color) !important;
+    background-color: var(--code-bg-color);
     overflow-x: auto;
   }
 
