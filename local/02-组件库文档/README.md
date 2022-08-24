@@ -9,6 +9,10 @@
 
 [在线预览](https://vangleer.github.io/vangle)
 
+[github 地址](https://github.com/vangleer/vangle)
+
+[gitee 地址](https://gitee.com/vangleer/vangle)
+
 ## 抽离 eslint-config
 
 一般市面上的组件库都会将 eslint-config 单独抽离出来，今天我们也来照猫画虎学习一下吧
