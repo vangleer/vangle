@@ -72,11 +72,6 @@ function toggleSourceVisible() {
 </script>
 
 <style lang="scss">
-:root {
-  --border-color: #dcdfe6;
-  --bg-color: #fff;
-  --van-text-color-secondary: #909399;
-}
 .example-showcase {
   padding: 0.8rem;
   margin: 0.5px;
