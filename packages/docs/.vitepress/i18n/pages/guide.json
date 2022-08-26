@@ -1,0 +1,13 @@
+{
+  "zh": {
+    "intro": {
+      "text": "基础",
+      "children": [
+        {
+          "text": "设计",
+          "link": "/guide/design"
+        }
+      ]
+    }
+  }
+}

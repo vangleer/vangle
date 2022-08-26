@@ -1,6 +1,7 @@
 import type { UserConfig } from 'vitepress'
 import { mdPlugin } from './config/plugins'
-
+import { sidebar } from './config/sidebars'
+import { nav } from './config/nav'
 export const config: UserConfig = {
   // base: '/vangle/',
   title: 'Vangle',
@@ -15,25 +16,9 @@ export const config: UserConfig = {
       apiKey: 'your_api_key',
       indexName: 'index_name'
     },
-    nav: [
-      { text: '指南', link: '/guide/design' },
-      { text: '组件', link: '/component/button' }
-    ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/vangleer' }],
-    sidebar: {
-      '/guide/': [],
-      '/component/': [
-        {
-          text: 'Basic',
-          items: [
-            {
-              text: 'Button',
-              link: '/component/button'
-            }
-          ]
-        }
-      ]
-    }
+    nav,
+    sidebar
   },
   markdown: {
     config: md => mdPlugin(md)
