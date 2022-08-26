@@ -25,9 +25,9 @@
 ## 目录结构
 
 ```
-|-- docs 
+|-- docs
     |-- index.md                    // 首页展示
-    |-- package.json                
+    |-- package.json
     |-- vite.config.ts              // vite 配置
     |-- .vitepress
     |   |-- config.ts               // vitepress 配置
@@ -44,7 +44,7 @@
     |   |   |-- index.ts
     |   |-- utils                   // 工具函数
     |   |   |-- highlight.ts        // 高亮 md
-    |   |   |-- types.ts            
+    |   |   |-- types.ts
     |   |-- vitepress
     |       |-- index.ts
     |       |-- component           // 公共组件
@@ -54,13 +54,13 @@
     |           |-- base.scss
     |           |-- code.scss
     |           |-- var.scss
-    |-- examples                    // 组件 demo 
+    |-- examples                    // 组件 demo
     |   |-- button
     |       |-- basic.vue
     |-- public
     |   |-- images
     |       |-- vite.svg
-    |-- zh                          
+    |-- zh
         |-- component               // 组件文档
         |   |-- button.md
         |-- guide                   // 指南文档
@@ -107,6 +107,7 @@ export const config: UserConfig = {
 }
 export default config
 ```
+
 > nav 和 sidebar 都是对 /i18n/pages 里对应配置的解析，解析的方式也很简单，这里就不在多说了
 
 ## 自定义 md 插件
@@ -115,9 +116,9 @@ export default config
 
 下面我们就来解析这个方法吧，show you the code
 
-- Demo组件、md、页面的对应关系
+- Demo 组件、md、页面的对应关系
 
-[图片-文档图片和md文档对应]
+[图片-文档图片和 md 文档对应]
 
 - validate 的作用就是每次遇到 demo 块的时候都会执行 render 函数
 
@@ -160,7 +161,6 @@ export const mdPlugin = (md: MarkdownIt) => {
 
       const m = tokens[idx].info.trim().match(/^demo\s*(.*)$/)
       if (tokens[idx].nesting === 1 /* means the tag is opening */) {
-
         // 拿到描述 Use `type`, `plain`, `round` and `circle` to define Button's style.
         const description = m && m.length > 1 ? m[1] : ''
 
@@ -191,7 +191,6 @@ export const mdPlugin = (md: MarkdownIt) => {
     }
   } as ContainerOpts)
 }
-
 ```
 
 ### 封装 Demo 组件
@@ -208,8 +207,8 @@ import DefineOptions from 'unplugin-vue-define-options/vite'
 export default defineConfig({
   plugins: [vueJsx(), DefineOptions()]
 })
-
 ```
+
 - 还需要注册组件，这样我们就可以在 md 里使用了
 
 ```typescript
@@ -230,7 +229,6 @@ export default define<ThemeType>({
     globals.forEach(([name, comp]) => app.component(name, comp))
   }
 })
-
 ```
 
 ## 自定义样式
@@ -278,12 +276,10 @@ html:not(.dark) {
 
 ## 小结：
 
-done... 
+done...
 
 ## 结束语
 
 到这里就是本篇文章的全部内容了，如果对大家有用，希望多多支持一下，你们的支持就是我的动力呀 (●'◡'●)
 
 等我悄悄放几个组件，下期就写一下打包吧。。。
-
-
