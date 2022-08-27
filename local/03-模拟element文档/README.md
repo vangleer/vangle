@@ -118,7 +118,7 @@ export default config
 
 - Demo 组件、md、页面的对应关系
 
-[图片-文档图片和 md 文档对应]
+[关系图]('./images/relation.png')
 
 - validate 的作用就是每次遇到 demo 块的时候都会执行 render 函数
 

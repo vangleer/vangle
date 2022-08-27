@@ -15,8 +15,3 @@ button/basic
 
 :::
 
-:::demo paint `type`, `plain`, `round` and `circle` to define Button's style.
-
-button/basic
-
-:::
