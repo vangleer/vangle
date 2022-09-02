@@ -1,7 +1,14 @@
 {
   "name": "vangle",
-  "version": "1.0.0",
-  "description": "all components are settled here",
+  "version": "1.0.7",
+  "description": "A Component Library for Vue 3",
+  "keywords": [
+    "vangle",
+    "component library",
+    "ui framework",
+    "ui",
+    "vue"
+  ],
   "main": "index.es.js",
   "module": "index.es.ts",
   "unpkg": "index.umd.js",
@@ -12,8 +19,7 @@
     }
   },
   "scripts": {},
-  "keywords": [],
-  "author": "",
+  "author": "vangleer",
   "license": "MIT",
   "peerDependencies": {
     "vue": "^3.2.0"
