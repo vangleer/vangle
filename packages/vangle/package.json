@@ -1,0 +1,22 @@
+{
+  "name": "vangle",
+  "version": "1.0.0",
+  "description": "all components are settled here",
+  "main": "index.es.js",
+  "module": "index.es.ts",
+  "unpkg": "index.umd.js",
+  "exports": {
+    ".": {
+      "import": "./index.es.js",
+      "require": "./index.umd.js"
+    }
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^3.2.0"
+  },
+  "types": "types/components/index.d.ts"
+}

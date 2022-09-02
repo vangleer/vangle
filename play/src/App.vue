@@ -3,7 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { VanButton } from '@vangle/components'
+import '../../packages/vangle/dist/style.css'
+import { VanButton } from '../../packages/vangle/dist'
 </script>
 
 <style scoped></style>
