@@ -18,5 +18,5 @@
   "peerDependencies": {
     "vue": "^3.2.0"
   },
-  "types": "types/components/index.d.ts"
+  "types": "types/vangle/index.d.ts"
 }

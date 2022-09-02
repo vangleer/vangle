@@ -14,7 +14,7 @@ const baseConfig = defineConfig({
     vue(),
     DefineOptions(),
     dts({
-      include: ['packages/components'],
+      include: ['packages/vangle', 'packages/components'],
       outputDir: path.resolve(outDir, 'types')
     })
   ],
