@@ -8,7 +8,7 @@
 
 ## 准备工作
 
-- 在 packages 目录下创建 vangle目录，在这个目录下初始化要发布的 package.json
+- 在 packages 目录下创建 vangle 目录，在这个目录下初始化要发布的 package.json
 - 新建 index.ts 将 packages/components 目录下的组件全部导出，附加 install 方法注册全部组件
 
 ```typescript
@@ -34,6 +34,7 @@ export default {
 ## 编写打包脚本
 
 - 根目录新建 scripts/build.js
+
 ```
 
 ```
@@ -43,7 +44,7 @@ export default {
 ```json
 {
   "scripts": {
-    "build": "node ./scripts/build.js",
+    "build": "node ./scripts/build.js"
   }
 }
 ```

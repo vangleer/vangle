@@ -10,11 +10,7 @@ const currentVersion = require('../package.json').version
 
 const packages = ['vangle', 'components']
 
-const versionIncrements = [
-  'patch',
-  'minor',
-  'major'
-]
+const versionIncrements = ['patch', 'minor', 'major']
 const step = msg => console.log(chalk.cyan(msg))
 const getPkgRoot = pkg => path.resolve(__dirname, '../packages/' + pkg)
 
@@ -103,11 +99,7 @@ async function publishPackage(pkgName, version) {
       // note: use of yarn is intentional here as we rely on its publishing
       // behavior.
       'npm',
-      [
-        'publish',
-        '--new-version',
-        version,
-      ],
+      ['publish', '--new-version', version],
       {
         cwd: pkgRoot,
         stdio: 'pipe'
