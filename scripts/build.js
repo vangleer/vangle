@@ -22,7 +22,7 @@ const baseConfig = defineConfig({
     lib: {
       entry: resolve('packages/vangle/index.ts'),
       name: 'vangle',
-      fileName: (format) => `index.${format}.js`
+      fileName: format => `index.${format}.js`
     },
     outDir,
     rollupOptions: {
@@ -49,10 +49,12 @@ async function main() {
 }
 
 async function genPkg() {
-  fs.copyFileSync(resolve('packages/vangle/package.json'), resolve('packages/vangle/dist/package.json'))
+  fs.copyFileSync(
+    resolve('packages/vangle/package.json'),
+    resolve('packages/vangle/dist/package.json')
+  )
 }
 
 function resolve(...urlOrUrls) {
   return path.resolve(rootDir, ...urlOrUrls)
 }
-
