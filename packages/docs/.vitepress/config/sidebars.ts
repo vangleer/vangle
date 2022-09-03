@@ -5,7 +5,7 @@ function getGuideSidebar() {
   const result = {}
   Object.entries(guideLocale).map(([lang, val]) => {
     result[`/${lang}/guide/`] = Object.values(val).map(item =>
-      mapPrefix(item, lang, '/component')
+      mapPrefix(item, lang, '/guide')
     )
   })
   return result
