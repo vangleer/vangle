@@ -1,6 +1,6 @@
 {
   "name": "vangle",
-  "version": "1.0.7",
+  "version": "1.0.16",
   "description": "A Component Library for Vue 3",
   "keywords": [
     "vangle",
@@ -9,20 +9,33 @@
     "ui",
     "vue"
   ],
-  "main": "index.es.js",
-  "module": "index.es.ts",
-  "unpkg": "index.umd.js",
+  "homepage": "https://vangleer.github.io/vangle/",
+  "bugs": {
+    "url": "https://github.com/vangleer/vangle/issues"
+  },
+  "license": "MIT",
+  "main": "dist/index.es.js",
+  "module": "dist/index.es.ts",
+  "unpkg": "dist/index.umd.js",
   "exports": {
     ".": {
-      "import": "./index.es.js",
-      "require": "./index.umd.js"
-    }
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/types/vangle/index.d.ts"
+    },
+    "./*": "./*"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vangleer/vangle.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "style": "dist/style.css",
   "scripts": {},
   "author": "vangleer",
-  "license": "MIT",
   "peerDependencies": {
     "vue": "^3.2.0"
-  },
-  "types": "types/vangle/index.d.ts"
+  }
 }

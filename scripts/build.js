@@ -44,14 +44,17 @@ async function main() {
   // build
   await build(baseConfig)
 
-  // copy package.json
-  await genPkg()
+  await copyFiles()
 }
 
-async function genPkg() {
+async function copyFiles() {
+  // fs.copyFileSync(
+  //   resolve('packages/vangle/package.json'),
+  //   resolve('packages/vangle/dist/package.json')
+  // )
   fs.copyFileSync(
-    resolve('packages/vangle/package.json'),
-    resolve('packages/vangle/dist/package.json')
+    resolve('README.md'),
+    resolve('packages/vangle/README.md')
   )
 }
 

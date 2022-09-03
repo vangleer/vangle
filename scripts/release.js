@@ -1,4 +1,4 @@
-const execa = require('execa')
+const { execSync } = require('child_process')
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
@@ -93,18 +93,15 @@ async function publishPackage(pkgName, version) {
   }
 
   step(`Publishing ${pkgName}...`)
+  console.log(pkgRoot, 'pkgRootpkgRoot')
 
   try {
-    await execa(
-      // note: use of yarn is intentional here as we rely on its publishing
-      // behavior.
-      'npm',
-      ['publish', '--new-version', version],
-      {
-        cwd: pkgRoot,
-        stdio: 'pipe'
-      }
-    )
+    execSync('git add .', { stdio: 'inherit' })
+
+    execSync(`git commit -m "chore: release v${version}"`, { stdio: 'inherit' })
+    execSync(`git tag -a v${version} -m "v${version}"`, { stdio: 'inherit' })
+    execSync('npm publish', { cwd: pkgRoot, stdio: 'inherit' })
+    
     console.log(chalk.green(`Successfully published ${pkgName}@${version}`))
   } catch (e) {
     if (e.stderr.match(/previously published/)) {
