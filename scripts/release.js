@@ -19,6 +19,7 @@ const inc = i => semver.inc(currentVersion, i)
 async function main() {
   let targetVersion = args._[0]
 
+  // 如果没有传入版本，提示选择
   if (!targetVersion) {
     // no explicit version, offer suggestions
     const { release } = await prompt({
@@ -96,6 +97,7 @@ async function publishPackage(pkgName, version) {
   console.log(pkgRoot, 'pkgRootpkgRoot')
 
   try {
+
     execSync('git add .', { stdio: 'inherit' })
 
     execSync(`git commit -m "chore: release v${version}"`, { stdio: 'inherit' })
