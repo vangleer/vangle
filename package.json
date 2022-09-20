@@ -7,6 +7,7 @@
     "play": "pnpm build && pnpm dev --filter ./play",
     "build": "node ./scripts/build.js",
     "release": "pnpm build && node ./scripts/release.js",
+    "gen": "node ./scripts/create.js",
     "docs:dev": "pnpm docs:dev --filter ./packages/docs",
     "docs:build": "pnpm docs:build --filter ./packages/docs",
     "prettier": "prettier --write .",

@@ -6,6 +6,12 @@
 
 话不多说，开搞！！！
 
+[在线预览](https://vangleer.github.io/vangle)
+
+[github 地址](https://github.com/vangleer/vangle)
+
+[gitee 地址](https://gitee.com/vangleer/vangle)
+
 ## 准备工作
 
 - 在 packages 目录下创建 vangle 目录，这个目录就是我们要发布的，在这个目录下初始化要发布的 package.json，填写必要的信息
