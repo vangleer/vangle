@@ -1,6 +1,6 @@
 // 创建组件
 const path = require('path')
-const fs = require('fs-extra')
+const fse = require('fs-extra')
 const glob = require('glob')
 // ejs模板渲染
 const ejs = require('ejs')
@@ -42,20 +42,18 @@ async function main() {
   fn()
 }
 
-/**
-  |-- button
-    |-- index.ts
-    |-- src
-    |   |-- button.ts
-    |   |-- button.vue
-    |   |-- button.less
-    |-- __test__
-*/
-function createComponent() {
-  console.log('创建组件')
-  const desc = path.resolve(componentDestDir, currentName)
-  fs.copySync(componentSrcDir, desc)
 
+/**
+ * 准备模板，模板里包含一个组件的所有文件，将公共部分使用 ejs 模板占位
+ * 根据创建的组件名称将模板拷贝到组件目录下
+ * 遍历所有 .ejs 结尾的文件，将占位替换位真实的内容
+ * 修改输出文件名称，也就是把 .ejs 去掉
+ * 最后删除 .ejs 结尾的文件
+ */
+function createComponent() {
+  const fileName = convertName(currentName)
+  const desc = path.resolve(componentDestDir, fileName)
+  fse.copySync(componentSrcDir, desc)
 
   return new Promise((resolve, reject) => {
     glob('**', {
@@ -67,19 +65,19 @@ function createComponent() {
       }
       
       const renderData = {
-        fileName: convertName(currentName),
+        fileName,
         name: currentName
       }
       Promise.all(files.map(file => {
         const tempPath = path.resolve(desc, file)
-        const filePath = path.resolve(desc, file.replace('component', renderData.fileName).replace('.ejs', ''))
+        const filePath = path.resolve(desc, file.replace('component', fileName).replace('.ejs', ''))
         return new Promise((resolve2, reject2) => {
           ejs.renderFile(tempPath, renderData, {}, (err, result) => {
             if (err) {
               reject2(err)
             } else {
-              fs.writeFileSync(filePath, result)
-              fs.removeSync(tempPath)
+              fse.writeFileSync(filePath, result)
+              fse.removeSync(tempPath)
               resolve2(result)
             }
           })
