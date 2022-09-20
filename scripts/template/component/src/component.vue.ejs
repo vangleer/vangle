@@ -1,0 +1,18 @@
+<template>
+</template>
+
+<script lang="ts" setup>
+import { createNamespace } from '@vangle/utils'
+import { <%= name %>Props } from './<%= fileName %>'
+defineOptions({
+  name: 'Van<%= name %>'
+})
+
+defineProps(<%= name %>Props)
+
+const { n, classes } = createNamespace('<%= fileName %>')
+</script>
+
+<style lang="less">
+@import './<%= fileName %>.less';
+</style>
