@@ -53,6 +53,9 @@ async function createAll() {
   step('\nCreate Component...')
   await createComponent()
 
+  step('\nAuto Import...')
+  await autoImport()
+
   step('\nCreate Doc...')
   await createDoc()
 }
@@ -67,6 +70,9 @@ async function createAll() {
 function createComponent() {
   const fileName = convertName(currentName)
   const desc = path.resolve(componentDestDir, fileName)
+
+  if (fse.pathExistsSync(desc)) return console.warn(`${currentName} already exists...`)
+
   fse.copySync(componentSrcDir, desc)
 
 
@@ -107,12 +113,14 @@ function createComponent() {
  * 创建 md 文件 packages/docs/zh/component/*.md
  * 创建 examples 
  */
-function createDoc() {
+async function createDoc() {
   const fileName = convertName(currentName)
   const desc = path.resolve(docDescDir, 'temp')
   fse.copySync(docSrcDir, desc)
 
-  addSidbar(fileName)
+  // 如果存在提示
+  const exists = await addSidbar(fileName)
+  if (exists) return console.warn(`${currentName} already exists...`)
 
   const renderData = {
     fileName,
@@ -161,8 +169,13 @@ async function addSidbar(fileName) {
   }
   const linkFileName = path.resolve(docDescDir, '.vitepress/i18n/pages/component.json')
   const linkConfig = await fse.readJson(linkFileName)
-  linkConfig.zh.basic.children.push(link)
-  fse.writeFileSync(linkFileName, JSON.stringify(linkConfig, null, 2))
+  const exists = linkConfig.zh.basic.children.find(v => v.link === link.link)
+  
+  if (!exists) {
+    linkConfig.zh.basic.children.push(link)
+    fse.writeFileSync(linkFileName, JSON.stringify(linkConfig, null, 2))
+  }
+  return exists 
 }
 
 function resolve(dir) {
@@ -174,4 +187,22 @@ function convertName(name, type) {
   return name.replace(/[A-Z]/g, (char, index) => {
     return index ? '-' + char : char
   }).toLowerCase()
+}
+
+// 自动导出引入
+function autoImport() {
+  const fileName = convertName(currentName)
+  // packages/component/index.ts 导出新组件
+  const n1 = path.resolve(componentDestDir, 'index.ts')
+  let res = fse.readFileSync(n1, { encoding: 'utf-8' })
+  res += `\nexport * from './${fileName}'\n`
+  fse.writeFileSync(n1, res)
+  
+  // packages/vangle/component.ts 添加导出
+  const n2 = resolve('../packages/vangle/component.ts')
+  let res2 = fse.readFileSync(n2, { encoding: 'utf-8' })
+  res2 = res2.replace(`} from '@vangle/components'`, `, ${currentName} } from '@vangle/components'`)
+  res2 = res2.replace(`] as Plugin[]`, `, ${currentName}] as Plugin[]`)
+  fse.writeFileSync(n2, res2)
+  console.log(res2, 'res2')
 }

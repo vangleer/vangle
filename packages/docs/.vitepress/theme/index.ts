@@ -1,4 +1,4 @@
-import { VanButton } from '@vangle/components'
+import * as Vangle from '@vangle/components'
 import { define } from '../utils/types'
 import type { Theme as ThemeType } from 'vitepress'
 
@@ -10,10 +10,11 @@ import Theme from 'vitepress/dist/client/theme-default/index.js'
 export default define<ThemeType>({
   ...Theme,
   enhanceApp: ({ app }) => {
-    app.component('VanButton', VanButton)
-
+    Object.keys(Vangle).forEach(key => {
+      if (key.startsWith('Van') && Vangle[key].name) {
+        app.component(Vangle[key].name, Vangle[key])
+      }
+    })
     globals.forEach(([name, comp]) => app.component(name, comp))
   }
 })
-
-console.log(Vangle, 'VangleVangleVangleVangle')

@@ -1,4 +1,4 @@
 import type { Plugin } from 'vue'
-import { VanButton } from '@vangle/components'
+import { VanButton, MessageBox } from '@vangle/components'
 
-export default [VanButton] as Plugin[]
+export default [VanButton, MessageBox] as Plugin[]
