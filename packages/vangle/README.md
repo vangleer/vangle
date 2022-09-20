@@ -49,4 +49,3 @@ import App from './App.vue'
 
 createApp(App).use(Vangle).mount('#app')
 ```
-

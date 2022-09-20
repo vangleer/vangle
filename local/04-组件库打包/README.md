@@ -21,13 +21,7 @@
   "name": "vangle",
   "version": "1.0.16",
   "description": "A Component Library for Vue 3",
-  "keywords": [
-    "vangle",
-    "component library",
-    "ui framework",
-    "ui",
-    "vue"
-  ],
+  "keywords": ["vangle", "component library", "ui framework", "ui", "vue"],
   "homepage": "https://vangleer.github.io/vangle/",
   "bugs": {
     "url": "https://github.com/vangleer/vangle/issues"
@@ -58,7 +52,6 @@
     "vue": "^3.2.0"
   }
 }
-
 ```
 
 - 新建 index.ts 将 packages/components 目录下的组件全部导出，附加 install 方法注册全部组件
@@ -150,16 +143,12 @@ async function copyFiles() {
   //   resolve('packages/vangle/package.json'),
   //   resolve('packages/vangle/dist/package.json')
   // )
-  fs.copyFileSync(
-    resolve('README.md'),
-    resolve('packages/vangle/README.md')
-  )
+  fs.copyFileSync(resolve('README.md'), resolve('packages/vangle/README.md'))
 }
 
 function resolve(...urlOrUrls) {
   return path.resolve(rootDir, ...urlOrUrls)
 }
-
 ```
 
 - 在 package.json 中添加打包脚本
@@ -283,13 +272,12 @@ async function publishPackage(pkgName, version) {
   console.log(pkgRoot, 'pkgRootpkgRoot')
 
   try {
-
     execSync('git add .', { stdio: 'inherit' })
 
     execSync(`git commit -m "chore: release v${version}"`, { stdio: 'inherit' })
     execSync(`git tag -a v${version} -m "v${version}"`, { stdio: 'inherit' })
     execSync('npm publish', { cwd: pkgRoot, stdio: 'inherit' })
-    
+
     console.log(chalk.green(`Successfully published ${pkgName}@${version}`))
   } catch (e) {
     if (e.stderr.match(/previously published/)) {
@@ -299,7 +287,6 @@ async function publishPackage(pkgName, version) {
     }
   }
 }
-
 ```
 
 - 在 package.json 中添加发布脚本

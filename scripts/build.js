@@ -52,10 +52,7 @@ async function copyFiles() {
   //   resolve('packages/vangle/package.json'),
   //   resolve('packages/vangle/dist/package.json')
   // )
-  fs.copyFileSync(
-    resolve('README.md'),
-    resolve('packages/vangle/README.md')
-  )
+  fs.copyFileSync(resolve('README.md'), resolve('packages/vangle/README.md'))
 }
 
 function resolve(...urlOrUrls) {
