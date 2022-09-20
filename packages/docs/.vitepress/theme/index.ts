@@ -15,3 +15,5 @@ export default define<ThemeType>({
     globals.forEach(([name, comp]) => app.component(name, comp))
   }
 })
+
+console.log(Vangle, 'VangleVangleVangleVangle')

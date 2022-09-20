@@ -5,16 +5,18 @@ const glob = require('glob')
 // ejs模板渲染
 const ejs = require('ejs')
 const args = require('minimist')(process.argv.slice(2))
-
+const chalk = require('chalk')
 const { prompt } = require('enquirer')
 
 const componentSrcDir = resolve('./template/component')
 const componentDestDir = resolve('../packages/components')
-const docDir = resolve('./template/doc')
+const docSrcDir = resolve('./template/doc')
+const docDescDir = resolve('../packages/docs')
+const step = msg => console.log(chalk.cyan(msg))
 
 let currentName = args._[0]
 const choices = [
-  ['component', createComponent],
+  ['component', createAll],
   ['doc', createDoc]
 ]
 
@@ -39,9 +41,21 @@ async function main() {
     currentName = name
   }
 
-  fn()
+  await fn()
+
+  if (type === 'doc') {
+    fse.removeSync(path.resolve(docDescDir, 'temp'))
+  }
 }
 
+async function createAll() {
+
+  step('\nCreate Component...')
+  await createComponent()
+
+  step('\nCreate Doc...')
+  await createDoc()
+}
 
 /**
  * 准备模板，模板里包含一个组件的所有文件，将公共部分使用 ejs 模板占位
@@ -54,6 +68,7 @@ function createComponent() {
   const fileName = convertName(currentName)
   const desc = path.resolve(componentDestDir, fileName)
   fse.copySync(componentSrcDir, desc)
+
 
   return new Promise((resolve, reject) => {
     glob('**', {
@@ -82,14 +97,72 @@ function createComponent() {
             }
           })
         })
-      }))
+      })).then(resolve, reject)
     })
   })
   
 }
 
+/**
+ * 创建 md 文件 packages/docs/zh/component/*.md
+ * 创建 examples 
+ */
 function createDoc() {
-  console.log('创建文档')
+  const fileName = convertName(currentName)
+  const desc = path.resolve(docDescDir, 'temp')
+  fse.copySync(docSrcDir, desc)
+
+  addSidbar(fileName)
+
+  const renderData = {
+    fileName,
+    name: currentName
+  }
+  
+  return new Promise((resolve, reject) => {
+    glob('**', {
+      cwd: desc,
+      nodir: true
+      }, (err, files) => {
+        if (err) {
+          reject(err)
+        }
+  
+        Promise.all(files.map(file => {
+          const realName = file.replace('.ejs', '').replace('component', fileName)
+          const tempPath = path.resolve(desc, file)
+          let filePath = tempPath
+          if (file.indexOf('.vue') !== -1) {
+            filePath = path.resolve(docDescDir, 'examples', fileName, realName)
+            fse.ensureDirSync(filePath.replace(realName, ''))
+          } else if (file.indexOf('.md') !== -1) {
+            filePath = path.resolve(docDescDir, 'zh/component', realName)
+          }
+          return new Promise((resolve2, reject2) => {
+            ejs.renderFile(tempPath, renderData, {}, (err, result) => {
+              if (err) {
+                reject2(err)
+              } else {
+                fse.writeFileSync(filePath, result)
+                resolve2(result)
+              }
+            })
+          })
+        })).then(resolve, reject)
+      })
+  })
+  
+}
+
+async function addSidbar(fileName) {
+  const link = {
+    "link": `/${fileName}`,
+    "text": currentName
+  }
+  const linkFileName = path.resolve(docDescDir, '.vitepress/i18n/pages/component.json')
+  const linkConfig = await fse.readJson(linkFileName)
+  linkConfig.zh.basic.children.push(link)
+  fse.writeFileSync(linkFileName, JSON.stringify(linkConfig, null, 2))
 }
 
 function resolve(dir) {
