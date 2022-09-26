@@ -198,11 +198,11 @@ function autoImport() {
   res += `export * from './${fileName}'\n`
   fse.writeFileSync(n1, res)
   
-  // packages/vangle/component.ts 添加导出
-  const n2 = resolve('../packages/vangle/component.ts')
-  let res2 = fse.readFileSync(n2, { encoding: 'utf-8' })
-  res2 = res2.replace(`} from '@vangle/components'`, `, ${currentName} } from '@vangle/components'`)
-  res2 = res2.replace(`] as Plugin[]`, `, ${currentName}] as Plugin[]`)
-  fse.writeFileSync(n2, res2)
-  console.log(res2, 'res2')
+  // // packages/vangle/component.ts 添加导出
+  // const n2 = resolve('../packages/vangle/component.ts')
+  // let res2 = fse.readFileSync(n2, { encoding: 'utf-8' })
+  // res2 = res2.replace(`} from '@vangle/components'`, `, ${currentName} } from '@vangle/components'`)
+  // res2 = res2.replace(`] as Plugin[]`, `, Van${currentName}] as Plugin[]`)
+  // fse.writeFileSync(n2, res2)
+  // console.log(res2, 'res2')
 }
