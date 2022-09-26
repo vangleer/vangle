@@ -6,14 +6,6 @@
         {
           "link": "/button",
           "text": "Button 按钮"
-        },
-        {
-          "link": "/dialog",
-          "text": "Dialog"
-        },
-        {
-          "link": "/message-box",
-          "text": "MessageBox"
         }
       ]
     }

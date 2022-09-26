@@ -195,7 +195,7 @@ function autoImport() {
   // packages/component/index.ts 导出新组件
   const n1 = path.resolve(componentDestDir, 'index.ts')
   let res = fse.readFileSync(n1, { encoding: 'utf-8' })
-  res += `\nexport * from './${fileName}'\n`
+  res += `export * from './${fileName}'\n`
   fse.writeFileSync(n1, res)
   
   // packages/vangle/component.ts 添加导出
