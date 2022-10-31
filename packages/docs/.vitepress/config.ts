@@ -7,7 +7,7 @@ export const config: UserConfig = {
   title: 'Vangle',
   description: 'a Vue 3 based component library for designers and developers',
   themeConfig: {
-    logo: '/images/vite.svg',
+    logo: '/images/logo.png',
     footer: {
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2022-PRESENT vangleer and Vangle contributors'
