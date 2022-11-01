@@ -11,7 +11,7 @@ hero:
       link: zh/component/button
     - theme: alt
       text: View on Githib
-      link: /articles/组件库环境搭建
+      link: https://github.com/vangleer/vangle
 
 features:
   - icon: ⚡️
