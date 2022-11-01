@@ -45,7 +45,7 @@ function mapPrefix(item: Item, lang: string, prefix = '') {
   }
   return {
     ...item,
-    link: `${lang}${prefix}${item.link}`
+    link: `/${lang}${prefix}${item.link}`
   }
 }
 
