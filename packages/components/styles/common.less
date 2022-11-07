@@ -1,28 +1,26 @@
 @import './var.less';
 
 :root {
-  --font-size-xs: @font-size-xs;
-  --font-size-sm: @font-size-sm;
-  --font-size-md: @font-size-md;
-  --font-size-lg: @font-size-lg;
-  --icon-size-xs: @icon-size-xs;
-  --icon-size-sm: @icon-size-sm;
-  --icon-size-md: @icon-size-md;
-  --icon-size-lg: @icon-size-lg;
-  --color-body: @color-body;
-  --color-text: @color-text;
-  --color-secondary-text: #909399;
-  --color-primary: @color-primary;
-  --color-info: @color-info;
-  --color-success: @color-success;
-  --color-warning: @color-warning;
-  --color-danger: @color-danger;
-  --color-disabled: @color-disabled;
-  --color-text-disabled: @color-text-disabled;
-  --color-white: #fff;
-  --border-color-light: #e4e7ed;
-  --cubic-bezier: @cubic-bezier;
-  --shadow-key-umbra-opacity: @shadow-key-umbra-opacity;
-  --shadow-key-penumbra-opacity: @shadow-key-penumbra-opacity;
-  --shadow-key-ambient-opacity: @shadow-key-ambient-opacity;
+  --@{namespace}-color-white: #ffffff;
+  --@{namespace}-color-black: #000000;
+
+  each(@fontSizes, {
+    --@{namespace}-font-size-@{key}: @value;
+  });
+
+each(@fontColors, {
+  --@{namespace}-text-color-@{key}: @value;
+});
+
+each(@disabledColors, {
+  --@{namespace}-disabled-@{key}-color: @value;
+});
+
+each(@iconSizes, {
+  --@{namespace}-icon-size-@{key}: @value;
+});
+
+each(@colors, {
+  --@{namespace}-color-@{key}: @value;
+});
 }

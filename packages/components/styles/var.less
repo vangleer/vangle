@@ -1,23 +1,67 @@
+@namespace: van;
+@types: primary, info, success, warning, danger;
+
+// 类型颜色
+@colors: {
+  primary: #3a7afe;
+  info: #00afef;
+  success: #00c48f;
+  warning: #ff9f00;
+  danger: #f44336;
+}
+
+// 文字颜色
+@fontColors: {
+  primary: '#303133';
+  regular: '#606266';
+  secondary: '#909399';
+  placeholder: '#a8abb2';
+  disabled: '#c0c4cc';
+}
+
+// 禁用颜色
+@disabledColors: {
+  bg: #f5f7fa;
+  text: #a8abb2;
+  border: #e4e7ed;
+}
+
+// 文字大小
+@fontSizes: {
+  mini: 10px;
+  small: 12px;
+  middle: 14px;
+  large: 16px;
+}
+
+// 文字大小
+@iconSizes: {
+  mini: 16px;
+  small: 18px;
+  middle: 20px;
+  large: 22px;
+}
+
 // 文字
-@font-size-xs: 10px;
-@font-size-sm: 12px;
-@font-size-md: 14px;
-@font-size-lg: 16px;
+@font-size-xs: @fontSizes[mini];
+@font-size-sm: @fontSizes[small];
+@font-size-md: @fontSizes[middle];
+@font-size-lg: @fontSizes[large];
 
 // 图标
-@icon-size-xs: 16px;
-@icon-size-sm: 18px;
-@icon-size-md: 20px;
-@icon-size-lg: 22px;
+@icon-size-xs: @iconSizes[mini];
+@icon-size-sm: @iconSizes[small];
+@icon-size-md: @iconSizes[middle];
+@icon-size-lg: @iconSizes[large];
 
 //颜色
 @color-body: #fff;
 @color-text: #333;
-@color-primary: #3a7afe;
-@color-info: #00afef;
-@color-success: #00c48f;
-@color-warning: #ff9f00;
-@color-danger: #f44336;
+@color-primary: @colors[primary];
+@color-info: @colors[info];
+@color-success: @colors[success];
+@color-warning: @colors[warning];
+@color-danger: @colors[danger];
 @color-disabled: #e0e0e0;
 @color-text-disabled: #aaa;
 
