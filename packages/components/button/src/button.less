@@ -1,189 +1,128 @@
-@button-default-color: #f5f5f5;
-@button-primary-color: var(--color-primary);
-@button-danger-color: var(--color-danger);
-@button-success-color: var(--color-success);
-@button-warning-color: var(--color-warning);
-@button-info-color: var(--color-info);
-@button-disabled-color: var(--color-disabled);
-@button-disabled-text-color: var(--color-text-disabled);
+@import '../../styles/var.less';
 
-@button-border-radius: 4px;
-@button-mini-padding: 0 9px;
-@button-small-padding: 0 11px;
-@button-normal-padding: 0 15px;
-@button-large-padding: 0 22px;
-@button-round-padding: 6px;
-@button-mini-height: 20px;
-@button-small-height: 28px;
-@button-normal-height: 36px;
-@button-large-height: 44px;
+.van-button {
+  --van-button-text-color: var(--van-text-color-regular);
+  --van-button-font-weight: 500;
+  --van-button-bg-color: var(--van-color-white);
+  --van-button-border-color: var(--van-border-color);
+  --van-button-font-size-middle: var(--van-font-size-middle);
+  --van-button-radius-middle: var(--van-radius-middle);
+  --van-button-disabled-opacity: var(--van-disabled-opacity);
+  --van-button-size: @buttonSizes[middle];
+  --van-button-size-large: @buttonSizes[large];
+  --van-button-size-small: @buttonSizes[small];
+  --van-button-padding: @paddingSizes[base] @paddingSizes[middle];
+}
 
-:root {
-  --button-default-color: @button-default-color;
-  --button-primary-color: @button-primary-color;
-  --button-danger-color: @button-danger-color;
-  --button-success-color: @button-success-color;
-  --button-warning-color: @button-warning-color;
-  --button-info-color: @button-info-color;
-  --button-disabled-color: @button-disabled-color;
-  --button-disabled-text-color: @button-disabled-text-color;
-  --button-border-radius: @button-border-radius;
-  --button-mini-padding: @button-mini-padding;
-  --button-small-padding: @button-small-padding;
-  --button-normal-padding: @button-normal-padding;
-  --button-large-padding: @button-large-padding;
-  --button-round-padding: @button-round-padding;
-  --button-mini-height: @button-mini-height;
-  --button-small-height: @button-small-height;
-  --button-normal-height: @button-normal-height;
-  --button-large-height: @button-large-height;
+.button-variant() {
+
+  // type
+  each(@colors, {
+    &.van-button--@{key} {
+      --van-button-bg-color: @value;
+      --van-button-text-color: #fff;
+      --van-button-border-color: @value;
+
+      &.is-plain {
+        --van-button-bg-color: var(--van-color-white);
+        --van-button-text-color: @value;
+        --van-button-border-color: @value;
+      }
+
+      &.is-text {
+        color: @value;
+      }
+    }
+  });
+}
+
+.button-sizes() {
+
+  each(@fontSizes, {
+    &.van-button--@{key} {
+      --van-button-size: ~'var(--van-button-size-@{key})';
+      --van-button-padding: calc(var(--van-button-size) - 20px) calc(var(--van-button-size) - 12px);
+      height: var(--van-button-size);
+      line-height: var(--van-button-size);
+      font-size: ~'var(--van-font-size-@{key})';
+      border-radius: ~'var(--van-radius-@{key})';
+    }
+  })
 }
 
 .van-button {
   position: relative;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  outline: none;
-  border: none;
-  border-radius: var(--button-border-radius);
-  user-select: none;
-  cursor: pointer;
-  font-family: inherit;
-  transition: box-shadow 0.2s, background-color 0.25s;
-  will-change: box-shadow;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  white-space: nowrap;
   line-height: 1;
+  height: var(--van-button-size);
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--van-button-text-color);
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: .1s;
+  font-weight: var(--van-button-font-weight);
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: var(--van-button-bg-color);
+  border: var(--van-border);
+  border-color: var(--van-button-border-color);
+  font-size: var(--van-button-font-size-middle);
+  border-radius: var(--van-button-radius-middle);
+  padding: var(--van-button-padding);
 
-  &+.van-button {
-    margin-left: 8px;
+  &+& {
+    margin-left: 12px;
   }
 
-  &:active {
-    box-shadow: 0 3px 5px -1px var(--shadow-key-umbra-opacity),
-      0 5px 8px 0 var(--shadow-key-penumbra-opacity),
-      0 1px 14px 0 var(--shadow-key-ambient-opacity);
-  }
-
-  &__loading[var-button-cover] {
+  &::before {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  &--default {
-    color: inherit;
-    background-color: var(--button-default-color);
-  }
-
-  &--primary {
-    color: #fff;
-    background-color: var(--button-primary-color);
-  }
-
-  &--info {
-    color: #fff;
-    background-color: var(--button-info-color);
-  }
-
-  &--success {
-    color: #fff;
-    background-color: var(--button-success-color);
-  }
-
-  &--warning {
-    color: #fff;
-    background-color: var(--button-warning-color);
-  }
-
-  &--danger {
-    color: #fff;
-    background-color: var(--button-danger-color);
-  }
-
-  &--disabled {
-    background-color: var(--button-disabled-color);
-    color: var(--button-disabled-text-color);
-    cursor: not-allowed;
-    box-shadow: none !important;
-  }
-
-  &--block {
     width: 100%;
+    height: 100%;
+    background: var(--van-color-black);
+    border: inherit;
+    border-color: var(--van-color-black);
+    border-radius: inherit;
+    /* inherit parent's border radius */
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    content: ' ';
   }
 
-  &--text {
-    background-color: transparent;
+  &:active::before {
+    opacity: 0.1;
+  }
 
-    &:active {
-      box-shadow: none;
+  .button-variant();
+  .button-sizes();
+
+  &.is-round {
+    border-radius: var(--van-radius-round);
+  }
+
+  &.is-circle {
+    border-radius: 50%;
+    padding: 8px;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: var(--van-button-disabled-opacity);
+
+    &::before {
+      display: none;
     }
   }
 
-  &--text-default {
-    color: inherit;
-  }
-
-  &--text-primary {
-    color: var(--button-primary-color);
-  }
-
-  &--text-info {
-    color: var(--button-info-color);
-  }
-
-  &--text-success {
-    color: var(--button-success-color);
-  }
-
-  &--text-warning {
-    color: var(--button-warning-color);
-  }
-
-  &--text-danger {
-    color: var(--button-danger-color);
-  }
-
-  &--text-disabled {
-    color: var(--button-disabled-text-color);
-  }
-
-  &--normal {
-    height: var(--button-normal-height);
-    padding: var(--button-normal-padding);
-    font-size: var(--van-font-size-middle);
-  }
-
-  &--large {
-    height: var(--button-large-height);
-    padding: var(--button-large-padding);
-    font-size: var(--van-font-size-large);
-  }
-
-  &--small {
-    height: var(--button-small-height);
-    padding: var(--button-small-padding);
-    font-size: var(--van-font-size-small);
-  }
-
-  &--mini {
-    height: var(--button-mini-height);
-    padding: var(--button-mini-padding);
-    font-size: var(--van-font-size-mini);
-  }
-
-  &--round {
-    padding: var(--button-round-padding);
-    border-radius: 50%;
-    height: auto;
-  }
-
-  &--outline {
-    border: thin solid currentColor;
-  }
-
-  &--hidden {
-    opacity: 0;
+  &.is-text {
+    color: var(--van-button-text-color);
+    border: 0 solid transparent;
+    background-color: transparent;
   }
 }

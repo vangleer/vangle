@@ -1,43 +1,43 @@
 <template>
   <button
-    :class="
-      classes(
-        n(),
-        n(`--${size}`),
-        [block, `van--flex ${n('--block')}`, 'van--inline-flex'],
-        [disabled, n('--disabled')],
-        [
-          text,
-          `${n(`--text-${type}`)} ${n('--text')}`,
-          `${n(`--${type}`)} van-elevation--2`
-        ],
-        [text && disabled, n('--text-disabled')],
-        [round, n('--round')],
-        [outline, n('--outline')]
-      )
-    "
+    :class="[
+      n(),
+      type && n(`--${type}`),
+      size && n(`--${size}`),
+      plain && 'is-plain',
+      round && 'is-round',
+      circle && 'is-circle',
+      disabled && 'is-disabled',
+      text && 'is-text'
+    ]"
     :style="{
       color: textColor,
-      background: color
+      ...style
     }"
     :disabled="disabled"
   >
-    <div :class="classes(n('content'))">
+    <div :class="[n('content')]">
       <slot />
     </div>
   </button>
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { ButtonProps } from './button'
 defineOptions({
   name: 'VanButton'
 })
 
-defineProps(ButtonProps)
+const props = defineProps(ButtonProps)
+const style = computed(() => props.color ? {
+  '--van-button-bg-color': props.color,
+  '--van-button-text-color': 'var(--van-color-white)',
+  '--van-button-border-color': props.color
+} : {})
 
-const { n, classes } = createNamespace('button')
+const { n } = createNamespace('button')
 </script>
 
 <style lang="less">

@@ -1,0 +1,49 @@
+@import './var.less';
+
+:root {
+  --van-color-white: #ffffff;
+  --van-color-black: #000000;
+
+  // Padding
+  --van-padding-base: 4px;
+  --van-padding-small: 12px;
+  --van-padding-middle: 16px;
+  --van-padding-large: 24px;
+  --van-line-height-small: 18px;
+  --van-line-height-middle: 20px;
+  --van-line-height-large: 22px;
+
+  // Border
+  --van-border-color: #ebedf0;
+  --van-border-width: 1px;
+  --van-border: var(--van-border-width) solid var(--van-border-color);
+  --van-radius-small: 2px;
+  --van-radius-middle: 4px;
+  --van-radius-large: 8px;
+  --van-radius-round: 20px;
+  --van-radius-max: 999px;
+
+  --van-active-opacity: 0.6;
+  --van-disabled-opacity: 0.5;
+
+  // Font
+  each(@fontSizes, {
+    --van-font-size-@{key}: @value;
+  });
+
+each(@fontColors, {
+  --van-text-color-@{key}: @value;
+});
+
+each(@disabledColors, {
+  --van-disabled-@{key}-color: @value;
+});
+
+each(@iconSizes, {
+  --van-icon-size-@{key}: @value;
+});
+
+each(@colors, {
+  --van-color-@{key}: @value;
+});
+}
