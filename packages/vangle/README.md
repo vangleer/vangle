@@ -4,7 +4,9 @@ Vue3 UI Components Library
 
 > 注：该仓库主要记录从 0 搭建一个组件库的方法，包括组件文档的编写
 
-[在线预览](https://vangleer.github.io/vangle)
+[在线预览 github](https://vangleer.github.io/vangle)
+
+[在线预览 gitee]( http://vangleer.gitee.io/vangle)
 
 ## 克隆代码到本地
 
