@@ -24,7 +24,6 @@ const list = Object.keys(svgs).map(key => {
     title: name
   }
 })
-console.log(svgs, 'svgssvgssvgs')
 </script>
 
 <style lang="scss">

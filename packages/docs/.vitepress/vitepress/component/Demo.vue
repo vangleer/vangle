@@ -24,7 +24,7 @@
         <div
           v-show="sourceVisible"
           class="example-float-control"
-          @click="toggleSourceVisible(false)"
+          @click="toggleSourceVisible()"
         >
           <span>隐藏代码</span>
         </div>
@@ -76,6 +76,10 @@ function toggleSourceVisible() {
   padding: 0.8rem;
   margin: 0.5px;
   background-color: var(--bg-color);
+  >.van-icon {
+    margin-right: 16px;
+    font-size: 26px;
+  }
 }
 .example {
   border: 1px solid var(--border-color);
@@ -98,7 +102,7 @@ function toggleSourceVisible() {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     margin-top: -1px;
-    color: var(--color-secondary-text);
+    color: var(--van-text-color-secondary);
     cursor: pointer;
     position: sticky;
     left: 0;
@@ -107,7 +111,7 @@ function toggleSourceVisible() {
     z-index: 10;
 
     &:hover {
-      color: var(--color-primary);
+      color: var(--van-color-primary);
     }
   }
   .example-source-wrapper {

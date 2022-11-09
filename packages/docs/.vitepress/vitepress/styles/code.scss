@@ -11,9 +11,8 @@ span[class~="language-css"]:before {
 }
 
 :root {
-  --border-color: #dcdfe6;
-  --bg-color: #fff;
-  --van-text-color-secondary: #909399;
+  --border-color: var(--van-border-color);
+  --bg-color: var(--van-bg-color);
 
   --prism-marker-opacity: 0.6;
   --prism-marker-color: var(--code-text-color);
@@ -66,7 +65,7 @@ html.dark {
   --prism-inline-background: #2d2d2d;
 }
 
-.vp-doc .example {
+.content-container .vp-doc .example {
   code {
     margin: 0;
     border-radius: 4px;
@@ -146,46 +145,25 @@ html.dark {
     font-size: var(--code-font-size);
     color: var(--code-text-color);
   }
+}
 
-  /* Line highlighting */
-
-  .highlight-lines {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1.25rem 0;
+.content-container .vp-doc {
+  table {
+    border-collapse: collapse;
     width: 100%;
-    line-height: var(--code-line-height);
-    font-family: var(--code-font-family);
-    font-size: var(--code-font-size);
-    user-select: none;
-    overflow: hidden;
+    background-color: var(--bg-color);
+    font-size: 14px;
+    line-height: 1.5em;
+    th {
+      background-color: var(--bg-color);
+    }
+    th,
+    td {
+      background-color: var(--bg-color);
+      border-color: var(--border-color);
+    }
   }
-
-  .highlight-lines .highlighted {
-    background-color: rgba(0, 0, 0, 0.66);
-  }
-
-  /* Line numbers mode */
-
-  div[class*="language-"].line-numbers-mode {
-    padding-left: 3.5rem;
-  }
-
-  .line-numbers-wrapper {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 3;
-    border-right: 1px solid var(--el-overlay-color-lighter);
-    padding: 1.25rem 0;
-    width: 3.5rem;
-    text-align: center;
-    line-height: var(--code-line-height);
-    font-family: var(--code-font-family);
-    font-size: var(--code-font-size);
-    color: #888;
+  h2 {
+    border-top: 0;
   }
 }
