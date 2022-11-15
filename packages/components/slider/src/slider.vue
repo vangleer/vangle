@@ -1,15 +1,20 @@
 <template>
   <div
-    :class="classes(n(), [props.vertical, n('--vertical')])"
+    :class="[
+      n(),
+      props.vertical && 'is-vertical'
+    ]"
     :aria-valuemin="min"
     :aria-valuemax="max"
     :aria-orientation="vertical ? 'vertical' : 'horizontal'"
   >
     <div
-      :class="classes(
+      ref="slider"
+      :class="[
         n('runway'),
-        [showInput && !range, 'show-input'],
-      )"
+        showInput && !range && 'show-input',
+      ]"
+      :style="{ height }"
     >
       <div :class="n('bar')" :style="barStyle" />
       <div
@@ -42,8 +47,9 @@ defineOptions({
 
 const props = defineProps(SliderProps)
 
-const { n, classes } = createNamespace('slider')
-const currentPosition = ref('50%')
+const { n } = createNamespace('slider')
+const slider = ref<HTMLElement | null>(null)
+const currentPosition = ref()
 const barStyle = computed<CSSProperties>(() => {
   return props.vertical
     ? {
@@ -58,7 +64,7 @@ const barStyle = computed<CSSProperties>(() => {
 const wrapperStyle = computed(() => {
   return (
     props.vertical
-      ? { bottom: currentPosition.value }
+      ? { top: currentPosition.value }
       : { left: currentPosition.value }
   ) as CSSProperties
 })
@@ -83,14 +89,57 @@ function handleMouseLeave() {
   initData.hovering = false
 }
 
-const onButtonDown = () => {
+const onButtonDown = (e: MouseEvent | TouchEvent) => {
+  const {clientX, clientY} = getClientXY(e)
+  initData.startX = clientX
+  initData.startY = clientY
+  const sliderInfo: DOMRect = slider.value!.getBoundingClientRect()
+  const sliderLeft = sliderInfo.left
+  const sliderTop = sliderInfo.top
+  const sliderWidth = sliderInfo.width
+  const sliderHeight = sliderInfo.height
+  const mouseMove = (e: MouseEvent) => {
+    let diff = 0
+    if (props.vertical) {
+      diff = (e.clientY - sliderTop) / sliderHeight * 100
+    } else {
+      diff = (e.clientX - sliderLeft) / sliderWidth * 100
+    }
 
+    setPosition(diff)
+  }
+  const mouseUp = () => {
+    window.removeEventListener('mousemove', mouseMove)
+    window.removeEventListener('mouseup', mouseUp)
+  }
+  window.addEventListener('mousemove', mouseMove)
+  window.addEventListener('mouseup', mouseUp)
 }
 const onLeftKeyDown = () => {
 
 }
 const onRightKeyDown = () => {
   
+}
+const getClientXY = (event: MouseEvent | TouchEvent) => {
+  let clientX: number
+  let clientY: number
+  if (event.type.startsWith('touch')) {
+    clientY = (event as TouchEvent).touches[0].clientY
+    clientX = (event as TouchEvent).touches[0].clientX
+  } else {
+    clientY = (event as MouseEvent).clientY
+    clientX = (event as MouseEvent).clientX
+  }
+  return {
+    clientX,
+    clientY,
+  }
+}
+const setPosition = (newPosition: number) => {
+  if (newPosition <= 0) newPosition = 0
+  if (newPosition >= 100) newPosition = 100
+  currentPosition.value = newPosition + '%'
 }
 
 </script>
