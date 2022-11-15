@@ -17,6 +17,7 @@
     :disabled="disabled"
   >
     <div :class="[n('content')]">
+      <VanIcon v-if="!!icon" :name="icon" />
       <slot />
     </div>
   </button>
@@ -26,6 +27,7 @@
 import { computed } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { ButtonProps } from './button'
+import { VanIcon } from '../../icon'
 defineOptions({
   name: 'VanButton'
 })
