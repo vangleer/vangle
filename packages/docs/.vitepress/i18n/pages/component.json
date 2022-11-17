@@ -18,6 +18,10 @@
         {
           "link": "/icon",
           "text": "Icon 图标"
+        },
+        {
+          "link": "/message",
+          "text": "Message 消息提示"
         }
       ]
     }
