@@ -3,6 +3,8 @@
   <van-button :plain="true" @click="open3">warning</van-button>
   <van-button :plain="true" @click="open1">message</van-button>
   <van-button :plain="true" @click="open4">error</van-button>
+  <van-button :plain="true" @click="closeAll">closeAll</van-button>
+
 </template>
 
 <script lang="ts" setup>
@@ -25,5 +27,9 @@ const open3 = () => {
 }
 const open4 = () => {
   VanMessage.error('Oops, this is a error message.')
+}
+
+const closeAll = () => {
+  VanMessage.closeAll()
 }
 </script>
