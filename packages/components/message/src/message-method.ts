@@ -1,11 +1,12 @@
-import { AppContext, createVNode, render, isVNode, VNode } from 'vue'
-import { MessagePropsTypes, MessageParams, messageTypes } from './message'
+import { AppContext, createVNode, render, isVNode, VNode, ComponentPublicInstance } from 'vue'
+import { MessagePropsTypes, MessageParams, messageTypes, MessageFn, Message } from './message'
 import { isString } from '@vangle/utils'
 import MessageContructor from './message.vue'
 let seed = 1
 let instances: VNode[] = []
 let zIndex = 2000
-function Message(options: MessageParams = {}, context?: AppContext | null) {
+
+const message: MessageFn & Partial<Message> = function (options: MessageParams = {}, context?: AppContext | null) {
   console.log(options, context, 'options, context')
   if (isString(options) || isVNode(options)) {
     options = { message: options } as MessageParams
@@ -48,14 +49,21 @@ function Message(options: MessageParams = {}, context?: AppContext | null) {
 
   appendTo!.appendChild(container.firstElementChild!)
   instances.push(vm)
+
+  return {
+    close: () =>
+    ((
+      vm.component!.proxy as ComponentPublicInstance<{ visible: boolean }>
+    ).visible = false),
+  }
 }
 
 messageTypes.forEach(type => {
-  (Message as any)[type] = (options: MessageParams = {}) => {
+  (message as any)[type] = (options: MessageParams = {}, appContext?: AppContext | null) => {
     if (isString(options) || isVNode(options)) {
       options = { message: options } as MessageParams
     }
-    Message({ ...options, type })
+    message({ ...options, type }, appContext)
   }
 })
 
@@ -83,5 +91,5 @@ export function closeAll() {
   }
 }
 
-Message.closeAll = closeAll
-export default Message
+message.closeAll = closeAll
+export default message as Message

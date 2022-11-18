@@ -1,4 +1,4 @@
-import { PropType, VNode, ExtractPropTypes } from 'vue'
+import { PropType, VNode, ExtractPropTypes, AppContext } from 'vue'
 export const messageTypes = ['success', 'info', 'warning', 'error'] as const
 export const MessageProps = {
   duration: {
@@ -51,6 +51,26 @@ export const MessageProps = {
   }
 }
 
+export interface MessageHandle {
+  close: () => void
+}
+export type MessageFn = ((
+  options?: MessageParams,
+  appContext?: null | AppContext
+) => MessageHandle) & {
+  closeAll(): void
+}
 export type MessagePropsTypes = ExtractPropTypes<typeof MessageProps>
 export type MessageParams = Partial<MessagePropsTypes> | string | VNode | any
-// export type MessageParams = { [key in string]: any }
+export type MessageOptionsTyped = Omit<MessagePropsTypes, 'type'>
+export type MessageParamsTyped = Partial<MessageOptionsTyped> | string | VNode
+export type MessageTypedFn = (
+  options?: MessageParamsTyped,
+  appContext?: null | AppContext
+) => MessageHandle
+export interface Message extends MessageFn {
+  success: MessageTypedFn
+  warning: MessageTypedFn
+  info: MessageTypedFn
+  error: MessageTypedFn
+}
