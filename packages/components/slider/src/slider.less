@@ -1,48 +1,57 @@
 @slider-height: 32px;
 
 :root {
-  --slider-height: @slider-height;
+  --van-slider-height: @slider-height;
 }
 
 .van-slider {
-  --slider-main-bg-color: var(--color-primary);
-  --slider-runway-bg-color: var(--border-color-light);
-  --slider-stop-bg-color: var(--color-white);
-  --slider-disabled-color: var(--text-color-placeholder);
-  --slider-border-radius: 3px;
-  --slider-height: 6px;
-  --slider-button-size: 20px;
-  --slider-button-wrapper-size: 36px;
-  --slider-button-wrapper-offset: -15px;
+  --van-slider-main-bg-color: var(--van-color-primary);
+  --van-slider-runway-bg-color: var(--van-border-color);
+  --van-slider-stop-bg-color: var(--van-color-white);
+  --van-slider-disabled-color: #a8abb2;
+  --van-slider-border-radius: 3px;
+  --van-slider-height: 6px;
+  --van-slider-button-size: 20px;
+  --van-slider-button-wrapper-size: 36px;
+  --van-slider-button-wrapper-offset: -15px;
 
   width: 100%;
   height: @slider-height;
   display: flex;
   align-items: center;
 
+  &.is-vertical {
+    width: var(--van-slider-height);
+    height: auto;
+
+    .van-slider__runway {
+      width: var(--van-slider-height);
+    }
+  }
+
   &__runway {
     flex: 1;
-    height: var(--slider-height);
-    background-color: var(--slider-runway-bg-color);
-    border-radius: var(--slider-border-radius);
+    height: var(--van-slider-height);
+    background-color: var(--van-slider-runway-bg-color);
+    border-radius: var(--van-slider-border-radius);
     position: relative;
     cursor: pointer;
   }
 
   &__bar {
-    height: var(--slider-height);
-    background-color: var(--slider-main-bg-color);
-    border-top-left-radius: var(--slider-border-radius);
-    border-bottom-left-radius: var(--slider-border-radius);
+    height: var(--van-slider-height);
+    background-color: var(--van-slider-main-bg-color);
+    border-top-left-radius: var(--van-slider-border-radius);
+    border-bottom-left-radius: var(--van-slider-border-radius);
     position: absolute;
   }
 
   &__button-wrapper {
-    height: var(--slider-button-wrapper-size);
-    width: var(--slider-button-wrapper-size);
+    height: var(--van-slider-button-wrapper-size);
+    width: var(--van-slider-button-wrapper-size);
     position: absolute;
     z-index: 1;
-    top: var(--slider-button-wrapper-offset);
+    top: var(--van-slider-button-wrapper-offset);
     transform: translateX(-50%);
     background-color: transparent;
     display: flex;
@@ -63,11 +72,11 @@
 
   &__button {
     display: inline-block;
-    width: var(--slider-button-size);
-    height: var(--slider-button-size);
+    width: var(--van-slider-button-size);
+    height: var(--van-slider-button-size);
     vertical-align: middle;
-    border: solid 2px var(--slider-main-bg-color);
-    background-color: var(--color-white);
+    border: solid 3px var(--van-slider-main-bg-color);
+    background-color: var(--van-color-white);
     border-radius: 50%;
     box-sizing: border-box;
     transition: var(--transition-duration-fast);

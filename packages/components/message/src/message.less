@@ -1,0 +1,52 @@
+@import '../../styles/var.less';
+
+.van-message {
+  --van-message-padding: var(--van-padding-middle);
+  --van-message-bg: #fff;
+  color: var(--van-message-color);
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  transform: translate(-50%);
+  background-color: var(--van-message-bg);
+  z-index: 2000;
+  transition: opacity .3s, transform .3s, top .3s;
+  padding: var(--van-message-padding);
+  border-radius: var(--van-radius-base);
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+  pointer-events: all;
+
+  // Font
+  each(@types, {
+    &--@{value} {
+      --van-message-color: ~'var(--van-color-@{value})';
+    }
+  });
+
+&--error {
+  --van-message-color: ~'var(--van-color-danger)';
+}
+
+&__content {
+  margin-left: 10px;
+}
+
+&__closeBtn {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+}
+
+.message-fade-enter-from,
+.message-fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}

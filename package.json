@@ -27,6 +27,7 @@
     "@vangle/components": "workspace:*",
     "@vangle/eslint-config": "workspace:*",
     "@vangle/utils": "workspace:*",
+    "@vangle/hooks": "workspace:*",
     "@vitejs/plugin-vue": "^3.0.0",
     "@vitejs/plugin-vue-jsx": "^2.0.0",
     "@vue/tsconfig": "^0.1.3",

@@ -9,7 +9,7 @@
         },
         {
           "link": "/dialog",
-          "text": "Dialog"
+          "text": "Dialog 对话框"
         },
         {
           "link": "/slider",
@@ -18,6 +18,10 @@
         {
           "link": "/icon",
           "text": "Icon 图标"
+        },
+        {
+          "link": "/message",
+          "text": "Message 消息提示"
         }
       ]
     }

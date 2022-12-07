@@ -26,15 +26,14 @@
   </div>
 
   <div>
-    <van-button circle />
-    <van-button type="primary" circle />
-    <van-button type="success" circle />
-    <van-button type="info" circle />
-    <van-button type="warning" circle />
-    <van-button type="danger" circle />
+    <van-button icon="search" circle />
+    <van-button type="primary" icon="edit" circle />
+    <van-button type="success" icon="check" circle />
+    <van-button type="info" icon="message" circle />
+    <van-button type="warning" icon="star" circle />
+    <van-button type="danger" icon="delete" circle />
   </div>
 </template>
-
 <style>
 .mb-4 {
   margin-bottom: 20px;
