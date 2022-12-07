@@ -25,7 +25,7 @@ icon/basic
 
 ## Icon Color
 
-:::demo Use name prop to set icon name
+:::demo Use color prop to set icon color
 
 icon/color
 

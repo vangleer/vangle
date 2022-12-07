@@ -1,6 +1,6 @@
 import { AppContext, createVNode, render, isVNode, VNode, ComponentPublicInstance } from 'vue'
 import { MessagePropsTypes, MessageParams, messageTypes, MessageFn, Message } from './message'
-import { isString } from '@vangle/utils'
+import { isString, isFunction } from '@vangle/utils'
 import MessageContructor from './message.vue'
 let seed = 1
 let instances: VNode[] = []
@@ -29,7 +29,16 @@ const message: MessageFn & Partial<Message> = function (options: MessageParams =
     }
   }
 
-  const vm = createVNode(MessageContructor, props)
+  const messageContent = props.message
+  const vm = createVNode(
+    MessageContructor,
+    props,
+    isFunction(messageContent)
+      ? { default: messageContent }
+      : isVNode(messageContent)
+        ? { default: () => messageContent }
+        : null
+  )
 
   vm.props!.onDestroy = () => {
     render(null, container)

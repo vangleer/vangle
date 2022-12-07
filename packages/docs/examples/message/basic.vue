@@ -12,11 +12,11 @@ const open = () => {
 }
 
 const openVn = () => {
-  // VanMessage({
-  //   message: h('p', null, [
-  //     h('span', null, 'Message can be '),
-  //     h('i', { style: 'color: teal' }, 'VNode'),
-  //   ]),
-  // })
+  VanMessage({
+    message: h('p', null, [
+      h('span', null, 'Message can be '),
+      h('i', { style: 'color: teal' }, 'VNode'),
+    ]),
+  })
 }
 </script>

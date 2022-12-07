@@ -1,8 +1,14 @@
 <template>
   <Transition name="message-fade" @before-leave="beforeLeave" @after-leave="emit('destroy')">
     <div v-show="visible" :id="id" :class="[n(), type && n('--' + type)]" :style="styles">
-      <VanIcon name="warning" />
-      <p :class="n('content')">{{ message }}</p>
+      <VanIcon :name="(icon || iconMap[type])" />
+      <div v-if="!dangerouslyUseHTMLString" :class="n('content')">
+        <slot>{{ message }}</slot>
+      </div>
+      <div v-else :class="n('content')" v-html="message"></div>
+      <div v-if="showClose" :class="n('closeBtn')" @click="close">
+        <VanIcon name="close" />
+      </div>
     </div>
   </Transition>
 </template>
@@ -15,7 +21,12 @@ import { MessageProps } from './message'
 defineOptions({
   name: 'VanMessage'
 })
-
+const iconMap: any = {
+  info: 'info-filled',
+  success: 'circle-check-filled',
+  warning: 'warning-filled',
+  error: 'circle-close-filled'
+}
 const props = defineProps(MessageProps)
 const emit = defineEmits(['destroy', 'close'])
 

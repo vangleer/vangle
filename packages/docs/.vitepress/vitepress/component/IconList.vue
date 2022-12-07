@@ -2,7 +2,7 @@
   <div class="demo-icon">
   <div class="demo-icon-item">
     <ul class="demo-icon-list">
-      <li v-for="item in list">
+      <li v-for="item in list" :key="item.name" @click="handleClick(item.name)">
         <span class="demo-svg-icon">
           <VanIcon :name="item.name" :size="20" />
           <span class="icon-name">{{item.title}}</span>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { svgs, VanIcon } from '@vangle/components'
+import { svgs, VanIcon, VanMessage } from '@vangle/components'
 
 const list = Object.keys(svgs).map(key => {
   const name = key.replace('./svg/', '').replace('.svg', '')
@@ -24,6 +24,16 @@ const list = Object.keys(svgs).map(key => {
     title: name
   }
 })
+const handleClick = (name) => {
+  var aux = document.createElement('input')
+  aux.setAttribute('value', `<van-icon name="${name}" />`)
+  document.body.appendChild(aux)
+  aux.select()
+  document.execCommand('copy')
+  document.body.removeChild(aux)
+  
+  VanMessage.success('复制成功')
+}
 </script>
 
 <style lang="scss">
