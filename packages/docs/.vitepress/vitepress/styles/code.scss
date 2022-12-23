@@ -18,6 +18,21 @@ span[class~="language-css"]:before {
   --prism-marker-color: var(--code-text-color);
   --prism-line-height: var(--code-line-height);
 }
+@mixin common {
+  --code-bg-color: #f5f7fa;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #38a7f8 30%, #52dad8);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #8baff8 50%, #84e0ff 50%);
+  --vp-home-hero-image-filter: blur(40px);
+
+  --vp-c-brand: #38a7f8;
+  --vp-c-brand-light: #5fb8f8;
+  --vp-c-brand-lighter: #89caf9;
+  --vp-c-brand-lightest: #b1dbf9;
+  --vp-c-brand-dark: #3399e4;
+  --vp-c-brand-darker: #318fd3;
+  --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
+}
 
 html:not(.dark) {
   --prism-builtin: #3182bd;
@@ -34,7 +49,7 @@ html:not(.dark) {
   --prism-symbol: green;
   --prism-selector: #0b8235;
 
-  --code-bg-color: #f5f7fa;
+  @include common;
 }
 
 html.dark {
@@ -63,6 +78,8 @@ html.dark {
   --prism-line-highlight-background: #444444;
   --prism-selection-background: #444444;
   --prism-inline-background: #2d2d2d;
+
+  @include common;
 }
 
 .content-container .vp-doc .example {
@@ -160,5 +177,44 @@ html.dark {
   }
   h2 {
     border-top: 0;
+  }
+}
+
+.image-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  width: 192px;
+  height: 192px;
+  background-image: var(--vp-home-hero-image-background-image);
+  filter: var(--vp-home-hero-image-filter);
+  transform: translate(-50%, -40%);
+  animation: logo-wave 6s infinite linear;
+}
+.VPNavBar {
+  .VPImage.logo {
+    height: 32px;
+  }
+}
+
+@keyframes logo-wave {
+  0% {
+    transform: translate(-42%, -42%);
+  }
+  20% {
+    transform: translate(-58%, -42%);
+  }
+  40% {
+    transform: translate(-58%, -58%);
+  }
+  60% {
+    transform: translate(-52%, -42%);
+  }
+  80% {
+    transform: translate(-42%, -58%);
+  }
+  100% {
+    transform: translate(-42%, -42%);
   }
 }
