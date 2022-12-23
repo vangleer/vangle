@@ -1,4 +1,18 @@
-# Vange
+<p align="center">
+  <a href="https://vangleer.github.io/vangle" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="https://vangleer.github.io/vangle/images/logo-rect.png" alt="vangle logo">
+  </a>
+</p>
+<br/>
+<p align="center">
+  <a href="https://npmjs.com/package/vangle"><img src="https://img.shields.io/npm/v/vangle.svg" alt="npm package"></a>
+  <img src="https://img.shields.io/badge/vue-v3.2.0%2B-%23407fbc" alt="vue">
+  <a href="https://github.com/vangleer/vangle/actions/workflows/ci.yml"><img src="https://github.com/vangleer/vangle/actions/workflows/ci.yml/badge.svg?branch=main" alt="build status"></a>
+  <img src="https://img.shields.io/github/stars/vangleer/vangle" alt="stars">
+</p>
+<br/>
+
+# Vange ⚡
 
 Vue3 UI Components Library
 
