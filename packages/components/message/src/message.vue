@@ -41,7 +41,6 @@ const styles = computed(() => ({
 
 const startTimer = () => {
   timerId.value = setTimeout(() => {
-    console.log('定时器')
     visible.value = false
   }, props.duration)
 }

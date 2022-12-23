@@ -7,7 +7,6 @@ let instances: VNode[] = []
 let zIndex = 2000
 
 const message: MessageFn & Partial<Message> = function (options: MessageParams = {}, context?: AppContext | null) {
-  console.log(options, context, 'options, context')
   if (isString(options) || isVNode(options)) {
     options = { message: options } as MessageParams
   }
@@ -89,13 +88,11 @@ function close(id: string, userClose?: (vm: VNode) => void) {
 
     instances[i].component!.props.offset = pos
   }
-  console.log(id, '关闭了')
 }
 
 export function closeAll() {
   for (let i = instances.length - 1; i >= 0; i--) {
     const instance = instances[i].component
-    console.log(instance, 'instanceinstanceinstanceinstance')
       ; (instance?.proxy as any).close()
   }
 }
