@@ -16,11 +16,13 @@
 
       <div v-show="sourceVisible"></div>
 
-      <div v-show="sourceVisible" class="example-source-wrapper">
-        <div class="example-source language-vue" v-html="decodedSource"></div>
-      </div>
-
-      <Transition name="el-fade-in-linear">
+      <Transition name="van-collapse-transition">
+        <div v-show="sourceVisible" class="example-source-wrapper">
+          <div class="example-source language-vue" v-html="decodedSource"></div>
+        </div>
+      </Transition>
+      
+      <Transition name="van-fade-in-linear">
         <div
           v-show="sourceVisible"
           class="example-float-control"
@@ -75,7 +77,6 @@ function toggleSourceVisible() {
 .example-showcase {
   padding: 0.8rem;
   margin: 0.5px;
-  background-color: var(--bg-color);
   >.van-icon {
     margin-right: 16px;
     font-size: 26px;
@@ -98,7 +99,6 @@ function toggleSourceVisible() {
     border-top: 1px solid var(--border-color);
     height: 44px;
     box-sizing: border-box;
-    background-color: var(--bg-color, #fff);
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     margin-top: -1px;
@@ -116,7 +116,7 @@ function toggleSourceVisible() {
   }
   .example-source-wrapper {
     .example-source.language-vue {
-      margin: 0;
+      margin: 0 !important;
       border-radius: 0;
     }
   }
@@ -129,4 +129,5 @@ function toggleSourceVisible() {
   margin: 0px 0;
   border-top: 1px solid var(--border-color);
 }
+
 </style>

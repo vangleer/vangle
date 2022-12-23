@@ -151,15 +151,10 @@ html.dark {
   table {
     border-collapse: collapse;
     width: 100%;
-    background-color: var(--bg-color);
     font-size: 14px;
     line-height: 1.5em;
-    th {
-      background-color: var(--bg-color);
-    }
     th,
     td {
-      background-color: var(--bg-color);
       border-color: var(--border-color);
     }
   }
