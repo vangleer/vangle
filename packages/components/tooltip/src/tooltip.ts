@@ -7,6 +7,10 @@ export const TooltipProps = {
   },
   effect: {
     type: String as PropType<'light' | 'dark'>,
-    default: 'light'
-  }
+    default: 'dark'
+  },
+  disabled: {
+    type: Boolean,
+  },
+  rawContent: Boolean
 }

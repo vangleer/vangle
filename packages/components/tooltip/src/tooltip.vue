@@ -3,7 +3,10 @@
     <slot></slot>
     <Transition name="van-tooltip-fade">
       <div v-if="visible" :class="[n('content'), `is-${effect}`]" :style="contentStyle" :data-side="placement">
-        <slot name="content">{{ content }}</slot>
+        <slot name="content">
+          <span v-if="rawContent" v-html="content"></span>
+          <template v-else>{{ content }}</template>
+        </slot>
         <span :class="n('arrow')"></span>
       </div>
     </Transition>
@@ -27,13 +30,17 @@ const contentStyle = ref<CSSProperties>({})
 watch(() => props.placement, () => {
   getStyle()
 })
+watch(() => props.disabled, () => {
+  visible.value = false
+})
 
 const events = {
   mouseenter() {
-    visible.value = true
+    if (!props.disabled) visible.value = true
+    
   },
   mouseleave() {
-    visible.value = false
+    if (!props.disabled) visible.value = false
   }
 }
 
