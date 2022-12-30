@@ -42,6 +42,25 @@ pnpm install
 
 > pnpm 版本是 6.32.6
 
+## 命令介绍
+
+```shell
+# 本地开发环境
+pnpm docs:dev
+
+# 打包组件库
+pnpm build
+
+# 发布到 npm，tips: 需要将npm的registry切换到原始的（https://registry.npmjs.org/）并提前登录
+pnpm release
+
+# 工具命令: 创建要开发的组件，此命令回创建组件的基本文件和添加文档
+pnpm gen ComponentName
+
+# 工具命令: 删除组件，会删除与该组件相关的文件和文档
+pnpm del ComponentName
+```
+
 ## 快速开始
 
 ### 用法
