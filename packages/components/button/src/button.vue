@@ -1,5 +1,6 @@
 <template>
   <button
+    v-ripple="{ disabled: !ripple || disabled }"
     :class="[
       n(),
       type && n(`--${type}`),
@@ -28,6 +29,7 @@ import { computed } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { ButtonProps } from './button'
 import { VanIcon } from '../../icon'
+import { ripple as vRipple } from '../../ripple'
 defineOptions({
   name: 'VanButton'
 })

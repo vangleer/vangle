@@ -30,5 +30,9 @@ export const ButtonProps = {
   disabled: Boolean,
   textColor: {
     type: String
+  },
+  ripple: {
+    type: Boolean,
+    default: true
   }
 }
