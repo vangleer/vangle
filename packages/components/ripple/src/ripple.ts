@@ -37,15 +37,14 @@ function removeRipple(e: MouseEvent) {
 
   if (!ripples.length) return
 
-  const last = ripples[ripples.length - 1]
-
-  const delay = 300 - (performance.now() - Number(last.dataset.createAt))
-
-  setTimeout(() => {
-    last.style.opacity = '0'
-    last.parentElement?.removeChild(last)
-    // setTimeout(() => , 3000)
-  }, delay)
+  for (let i = 0; i < ripples.length; i++) {
+    const rippleEle = ripples[i]
+    const delay = 300 - (performance.now() - Number(rippleEle.dataset.createAt))
+    setTimeout(() => {
+      rippleEle.style.opacity = '0'
+      rippleEle.parentElement?.removeChild(rippleEle)
+    }, delay)
+  }
 }
 
 export const ripple: Directive = {
