@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vangle": "workspace:^1.0.14",
+    "vangle": "workspace:^1.0.17",
     "vue": "^3.2.37"
   },
   "devDependencies": {

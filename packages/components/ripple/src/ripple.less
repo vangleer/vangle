@@ -1,0 +1,40 @@
+// .van-ripple {
+//   --ripple-cubic-bezier: cubic-bezier(0.68, 0.01, 0.62, 0.6);
+//   --ripple-color: currentColor;
+//   position: absolute;
+//   transition: transform 0.2s var(--ripple-cubic-bezier), opacity 0.14s linear;
+//   top: 0;
+//   left: 0;
+//   border-radius: 50%;
+//   opacity: 0;
+//   will-change: transform, opacity;
+//   pointer-events: none;
+//   z-index: 100;
+//   background-color: var(--ripple-color);
+// }
+
+.van-ripple {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  animation: .2s rippleScale linear;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(2);
+}
+
+@keyframes rippleScale {
+  0% {
+    transform: scale(0);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0.3;
+  }
+}

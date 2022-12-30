@@ -1,0 +1,101 @@
+@sides: {
+  top: bottom;
+  bottom: top;
+  left: right;
+  right: left;
+}
+
+@borderHelper: {
+  top: right;
+  bottom: right;
+  left: top;
+  right: top;
+}
+
+.van-tooltip {
+  --van-arrow-size: 10px;
+  position: relative;
+  display: inline-block;
+
+  &__content {
+    --van-tooltip-content-bg: var(--van-color-white);
+    border-radius: var(--van-radius-middle);
+    color: var(--van-color-black);
+    background-color: var(--van-tooltip-content-bg);
+    padding: 4px 12px;
+    border: 1px solid var(--van-border-color);
+    position: absolute;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+    font-size: 13px;
+    z-index: 1000;
+
+    &.is-dark {
+      --van-tooltip-content-bg: var(--van-color-black);
+      color: var(--van-color-white);
+      border: none;
+    }
+
+    each(@sides, {
+      @positionKey: if((@key =top) or (@key =bottom), left, top);
+
+      &[data-side^='@{value}'] {
+        @{key}: 0;
+        @{positionKey}: if((@positionKey =top), -50%, 50%);
+      }
+
+      &[data-side^='@{value}'] [class*='__arrow'] {
+        @{key}: -5px;
+
+        @{positionKey}: calc(50% - var(--van-arrow-size) / 2);
+      }
+
+      &.is-light[data-side^='@{value}'] {
+        .van-tooltip__arrow::before {
+          border-@{key}: var(--van-border);
+        }
+
+        .van-tooltip__arrow::before when (@value =top) {
+          border-right: var(--van-border);
+        }
+
+        .van-tooltip__arrow::before when (@value =bottom) {
+          border-left: var(--van-border);
+        }
+
+        .van-tooltip__arrow::before when (@value =left) {
+          border-top: var(--van-border);
+        }
+
+        .van-tooltip__arrow::before when (@value =right) {
+          border-bottom: var(--van-border);
+        }
+      }
+    });
+}
+
+&__arrow {
+  position: absolute;
+  width: var(--van-arrow-size);
+  height: var(--van-arrow-size);
+  z-index: -1;
+
+  &::before {
+    position: absolute;
+    transform: rotate(45deg);
+    content: '';
+    width: var(--van-arrow-size);
+    height: var(--van-arrow-size);
+    border-right: inherit;
+    border-bottom: inherit;
+    background-color: var(--van-tooltip-content-bg);
+    z-index: -1;
+  }
+}
+
+}
+
+.van-tooltip-fade-enter-from,
+.van-tooltip-fade-leave-to {
+  opacity: 0;
+}

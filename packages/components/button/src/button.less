@@ -85,18 +85,19 @@
     left: 50%;
     width: 100%;
     height: 100%;
-    background: var(--van-color-black);
-    border: inherit;
-    border-color: var(--van-color-black);
+    background: currentColor;
     border-radius: inherit;
     /* inherit parent's border radius */
     transform: translate(-50%, -50%);
     opacity: 0;
-    content: ' ';
+    content: '';
   }
 
-  &:active::before {
-    opacity: 0.1;
+  &:hover,
+  &:active {
+    &::before {
+      opacity: 0.3;
+    }
   }
 
   .button-variant();

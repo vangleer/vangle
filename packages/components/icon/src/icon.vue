@@ -16,7 +16,7 @@ defineOptions({
 const props = defineProps(IconProps)
 
 const { n } = createNamespace('icon')
-const icon = getIcon(props.name)
+const icon = computed(() => getIcon(props.name))
 const style = computed<CSSProperties>(() => {
   if (!props.size && !props.color) return {}
 

@@ -22,6 +22,10 @@
         {
           "link": "/message",
           "text": "Message 消息提示"
+        },
+        {
+          "link": "/tooltip",
+          "text": "Tooltip"
         }
       ]
     }
