@@ -1,6 +1,6 @@
 {
   "name": "@vangle/components",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "all components are settled here",
   "main": "index.ts",
   "module": "index.ts",
