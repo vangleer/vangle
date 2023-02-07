@@ -112,7 +112,7 @@ export interface Message extends MessageFn {
 ## 准备模板和样式
 
 ### 模板 `src/message.vue`
-```vue
+```html
 <template>
   <Transition name="message-fade" @before-leave="beforeLeave" @after-leave="emit('destroy')">
     <div v-show="visible" :id="id" :class="[n(), type && n('--' + type)]" :style="styles">
