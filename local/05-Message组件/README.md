@@ -33,11 +33,11 @@
 
 ## 大体流程
 
-1. 准备props类型文件 src/message-method.ts
+1. 准备props类型文件 `src/message-method.ts`
 2. 准备vue模板和样式，使用vue自带Transition组件添加动画
 3. Message方法，使用vue提供的 createVNode 创建 vnode，render 挂载和销毁实例
 
-## 准备props类型文件 src/message-method.ts
+## 准备props类型文件 `src/message-method.ts`
 ```ts
 import { PropType, VNode, ExtractPropTypes, AppContext } from 'vue'
 export const messageTypes = ['success', 'info', 'warning', 'error'] as const
@@ -111,7 +111,7 @@ export interface Message extends MessageFn {
 
 ## 准备模板和样式
 
-### 模板 src/message.vue
+### 模板 `src/message.vue`
 ```vue
 <template>
   <Transition name="message-fade" @before-leave="beforeLeave" @after-leave="emit('destroy')">
@@ -389,7 +389,17 @@ message.closeAll = closeAll
 export default message as Message
 ```
 
-## index.ts 导出
+> 详细注释已标明
+
+1. 处理传入的参数
+2. 计算每一个消息框的offset偏移
+3. 组装props
+4. 使用模板、props、内容创建vNode实例vm
+5. 在实例的props上添加destroy事件的监听，emit('destroy')触发，也就是Transition动画执行完毕后
+6. 创建一个div，使用render函数将vm挂载到这个div上
+7. 处理appendTo，得到最终要挂载的哪个元素
+
+## `index.ts` 导出
 ```ts
 export * from './src/message'
 import { withInstallFunction } from '@vangle/utils'
