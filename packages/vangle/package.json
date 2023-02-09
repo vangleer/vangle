@@ -37,5 +37,6 @@
   "author": "vangleer",
   "peerDependencies": {
     "vue": "^3.2.0"
-  }
+  },
+  "typings": "dist/types/vangle/index.d.ts"
 }
