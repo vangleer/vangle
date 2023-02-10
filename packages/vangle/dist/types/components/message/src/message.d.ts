@@ -55,14 +55,14 @@ export declare const MessageProps: {
 export interface MessageHandle {
     close: () => void;
 }
-export declare type MessageFn = ((options?: MessageParams, appContext?: null | AppContext) => MessageHandle) & {
+export type MessageFn = ((options?: MessageParams, appContext?: null | AppContext) => MessageHandle) & {
     closeAll(): void;
 };
-export declare type MessagePropsTypes = ExtractPropTypes<typeof MessageProps>;
-export declare type MessageParams = Partial<MessagePropsTypes> | string | VNode | any;
-export declare type MessageOptionsTyped = Omit<MessagePropsTypes, 'type'>;
-export declare type MessageParamsTyped = Partial<MessageOptionsTyped> | string | VNode;
-export declare type MessageTypedFn = (options?: MessageParamsTyped, appContext?: null | AppContext) => MessageHandle;
+export type MessagePropsTypes = ExtractPropTypes<typeof MessageProps>;
+export type MessageParams = Partial<MessagePropsTypes> | string | VNode | any;
+export type MessageOptionsTyped = Omit<MessagePropsTypes, 'type'>;
+export type MessageParamsTyped = Partial<MessageOptionsTyped> | string | VNode;
+export type MessageTypedFn = (options?: MessageParamsTyped, appContext?: null | AppContext) => MessageHandle;
 export interface Message extends MessageFn {
     success: MessageTypedFn;
     warning: MessageTypedFn;

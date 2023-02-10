@@ -13,7 +13,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
     clearTimer: () => void;
     close: () => boolean;
     beforeLeave: () => void;
-    VanIcon: import("@vangle/utils").SFCWithInstall<import("vue").DefineComponent<unknown, object, {}, import("vue").ComputedOptions, import("vue").MethodOptions, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<unknown>, {}>> & Record<string, any>;
+    readonly VanIcon: import("@vangle/utils").SFCWithInstall<import("vue").DefineComponent<unknown, object, {}, import("vue").ComputedOptions, import("vue").MethodOptions, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<unknown>, {}>> & Record<string, any>;
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "destroy")[], "close" | "destroy", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>> & {
     onClose?: ((...args: any[]) => any) | undefined;
     onDestroy?: ((...args: any[]) => any) | undefined;

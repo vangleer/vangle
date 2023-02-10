@@ -1,6 +1,6 @@
 {
   "name": "vangle",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "A Component Library for Vue 3",
   "keywords": [
     "vangle",
@@ -17,6 +17,9 @@
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
   "unpkg": "dist/index.umd.js",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.es.js",

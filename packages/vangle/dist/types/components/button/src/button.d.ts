@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 export declare const ButtonProps: {
     type: PropType<"primary" | "info" | "success" | "warning" | "danger">;
-    size: PropType<"small" | "mini" | "large">;
+    size: PropType<"mini" | "small" | "large">;
     plain: BooleanConstructor;
     autofocus: BooleanConstructor;
     round: BooleanConstructor;
