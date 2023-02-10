@@ -5,8 +5,7 @@
 
 <script lang="ts" setup>
 import { h } from 'vue'
-import { VanMessage } from '@vangle/components'
-
+import { VanMessage } from 'vangle'
 const open = () => {
   VanMessage('this is a message.')
 }

@@ -14,8 +14,8 @@
     "url": "https://github.com/vangleer/vangle/issues"
   },
   "license": "MIT",
-  "main": "dist/index.es.js",
-  "module": "dist/index.es.ts",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
   "unpkg": "dist/index.umd.js",
   "exports": {
     ".": {

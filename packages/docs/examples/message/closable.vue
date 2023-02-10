@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { VanMessage } from '@vangle/components'
+import { VanMessage } from 'vangle'
 
 const open1 = () => {
   VanMessage({

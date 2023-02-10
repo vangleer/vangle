@@ -26,8 +26,8 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@vangle/components": "workspace:*",
     "@vangle/eslint-config": "workspace:*",
-    "@vangle/utils": "workspace:*",
     "@vangle/hooks": "workspace:*",
+    "@vangle/utils": "workspace:*",
     "@vitejs/plugin-vue": "^3.0.0",
     "@vitejs/plugin-vue-jsx": "^2.0.0",
     "@vue/tsconfig": "^0.1.3",
@@ -53,6 +53,7 @@
     "vue": "^3.2.37"
   },
   "dependencies": {
-    "escape-html": "^1.0.3"
+    "escape-html": "^1.0.3",
+    "vangle": "workspace:*"
   }
 }
