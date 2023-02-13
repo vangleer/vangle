@@ -8,16 +8,26 @@
           "text": "Button 按钮"
         },
         {
-          "link": "/dialog",
-          "text": "Dialog 对话框"
-        },
+          "link": "/icon",
+          "text": "Icon 图标"
+        }
+      ]
+    },
+    "form": {
+      "text": "Form 表单组件",
+      "children": [
         {
           "link": "/slider",
           "text": "Slider 滑块"
-        },
+        }
+      ]
+    },
+    "feedback": {
+      "text": "Feedback 反馈组件",
+      "children": [
         {
-          "link": "/icon",
-          "text": "Icon 图标"
+          "link": "/dialog",
+          "text": "Dialog 对话框"
         },
         {
           "link": "/message",
