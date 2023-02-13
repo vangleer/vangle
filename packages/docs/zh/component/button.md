@@ -1,33 +1,33 @@
 ---
-title: Button
-lang: en-US
+title: Button 按钮
+lang: zh-CN
 ---
 
-# Button
+# Button 按钮
 
-Commonly used button.
+常用的操作按钮。
 
-## Basic usage
+## 基础用法
 
-:::demo Use `type`, `plain`, `round` and `circle` to define Button's style.
+:::demo 使用 `type`、`plain`、`round` 和 `circle` 来定义按钮的样式。
 
 button/basic
 
 :::
 
-## Disabled Button
+## 禁用状态
 
-The `disabled` attribute determines if the button is disabled.
+你可以使用 `disabled` 属性来定义按钮是否被禁用。
 
-:::demo Use `disabled` attribute to determine whether a button is disabled. It accepts a `Boolean` value.
+:::demo 使用 `disabled` 属性来控制按钮是否为禁用状态。 该属性接受一个 `Boolean` 类型的值。
 
 button/disabled
 
 :::
 
-## Text Button
+## 文字按钮
 
-Buttons without border and background.
+没有边框和背景色的按钮。
 
 :::demo
 
@@ -35,21 +35,21 @@ button/text
 
 :::
 
-## Sizes
+## 调整尺寸
 
-Besides default size, Button component provides three additional sizes for you to choose among different scenarios.
+除了默认的大小，按钮组件还提供了几种额外的尺寸可供选择，以便适配不同的场景。
 
-:::demo Use attribute `size` to set additional sizes with `large`, `small`.
+:::demo 使用 `size` 属性额外配置尺寸，可使用 `large`和`small`两种值。
 
 button/size
 
 :::
 
-## Custom Color
+## 自定义颜色
 
-You can custom button color.
+您可以自定义按钮颜色。
 
-We will calculate hover color & active color automatically.
+我们将自动计算 hover 和 active 颜色。
 
 :::demo
 
@@ -68,8 +68,9 @@ button/custom
 | circle            | determine whether it's a circle button                      | boolean            | —                                                  | false   |
 | disabled          | disable the button                                          | boolean            | —                                                  | false   |
 
-## Button Slots
+### Button 插槽
 
-| Name    | Description                 |
-| ------- | --------------------------- |
-| —       | customize default content   |
+| 插槽名     | 说明       |
+| ------- | -------- |
+| default | 自定义默认内容  |
+

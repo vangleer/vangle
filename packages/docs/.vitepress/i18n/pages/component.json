@@ -13,7 +13,7 @@
         },
         {
           "link": "/slider",
-          "text": "Slider"
+          "text": "Slider 滑块"
         },
         {
           "link": "/icon",
@@ -25,7 +25,7 @@
         },
         {
           "link": "/tooltip",
-          "text": "Tooltip"
+          "text": "Tooltip 文字提示"
         }
       ]
     }
