@@ -1,0 +1,60 @@
+.van-input {
+  --el-input-height: 32px;
+  display: inline-flex;
+  width: 100%;
+  position: relative;
+  line-height: var(--el-input-height);
+  box-sizing: border-box;
+  vertical-align: middle;
+
+  &__wrapper {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1px 11px;
+    border: var(--van-border);
+    border-radius: var(--van-radius-base);
+    transition: border 0.2s;
+
+    &:hover {
+      border-color: var(--van-disabled-text-color);
+    }
+
+    &.is-focus,
+    &:focus {
+      border-color: var(--van-color-primary);
+    }
+  }
+
+  &__inner {
+    width: 100%;
+    color: var(--van-input-text-color, var(--van-text-color-regular));
+    cursor: inherit;
+  }
+
+  &__suffix,
+  &__prefix {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--van-text-color-placeholder);
+    padding-left: 11px;
+  }
+
+  &__prefix {
+    padding-left: 0;
+    padding-right: 11px;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+
+    .van-input__wrapper {
+      background-color: var(--van-disabled-bg-color);
+      border-color: var(--van-disabled-bg-color);
+    }
+  }
+}
