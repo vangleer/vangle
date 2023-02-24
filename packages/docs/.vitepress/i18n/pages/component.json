@@ -18,6 +18,10 @@
         {
           "link": "/checkbox",
           "text": "Checkbox"
+        },
+        {
+          "link": "/collapse",
+          "text": "Collapse"
         }
       ]
     },
