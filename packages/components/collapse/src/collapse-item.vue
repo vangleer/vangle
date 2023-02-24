@@ -26,8 +26,6 @@ defineOptions({
 
 const ctx = inject(collapseContextKey)
 
-console.log(ctx, 'ctx')
-
 const props = defineProps({
   title: {
     type: String,

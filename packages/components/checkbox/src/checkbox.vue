@@ -22,10 +22,9 @@ defineOptions({
 const props = defineProps(CheckboxProps)
 const emit = defineEmits(['update:modelValue'])
 const { n } = createNamespace('checkbox')
-const parent = inject(checkboxGroupContextKey)
+const parent = inject(checkboxGroupContextKey, undefined)
 const checked = computed({
   get: () => {
-    console.log(parent)
     if (parent && parent.group) {
       const group: any = parent
       return group.modelValue?.value.some((item: any) => item === props.label)
@@ -52,7 +51,6 @@ const handleChecked = () => {
   if (props.disabled) return
   const newValue = !checked.value
   checked.value = newValue
-  console.log(checked.value, 'checked.value')
 }
 </script>
 

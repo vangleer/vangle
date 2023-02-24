@@ -41,7 +41,6 @@ const checked = computed({
 
 const style = computed(() => {
   if (props.width) {
-    console.log(props.width)
     return { width: addUnit(props.width) }
   }
 })

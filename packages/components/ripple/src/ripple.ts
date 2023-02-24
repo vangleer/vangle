@@ -14,8 +14,6 @@ function creareRipple(e: MouseEvent) {
   const rippleX = e.clientX - rect.left
   const rippleY = e.clientY - rect.top
 
-  console.log(rippleX, rippleY)
-
   if (el.dataset.rippleColor) {
     rippleEle.style.background = el.dataset.rippleColor
   }
