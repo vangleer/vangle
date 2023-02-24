@@ -5,3 +5,8 @@ export * from './icon';
 export * from './message';
 export * from './tooltip';
 export * from './ripple';
+export * from './input';
+export * from './checkbox';
+export * from './collapse';
+export * from './radio';
+export * from './switch';
