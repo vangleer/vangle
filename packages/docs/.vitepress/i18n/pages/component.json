@@ -8,16 +8,43 @@
           "text": "Button 按钮"
         },
         {
-          "link": "/dialog",
-          "text": "Dialog 对话框"
+          "link": "/icon",
+          "text": "Icon 图标"
+        }
+      ]
+    },
+    "form": {
+      "text": "Form 表单组件",
+      "children": [
+        {
+          "link": "/input",
+          "text": "Input 输入框"
+        },
+        {
+          "link": "/checkbox",
+          "text": "Checkbox 多选框"
         },
         {
           "link": "/slider",
-          "text": "Slider"
-        },
+          "text": "Slider 滑块"
+        }
+      ]
+    },
+    "data": {
+      "text": "Data 数据展示",
+      "children": [
         {
-          "link": "/icon",
-          "text": "Icon 图标"
+          "link": "/collapse",
+          "text": "Collapse 折叠面板"
+        }
+      ]
+    },
+    "feedback": {
+      "text": "Feedback 反馈组件",
+      "children": [
+        {
+          "link": "/dialog",
+          "text": "Dialog 对话框"
         },
         {
           "link": "/message",
@@ -25,7 +52,7 @@
         },
         {
           "link": "/tooltip",
-          "text": "Tooltip"
+          "text": "Tooltip 文字提示"
         }
       ]
     }

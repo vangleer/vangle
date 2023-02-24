@@ -6,6 +6,10 @@
         {
           "text": "设计",
           "link": "/design"
+        },
+        {
+          "text": "开发指南",
+          "link": "/dev-guide"
         }
       ]
     }

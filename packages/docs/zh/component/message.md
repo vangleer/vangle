@@ -1,47 +1,47 @@
 ---
-title: Message
-lang: en-US
+title: Message 消息提示
+lang: zh-CN
 ---
 
-# Message
+# Message 消息提示
 
-Used to show feedback after an activity. The difference with Notification is that the latter is often used to show a system level passive notification.
+常用于主动操作后的反馈提示。 与 Notification 的区别是后者更多用于系统级通知的被动提醒。
 
-## Basic usage
+## 基础用法
 
-Displays at the top, and disappears after 3 seconds.
+从顶部出现，3 秒后自动消失。
 
-:::demo The setup of Message is very similar to notification, so parts of the options won't be explained in detail here. You can check the options table below combined with notification doc to understand it. Element Plus has registered a `$message` method for invoking. Message can take a string or a VNode as parameter, and it will be shown as the main body.
+:::demo Message 在配置上与 Notification 非常类似，所以部分 options 在此不做详尽解释。 文末有 options 列表，可以结合 Notification 的文档理解它们。 Vangle 注册了一个全局的 `$message`方法用于调用。 Message 可以接收一个字符串或一个 VNode 作为参数，它会被显示为正文内容。
 
 message/basic
 
 :::
 
-## Types
+## 不同状态
 
-Used to show the feedback of Success, Warning, Message and Error activities.
+用来显示「成功、警告、消息、错误」类的操作反馈。
 
-:::demo When you need more customizations, Message component can also take an object as parameter. For example, setting value of `type` can define different types, and its default is `info`. In such cases the main body is passed in as the value of `message`. Also, we have registered methods for different types, so you can directly call it without passing a type like `open4`.
+:::demo 当需要自定义更多属性时，Message 也可以接收一个对象为参数。 比如，设置 `type` 字段可以定义不同的状态，默认为`info`。 此时正文内容以 `message` 的值传入。 同时，我们也为 Message 的各种 type 注册了方法，可以在不传入 type 字段的情况下像 `open4` 那样直接调用。
 
 message/different-types
 
-::: 
+:::
 
-## Closable
+## 可关闭的消息提示
 
-A close button can be added.
+可以添加关闭按钮。
 
-:::demo A default Message cannot be closed manually. If you need a closable message, you can set `showClose` field. Besides, same as notification, message has a controllable `duration`. Default duration is 3000 ms, and it won't disappear when set to `0`.
+:::demo 默认的 Message 是不可以被人工关闭的。 如果你需要手动关闭功能，你可以把 `showClose` 设置为 true 此外，和 Notification 一样，Message 拥有可控的 `duration`， 默认的关闭时间为 3000 毫秒，当把这个属性的值设置为`0`便表示该消息不会被自动关闭。
 
 message/closable
 
 :::
 
-## Use HTML string
+## 使用 HTML 片段作为正文内容
 
-`message` supports HTML string.
+`message` 还支持使用 HTML 字符串作为正文内容。
 
-:::demo Set `dangerouslyUseHTMLString` to true and `message` will be treated as an HTML string.
+:::demo 将`dangerouslyUseHTMLString`属性设置为 true,`message` 就会被当作 HTML 片段处理。
 
 message/raw-html
 
@@ -49,46 +49,45 @@ message/raw-html
 
 :::warning
 
-Although `message` property supports HTML strings, dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting). So when `dangerouslyUseHTMLString` is on, please make sure the content of `message` is trusted, and **never** assign `message` to user-provided content.
+`message` 属性虽然支持传入 HTML 片段，但是在网站上动态渲染任意 HTML 是非常危险的，因为容易导致 [XSS 攻击](https://en.wikipedia.org/wiki/Cross-site_scripting)。 因此在 `dangerouslyUseHTMLString` 打开的情况下，请确保 `message` 的内容是可信的，**永远不要**将用户提交的内容赋值给 `message` 属性。
 
 :::
 
-## Global method
+## 全局方法
 
-Vangle has added a global method `$message` for `app.config.globalProperties`. So in a vue instance you can call `Message` like what we did in this page.
+Vangle 为 `app.config.globalProperties` 添加了全局方法 `$message`。 因此在 vue 实例中你可以使用当前页面中的调用方式调用 `Message`
 
-## Local import
+## 单独引用
 
 ```ts
 import { VanMessage } from 'vangle'
 ```
 
-In this case you should call `VanMessage(options)`. We have also registered methods for different types, e.g. `VanMessage.success(options)`. You can call `VanMessage.closeAll()` to manually close all the instances.
-
+此时调用方法为 `VanMessage(options)`。 我们也为每个 type 定义了各自的方法，如 `VanMessage.success(options)`。 并且可以调用 `VanMessage.closeAll()` 手动关闭所有实例。
 
 ## Message API
 
-### Options
+### Message 配置项
 
-| Attribute                  | Description                                                                    | Type                                          | Default         |
-| -------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------- | --------------- |
-| `message`                  | message text                                                                   | `string \| VNode \| (() => VNode)`            | —               |
-| `type`                     | message type                                                                   | `'success' \| 'warning' \| 'info' \| 'error'` | `'info'`        |
-| `icon`                     | custom icon component, overrides `type`                                        | `string \| Component`                         | —               |
-| `dangerouslyUseHTMLString` | whether `message` is treated as HTML string                                    | `boolean`                                     | `false`         |
-| `custom-class`             | custom class name for Message                                                  | `string`                                      | —               |
-| `duration`                 | display duration, millisecond. If set to 0, it will not turn off automatically | `number`                                      | `3000`          |
-| `show-close`               | whether to show a close button                                                 | `boolean`                                     | `false`         |
-| `center`                   | whether to center the text                                                     | `boolean`                                     | `false`         |
-| `on-close`                 | callback function when closed with the message instance as the parameter       | `function`                                    | —               |
-| `offset`                   | set the distance to the top of viewport                                        | `number`                                      | `20`            |
-| `appendTo`                 | set the root element for the message                                           | `string \| HTMLElement`                       | `document.body` |
-| `grouping`                 | merge messages with the same content, type of VNode message is not supported   | `boolean`                                     | `false`         |
+| 属性                         | 说明                           | 类型                                               | 默认值             |
+| -------------------------- | ---------------------------- | ------------------------------------------------ | --------------- |
+| `message`                  | 消息文字                         | `string \| VNode \| (() => VNode)`          | —               |
+| `type`                     | 消息类型                         | `'success' \| 'warning' \| 'info' \| 'error'` | `'info'`        |
+| `icon`                     | 自定义图标，该属性会覆盖 `type` 的图标。     | `string \| Component`                           | —               |
+| `dangerouslyUseHTMLString` | 是否将 message 属性作为 HTML 片段处理   | `boolean`                                        | `false`         |
+| `custom-class`             | 自定义类名                        | `string`                                         | —               |
+| `duration`                 | 显示时间，单位为毫秒。 设为 0 则不会自动关闭     | `number`                                         | `3000`          |
+| `show-close`               | 是否显示关闭按钮                     | `boolean`                                        | `false`         |
+| `center`                   | 文字是否居中                       | `boolean`                                        | `false`         |
+| `on-close`                 | 关闭时的回调函数, 参数为被关闭的 message 实例 | `function`                                       | —               |
+| `offset`                   | Message 距离窗口顶部的偏移量           | `number`                                         | `20`            |
+| `appendTo`                 | 设置组件的根元素                     | `string \| HTMLElement`                         | `document.body` |
 
-### Methods
 
-`Message` and `this.$message` returns the current Message instance. To manually close the instance, you can call `close` on it.
+### Message 方法
 
-| Method  | Description       |
-| ------- | ----------------- |
-| `close` | close the Message |
+调用 `Message` 或 `this.$message` 会返回当前 Message 的实例。 如果需要手动关闭实例，可以调用它的 `close` 方法。
+
+| 方法名     | 描述            |
+| ------- | ------------- |
+| `close` | 关闭当前的 Message |

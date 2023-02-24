@@ -1,9 +1,9 @@
 ---
-title: Slider
+title: Slider 滑块
 lang: en-US
 ---
 
-# Slider
+# Slider 滑块
 
 Commonly used Slider.
 

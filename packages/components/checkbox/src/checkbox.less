@@ -1,0 +1,102 @@
+@N: van-checkbox;
+
+.@{N} {
+  --van-checkbox-checked-text-color: var(--van-color-primary);
+  --van-checkbox-checked-bg-color: var(--van-color-primary);
+  --van-checkbox-checked-input-border-color: var(--van-color-primary);
+  --van-checkbox-checked-icon-color: var(--van-color-white);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 30px;
+  user-select: none;
+
+  &.is-checked {
+    .@{N}__label {
+      color: var(--van-checkbox-checked-text-color);
+    }
+
+    .@{N}__inner {
+      background-color: var(--van-checkbox-checked-bg-color);
+      border-color: var(--van-checkbox-checked-input-border-color);
+
+      &::after {
+        transform: rotate(45deg) scaleY(1);
+      }
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+
+    .@{N}__label {
+      padding: 0 0 0 8px;
+      color: var(--van-disabled-text-color);
+    }
+
+    .@{N}__input,
+    .@{N}__inner {
+      background-color: var(--van-disabled-bg-color);
+      border-color: var(--van-disabled-border-color);
+    }
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &__input {
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-flex;
+    position: relative;
+  }
+
+  &__inner {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    border: var(--van-border);
+    border-radius: 2px;
+    transition: all 0.2s;
+    text-align: center;
+    line-height: 14px;
+    color: #fff;
+    box-sizing: border-box;
+
+    &::after {
+      box-sizing: content-box;
+      content: "";
+      border: 1px solid var(--van-checkbox-checked-icon-color);
+      border-left: 0;
+      border-top: 0;
+      height: 7px;
+      left: 4px;
+      position: absolute;
+      top: 1px;
+      transform: rotate(45deg) scaleY(1);
+      width: 3px;
+      transition: transform .15s ease-in .05s;
+      transform-origin: center;
+    }
+
+    .van-icon {
+      transform: translateY(-1px);
+    }
+  }
+
+  &__original {
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    margin: 0;
+    width: 0;
+    height: 0;
+    z-index: -1;
+  }
+
+  &__label {
+    padding: 0 0 0 8px;
+  }
+}

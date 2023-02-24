@@ -1,11 +1,11 @@
 ---
-title: Icon
-lang: en-US
+title: Icon 图标
+lang: zh-CN
 ---
 
-# Install
+# Icon 图标
 
-Element Plus provides a set of common icons. 
+Vangle 提供了一套常用的图标集合。
 
 ```javascript
 import { createApp } from 'vue';
@@ -15,25 +15,25 @@ const app = createApp();
 app.use(VanIcon);
 ```
 
-## Basic usage
+## 基本使用
 
-:::demo Use name prop to set icon name
+:::demo 使用 `name` 属性设置图标
 
 icon/basic
 
 :::
 
-## Icon Color
+## 图标颜色
 
-:::demo Use color prop to set icon color
+:::demo 使用 `color` 属性设置图标颜色
 
 icon/color
 
 :::
 
-## Icon Size
+## 图标大小
 
-:::demo Use size prop to set icon size.
+:::demo 使用 `size` 属性设置图标大小
 
 icon/size
 
@@ -41,19 +41,20 @@ icon/size
 
 
 
-## Icon Collection
+## 图标集合
 
 <IconList />
 
-## Icon Attributes
+### Attributes
 
-| Attribute | Description                | Type                           | Acceptable Value | Default                |
-| --------- | -------------------------- | ------------------------------ | ---------------- | ---------------------- |
-| color     | SVG tag's fill attribute   | Pick\<CSSProperties, 'color'\> | -                | inherit from color     |
-| size      | SVG icon size, size x size | number \| string               | -                | inherit from font size |
+| 属性名   | 说明                    | 类型                    | 默认值    |
+| ----- | --------------------- | --------------------- | ------ |
+| name | 图标名称         | ^[string]             | -   |
+| color | svg 的 fill 颜色         | ^[string]             | 继承颜色   |
+| size  | SVG 图标的大小，size x size | ^[number] / ^[string] | 继承字体大小 |
 
-## Icon Slots
+### Slots
 
-| Name | Description               |
-| ---- | ------------------------- |
-| —    | customize default content |
+| 名称      | 说明      |
+| ------- | ------- |
+| default | 自定义默认内容 |

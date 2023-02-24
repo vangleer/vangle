@@ -1,6 +1,6 @@
 ---
-title: Dialog
-lang: en-US
+title: Dialog 对话框
+lang: zh-CN
 ---
 
 # Dialog 对话框
