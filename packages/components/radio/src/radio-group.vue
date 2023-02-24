@@ -14,7 +14,7 @@ defineOptions({
 
 const props = defineProps(RadioGroupProps)
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const { n } = createNamespace('radio-group')
 const activeLabel = computed({
@@ -26,6 +26,7 @@ const activeLabel = computed({
 
 function handleChange(val: LabelType) {
   activeLabel.value = val
+  emit('change', val)
 }
 
 provide(RadioGroupContextKey, {

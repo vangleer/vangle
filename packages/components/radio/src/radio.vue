@@ -23,7 +23,7 @@ defineOptions({
 })
 
 const props = defineProps(RadioProps)
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 const { n } = createNamespace('radio')
 const ctx = inject(RadioGroupContextKey, undefined)
 
@@ -35,6 +35,8 @@ const checked = computed({
     } else {
       emit('update:modelValue', props.label)
     }
+
+    emit('change', props.label)
   }
 })
 

@@ -10,10 +10,6 @@
         {
           "link": "/icon",
           "text": "Icon 图标"
-        },
-        {
-          "link": "/radio",
-          "text": "Radio"
         }
       ]
     },
@@ -27,6 +23,14 @@
         {
           "link": "/checkbox",
           "text": "Checkbox 多选框"
+        },
+        {
+          "link": "/radio",
+          "text": "Radio 单选框"
+        },
+        {
+          "link": "/switch",
+          "text": "Switch 开关"
         },
         {
           "link": "/slider",
