@@ -1,6 +1,5 @@
 <template>
   <div>
-    <van-input />
     <van-checkbox v-model="checked1" label="Option 1" />
     <van-checkbox v-model="checked2" label="Option 2" />
   </div>

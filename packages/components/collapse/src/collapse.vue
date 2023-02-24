@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { provide, computed } from 'vue'
-import { createNamespace, isNumber, isString } from '@vangle/utils'
+import { createNamespace } from '@vangle/utils'
 import { CollapseProps, collapseContextKey, CollapseActiveName } from './collapse'
 defineOptions({
   name: 'VanCollapse'
