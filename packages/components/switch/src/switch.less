@@ -1,0 +1,116 @@
+@N: .van-switch;
+
+@{N} {
+  --van-switch-off-color: var(--van-border-color);
+  --van-switch-on-color: var(--van-color-primary);
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  transition: width var(--van-transition-duration);
+
+
+  &+& {
+    margin-left: 8px;
+  }
+
+  &.is-checked {
+    @{N}__core {
+      background-color: var(--van-switch-on-color);
+    }
+
+    @{N}__action {
+      left: calc(100% - 18px);
+    }
+
+    @{N}__label--right {
+      color: var(--van-switch-on-color);
+    }
+
+    @{N}__inner {
+      padding: 0 18px 0 4px;
+    }
+
+    .is-loading {
+      color: var(--van-switch-on-color);
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: .6;
+  }
+
+  .is-loading {
+    color: var(--van-switch-off-color);
+  }
+
+  &__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    margin: 0;
+  }
+
+  &__label--left,
+  &__label--right {
+    line-height: 1;
+    font-size: 14px;
+    display: inline-block;
+    transition: color var(--van-transition-duration);
+  }
+
+  &__label--left {
+    margin-right: 8px;
+  }
+
+  &__label--right {
+    margin-left: 8px;
+  }
+
+  &__core {
+    position: relative;
+    min-width: 40px;
+    height: 20px;
+    border-radius: 12px;
+    background-color: var(--van-switch-off-color);
+    transition: background-color var(--van-transition-duration);
+  }
+
+  &__inner {
+    width: 100%;
+    transition: all var(--van-transition-duration);
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 4px 0 18px;
+
+    .is-text {
+      font-size: 12px;
+      color: var(--van-color-white);
+      user-select: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-height: calc(100% + 4px);
+    }
+  }
+
+  &__action {
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: left var(--van-transition-duration);
+  }
+}

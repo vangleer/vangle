@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, provide } from 'vue'
+import { computed } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { CheckboxProps } from './checkbox'
 defineOptions({
@@ -26,7 +26,6 @@ const checked = computed({
 const handleChecked = () => {
   if (props.disabled) return
   checked.value = !checked.value
-  console.log(checked.value)
 }
 </script>
 
