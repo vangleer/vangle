@@ -11,7 +11,8 @@ export const SelectProps = {
   clearable: Boolean,
   filterable: {
     type: Boolean
-  }
+  },
+  disabled: Boolean
 }
 
 export const OptionProps = {

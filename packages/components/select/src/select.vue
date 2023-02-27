@@ -7,6 +7,7 @@
         :clearable="clearable"
         :readonly="!filterable"
         :placeholder="placeholder"
+        :disabled="disabled"
         @clear="handleMouseleave"
         @input="handleInput"
       />
@@ -32,7 +33,7 @@ defineOptions({
   name: 'VanSelect'
 })
 const props = defineProps(SelectProps)
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 const { n } = createNamespace('select')
 
 const show = ref(false)
@@ -47,9 +48,11 @@ const showClear = ref(false)
 const clearable = computed(() => showClear.value && props.clearable && props.modelValue)
 const filterable = computed(() => props.filterable)
 function handleFocus() {
+  if (props.disabled) return
   show.value = true
 }
 function onChange(value: SelectValueType) {
+  emit('change', value)
   emit('update:modelValue', value)
   show.value = false
 }
@@ -61,6 +64,7 @@ provide(SelectContextKey, {
 })
 
 function handleMouseenter() {
+  if (props.disabled) return
   if (props.clearable && props.modelValue) {
     suffixIcon.value = ''
     showClear.value = true
@@ -68,6 +72,7 @@ function handleMouseenter() {
 }
 
 function handleMouseleave() {
+  if (props.disabled) return
   if (props.clearable && props.modelValue) {
     suffixIcon.value = 'arrow-down'
     showClear.value = false
@@ -75,15 +80,14 @@ function handleMouseleave() {
 }
 
 function handleInput() {
-
   show.value = true
-  console.log(props.modelValue)
 }
 
 function handleOutside() {
   show.value = false
 }
 onMounted(() => {
+  if (props.disabled) return
   document.addEventListener('click', handleOutside)
 })
 
