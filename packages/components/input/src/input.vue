@@ -23,7 +23,7 @@
         <template v-if="showPassword">
           <VanIcon :name="passwordView ? 'view' : 'hide'" @click="handleViewPassword" />
         </template>
-        <VanIcon v-if="clearable" name="circle-close" @click="clear" />
+        <VanIcon v-if="clearable" name="circle-close" @click.stop="clear" />
       </span>
       <span v-if="$slots.suffix || suffixIcon" :class="n('suffix')">
         <slot name="suffix"></slot>
