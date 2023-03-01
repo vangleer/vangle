@@ -20,6 +20,7 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
     middlewareData,
   } as const
   async function update() {
+    console.log(middleware, 'middleware')
     const data: any = await computePosition(referenceRef.value, contentRef.value, {
       middleware: unref(middleware),
       placement: unref(placement),

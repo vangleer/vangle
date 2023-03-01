@@ -1,3 +1,34 @@
 .van-popper {
-  color: var(--color-text);
+  --van-arrow-size: 10px;
+  --van-popper-content-bg: var(--van-color-white);
+  border-radius: var(--van-radius-middle);
+  color: var(--van-color-black);
+  background-color: var(--van-popper-content-bg);
+  padding: 4px 12px;
+  border: 1px solid var(--van-border-color);
+  position: absolute;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+  font-size: 13px;
+  z-index: 1000;
+  width: max-content;
+
+  &.is-dark {
+    --van-popper-content-bg: var(--van-color-black);
+    color: var(--van-color-white);
+    border: none;
+  }
+
+  &__arrow {
+    position: absolute;
+    width: var(--van-arrow-size);
+    height: var(--van-arrow-size);
+    background: var(--van-popper-content-bg);
+    transform: rotate(45deg);
+  }
+}
+
+.van-popper-fade-enter-from,
+.van-popper-fade-leave-to {
+  opacity: 0;
 }

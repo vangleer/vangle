@@ -1,8 +1,8 @@
 <template>
   <van-popper ref="poperRef">
-    <button>hover me</button>
+    <van-button>hover me</van-button>
     <template #content>
-      123465
+      啦啦啦啦啦啦啦
     </template>
   </van-popper>
 </template>
