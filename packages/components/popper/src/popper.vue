@@ -4,16 +4,16 @@
   </Trigger>
   <Teleport :to="`#${selector}`">
     <Transition :name="transitionName">
-      <div v-show="show" ref="contentRef" :class="[n(), `is-${effect}`]" :style="contentStyle">
+      <div v-if="show" ref="contentRef" :class="[n(), `is-${effect}`]" :style="contentStyle">
         <slot name="content"></slot>
-        <span ref="arrowRef" :class="n('arrow')" :style="arrowStyle"></span>
+        <span v-if="showArrow" ref="arrowRef" :class="n('arrow')" :style="arrowStyle"></span>
       </div>
     </Transition>
   </Teleport>
 </template>
 
 <script lang="ts" setup>
-import { provide, onMounted, ref, computed } from 'vue'
+import { provide, onMounted, ref, computed, watch } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { PopperProps, PopperContextKey } from './popper'
 import { usePopperContainer } from './use-popper-container'
@@ -27,14 +27,24 @@ defineOptions({
 const props = defineProps(PopperProps)
 const { n } = createNamespace('popper')
 const arrowRef = ref()
-const show = ref(true)
+const show = ref(false)
 const { selector } = usePopperContainer()
 
-const placement = computed(() =>  props.placement)
-const strategy = computed(() =>  props.strategy)
+const placement = computed({
+  get: () =>  props.placement,
+  set: () => {}
+})
+const strategy = computed({
+  get: () =>  props.strategy,
+  set: () => {}
+})
 
 const middleware = computed(() => {
-  return [flip(), shift(), offset(props.offset), props.showArrow && arrow({ element: arrowRef.value })]
+  const mds = [flip(), shift(), offset(props.offset)]
+  if (props.showArrow) {
+    mds.push(arrow({ element: arrowRef.value }))
+  }
+  return mds
 })
 
 const { x, y, referenceRef, contentRef, middlewareData } = useFloating({ middleware, placement, strategy })
@@ -53,8 +63,17 @@ defineExpose({
   reference: contentRef
 })
 onMounted(() => {
-  console.log(referenceRef.value)
+  watch(
+    () => props.reference || referenceRef.value,
+    (el) => {
+      referenceRef.value = el || undefined
+    },
+    {
+      immediate: true,
+    }
+  )
 })
+
 function onOpen() {
   show.value = true
 }

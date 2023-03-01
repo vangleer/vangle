@@ -1,5 +1,4 @@
-import { Middleware, Placement, Strategy, ComputePositionReturn } from '@floating-ui/core'
-import { computePosition } from '@floating-ui/dom'
+import { computePosition, Middleware, Placement, Strategy, ComputePositionReturn } from '@floating-ui/dom'
 import { onMounted, ref, ToRefs, unref, watchEffect } from 'vue'
 type UseFloatingProps = ToRefs<{
   middleware: Array<Middleware>
@@ -20,14 +19,13 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
     middlewareData,
   } as const
   async function update() {
-    console.log(middleware, 'middleware')
+    if (!referenceRef.value || !contentRef.value) return
     const data: any = await computePosition(referenceRef.value, contentRef.value, {
       middleware: unref(middleware),
       placement: unref(placement),
       strategy: unref(strategy)
     })
 
-    console.log(data, 'datadatadata')
     Object.keys(states).forEach(key => {
       (states as any)[key].value = data[key]
     })

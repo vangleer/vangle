@@ -1,9 +1,9 @@
 
 import { PropType, InjectionKey, Ref } from 'vue'
 import type { Placement, Strategy, VirtualElement } from '@floating-ui/dom'
-const tooltipV2Strategies = ['absolute', 'fixed'] as const
+const popperStrategies = ['absolute', 'fixed'] as const
 
-const tooltipV2Placements = [
+const popperPlacements = [
   'top-start',
   'top-end',
   'top',
@@ -32,12 +32,12 @@ export const PopperProps = {
   },
   placement: {
     type: String as PropType<Placement>,
-    values: tooltipV2Placements,
+    values: popperPlacements,
     default: 'bottom-end',
   },
   strategy: {
     type: String as PropType<Strategy>,
-    values: tooltipV2Strategies,
+    values: popperStrategies,
     default: 'absolute',
   },
   reference: {
@@ -52,6 +52,18 @@ export const PopperProps = {
     type: Boolean,
     default: true,
   }
+}
+const EventHandler = {
+  type: Function as PropType<(e: Event) => boolean | void>,
+} as const
+export const TriggerProps = {
+  nowrap: Boolean,
+  onBlur: EventHandler,
+  onClick: EventHandler,
+  onFocus: EventHandler,
+  onMouseDown: EventHandler,
+  onMouseEnter: EventHandler,
+  onMouseLeave: EventHandler,
 }
 
 export type PopperContext = {
