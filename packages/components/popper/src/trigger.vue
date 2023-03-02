@@ -1,5 +1,5 @@
 <template>
-  <ForwarRef v-if="nowrap" :set-ref="setTriggerRef" only-child>
+  <ForwarRef v-if="nowrap" :set-ref="setTriggerRef" only-child v-bind="$attrs">
     <slot />
   </ForwarRef>
   <button v-else ref="triggerRef" :class="n('trigger')" v-bind="$attrs">

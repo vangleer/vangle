@@ -1,3 +1,12 @@
+@sides: {
+  top: bottom;
+  bottom: top;
+  left: right;
+  right: left;
+}
+
+@N: .van-popper;
+
 .van-popper {
   --van-arrow-size: 10px;
   --van-popper-content-bg: var(--van-color-white);
@@ -8,7 +17,7 @@
   border: 1px solid var(--van-border-color);
   position: absolute;
   white-space: nowrap;
-  transition: opacity 0.3s;
+  transition: opacity var(--van-transition-duration);
   font-size: 13px;
   z-index: 1000;
   width: max-content;

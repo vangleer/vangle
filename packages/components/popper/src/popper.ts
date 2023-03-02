@@ -22,6 +22,9 @@ export const PopperProps = {
     type: String as PropType<'light' | 'dark'>,
     default: 'dark'
   },
+  content: {
+    type: String
+  },
   arrowPadding: {
     type: Number,
     default: 5,
@@ -46,7 +49,7 @@ export const PopperProps = {
   },
   offset: {
     type: Number,
-    default: 8,
+    default: 10,
   },
   showArrow: {
     type: Boolean,

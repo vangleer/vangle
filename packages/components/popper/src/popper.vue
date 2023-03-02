@@ -4,8 +4,8 @@
   </Trigger>
   <Teleport :to="`#${selector}`">
     <Transition :name="transitionName">
-      <div v-if="show" ref="contentRef" :class="[n(), `is-${effect}`]" :style="contentStyle">
-        <slot name="content"></slot>
+      <div v-if="show" ref="contentRef" :class="[n(), `is-${effect}`]" :style="contentStyle" :data-side="placement">
+        <slot name="content">{{ content }}</slot>
         <span v-if="showArrow" ref="arrowRef" :class="n('arrow')" :style="arrowStyle"></span>
       </div>
     </Transition>
@@ -13,13 +13,13 @@
 </template>
 
 <script lang="ts" setup>
-import { provide, onMounted, ref, computed, watch } from 'vue'
+import { provide, onMounted, ref, unref, computed, watch } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { PopperProps, PopperContextKey } from './popper'
 import { usePopperContainer } from './use-popper-container'
 import Trigger from './trigger.vue'
 import { useFloating } from './use-floating'
-import { offset, arrow, flip, shift } from '@floating-ui/dom'
+import { offset, arrow } from '@floating-ui/dom'
 defineOptions({
   name: 'VanPopper'
 })
@@ -40,7 +40,7 @@ const strategy = computed({
 })
 
 const middleware = computed(() => {
-  const mds = [flip(), shift(), offset(props.offset)]
+  const mds = [offset(props.offset)]
   if (props.showArrow) {
     mds.push(arrow({ element: arrowRef.value }))
   }
@@ -50,15 +50,22 @@ const middleware = computed(() => {
 const { x, y, referenceRef, contentRef, middlewareData } = useFloating({ middleware, placement, strategy })
 
 const contentStyle = computed(() => ({ left: x.value + 'px', top: y.value + 'px' }))
-const staticSide = computed(() => {
+const staticSide = computed<string>(() => {
   return {
     top: 'bottom',
     right: 'left',
     bottom: 'top',
     left: 'right',
-  }[placement.value.split('-')[0]]
+  }[placement.value.split('-')[0]] as string
 })
-const arrowStyle = computed(() => ({ left: middlewareData.value.arrow?.x + 'px', top: middlewareData.value.arrow?.y, [staticSide.value as string]: '-5px' }))
+
+
+const arrowStyle = computed(() => {
+  if (!props.showArrow) return {}
+  const { arrow } = unref(middlewareData)
+  const p =  -5
+  return { left: arrow?.x + 'px', top: arrow?.y + 'px', [staticSide.value]: `${p}px` }
+})
 defineExpose({
   reference: contentRef
 })

@@ -1,5 +1,5 @@
 import { computePosition, Middleware, Placement, Strategy, ComputePositionReturn } from '@floating-ui/dom'
-import { onMounted, ref, ToRefs, unref, watchEffect } from 'vue'
+import { onMounted, ref, ToRefs, unref, watchEffect, watch } from 'vue'
 type UseFloatingProps = ToRefs<{
   middleware: Array<Middleware>
   placement: Placement
@@ -31,11 +31,16 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
     })
   }
 
-  onMounted(() => {
-    watchEffect(() => {
-      update()
-    })
-  })
+  watch([referenceRef, contentRef], update, { flush: 'sync' })
+  watch([middleware, placement, strategy], update, {
+    flush: 'sync',
+  });
+
+  // onMounted(() => {
+  //   watchEffect(() => {
+  //     update()
+  //   })
+  // })
 
   return {
     ...states,
