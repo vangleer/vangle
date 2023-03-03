@@ -2,13 +2,13 @@
   <ForwarRef v-if="nowrap" :set-ref="setTriggerRef" only-child v-bind="$attrs">
     <slot />
   </ForwarRef>
-  <button v-else ref="triggerRef" :class="n('trigger')" v-bind="$attrs">
+  <span v-else ref="triggerRef" :class="n('trigger')" v-bind="$attrs">
     <slot />
-  </button>
+  </span>
 </template>
 
 <script lang="ts" setup>
-import { inject, onBeforeUnmount, watch } from 'vue'
+import { inject, onBeforeUnmount, onMounted, watch } from 'vue'
 import { createNamespace, composeEventHandlers } from '@vangle/utils'
 import { PopperContextKey, TriggerProps } from './popper'
 import ForwarRef from './forward-ref'
@@ -24,6 +24,7 @@ const { onClose, onOpen, triggerRef } = inject(PopperContextKey)!
 
 const setTriggerRef = (el: HTMLElement) => {
   triggerRef.value = el
+  triggerRef.value.classList.add(n('trigger'))
 }
 
 let isMousedown = false
