@@ -13,4 +13,8 @@ export declare const TooltipProps: {
         type: BooleanConstructor;
     };
     rawContent: BooleanConstructor;
+    transitionName: {
+        type: StringConstructor;
+        default: string;
+    };
 };

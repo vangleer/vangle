@@ -10,3 +10,5 @@ export * from './checkbox';
 export * from './collapse';
 export * from './radio';
 export * from './switch';
+export * from './select';
+export * from './popper';
