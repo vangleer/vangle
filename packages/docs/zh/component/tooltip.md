@@ -15,9 +15,9 @@ lang: zh-CN
 
 ## 基础用法
 
-在这里我们提供 4 种不同方向的展示方式，可以通过以下完整示例来理解，选择你要的效果。
+在这里我们提供 9 种不同方向的展示方式，可以通过以下完整示例来理解，选择你要的效果。
 
-:::demo 使用 `content` 属性来决定 `hover` 时的提示信息。 由 `placement` 属性决定展示效果： `placement`属性值为：`[方向]`；四个方向：`top`、`left`、`right`、`bottom`；
+:::demo 使用 `content` 属性来决定 `hover` 时的提示信息。 由 `placement` 属性决定展示效果： `placement`属性值为：[方向]-[对齐位置]；四个方向：`top`、`left`、`right`、`bottom`；三种对齐位置：`start`, `end`，默认为空。 如 `placement="left-end"`，则提示信息出现在目标元素的左侧，且提示信息的底部与目标元素的底部对齐。
 
 tooltip/basic
 
@@ -55,7 +55,7 @@ tooltip/rich-content
 
 除了这些基本设置外，还有一些属性可以让使用者更好的定制自己的效果：
 
-`transition` 属性可以定制显隐的动画效果，默认为`fade-in-linear`。
+`transition` 属性可以定制显隐的动画效果，默认为`van-popper-fade`。
 
 如果需要关闭 `tooltip` 功能，`disabled` 属性可以满足这个需求， 你只需要将其设置为 `true`。
 
