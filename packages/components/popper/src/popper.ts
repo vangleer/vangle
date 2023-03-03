@@ -56,6 +56,7 @@ export const PopperProps = {
     default: true,
   }
 }
+
 const EventHandler = {
   type: Function as PropType<(e: Event) => boolean | void>,
 } as const

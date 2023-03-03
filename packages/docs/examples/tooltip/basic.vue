@@ -7,7 +7,7 @@
         content="Top Center prompts info"
         placement="top"
       >
-        <van-button>top</van-button>
+        top
       </van-tooltip>
     </div>
     <div class="row">

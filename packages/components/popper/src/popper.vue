@@ -1,5 +1,5 @@
 <template>
-  <Trigger :nowrap="nowrap">
+  <Trigger :nowrap="nowrap" v-bind="$attrs">
     <slot></slot>
   </Trigger>
   <Teleport :to="`#${selector}`">
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { provide, onMounted, ref, unref, computed, watch, getCurrentInstance, VNode } from 'vue'
+import { provide, onMounted, ref, unref, computed, watch, getCurrentInstance } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { PopperProps, PopperContextKey } from './popper'
 import { usePopperContainer } from './use-popper-container'
@@ -27,7 +27,7 @@ defineOptions({
 const props = defineProps(PopperProps)
 const { n } = createNamespace('popper')
 const arrowRef = ref()
-const show = ref(false)
+const show = ref(true)
 const { selector } = usePopperContainer()
 const ctx = getCurrentInstance()
 const placement = computed({
