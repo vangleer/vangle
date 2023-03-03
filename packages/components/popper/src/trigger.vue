@@ -29,23 +29,34 @@ const setTriggerRef = (el: HTMLElement) => {
 
 let isMousedown = false
 const onMouseup = () => {
+  onClose()
   isMousedown = false
 }
-const onBlur = composeEventHandlers(props.onBlur, onClose)
+const onBlur = composeEventHandlers(props.onBlur, () => {
+  props.trigger === 'focus' && onClose()
+})
 const onFocus = composeEventHandlers(props.onFocus, () => {
-  if (!isMousedown) onOpen()
+  if (props.trigger === 'focus') onOpen()
+  else if (!isMousedown) onOpen()
 })
 
 const onClick = composeEventHandlers(props.onClick, (e) => {
-  if ((e as MouseEvent).detail === 0) onClose()
+  if (props.trigger === 'click') {
+    onOpen()
+    document.addEventListener('mouseup', onMouseup, { once: true })
+  } else if ((e as MouseEvent).detail === 0) {
+    onClose()
+  }
 })
 const onMousedown = composeEventHandlers(props.onMouseDown, () => {
-  onClose()
-  isMousedown = true
-  document.addEventListener('mouseup', onMouseup, { once: true })
+  // onClose()
+  // isMousedown = true
+  // document.addEventListener('mouseup', onMouseup, { once: true })
 })
-const onMouseenter = composeEventHandlers(props.onMouseEnter, onOpen)
-const onMouseleave = composeEventHandlers(props.onMouseLeave, onClose)
+const onMouseenter = composeEventHandlers(props.onMouseEnter, () => {
+  props.trigger === 'hover' && onOpen()
+})
+const onMouseleave = composeEventHandlers(props.onMouseLeave, () => props.trigger === 'hover' && onClose())
 
 const events = {
   blur: onBlur,

@@ -2,7 +2,7 @@
 import { PropType, InjectionKey, Ref } from 'vue'
 import type { Placement, Strategy, VirtualElement } from '@floating-ui/dom'
 const popperStrategies = ['absolute', 'fixed'] as const
-
+export type TriggerType = 'hover' | 'click' | 'focus' | 'contextmenu'
 const popperPlacements = [
   'top-start',
   'top-end',
@@ -54,6 +54,17 @@ export const PopperProps = {
   showArrow: {
     type: Boolean,
     default: true,
+  },
+  nowrap: {
+    type: Boolean,
+    default: true
+  },
+  disabled: {
+    type: Boolean
+  },
+  trigger: {
+    type: String as PropType<TriggerType>,
+    default: 'hover'
   }
 }
 
@@ -68,6 +79,10 @@ export const TriggerProps = {
   onMouseDown: EventHandler,
   onMouseEnter: EventHandler,
   onMouseLeave: EventHandler,
+  trigger: {
+    type: String as PropType<TriggerType>,
+    default: 'hover'
+  }
 }
 
 export type PopperContext = {

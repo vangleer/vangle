@@ -1,10 +1,10 @@
 <template>
-  <Trigger :nowrap="nowrap" v-bind="$attrs">
+  <Trigger :nowrap="nowrap" :trigger="trigger" v-bind="$attrs">
     <slot></slot>
   </Trigger>
   <Teleport :to="`#${selector}`">
     <Transition :name="transitionName">
-      <div v-if="show" ref="contentRef" :class="[n(), `is-${effect}`]" :style="contentStyle" :data-side="placement">
+      <div v-if="!disabled && show" ref="contentRef" :class="[n(), `is-${effect}`]" :style="contentStyle" :data-side="placement">
         <slot name="content">{{ content }}</slot>
         <span v-if="showArrow" ref="arrowRef" :class="n('arrow')" :style="arrowStyle"></span>
       </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { provide, onMounted, ref, unref, computed, watch, getCurrentInstance } from 'vue'
+import { provide, onMounted, ref, unref, computed, watch } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { PopperProps, PopperContextKey } from './popper'
 import { usePopperContainer } from './use-popper-container'
@@ -27,9 +27,8 @@ defineOptions({
 const props = defineProps(PopperProps)
 const { n } = createNamespace('popper')
 const arrowRef = ref()
-const show = ref(true)
+const show = ref(false)
 const { selector } = usePopperContainer()
-const ctx = getCurrentInstance()
 const placement = computed({
   get: () =>  props.placement,
   set: () => {}
@@ -93,17 +92,6 @@ provide(PopperContextKey, {
   onOpen,
   triggerRef: referenceRef
 })
-
-const nowrap = computed(() => {
-  if (ctx?.slots.default) {
-    const defaults = ctx?.slots.default()
-    if (!defaults[0] || defaults[0].shapeFlag === 8) {
-      return false
-    }
-    return true
-  }
-})
-
 </script>
 
 <style lang="less">

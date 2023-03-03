@@ -1,5 +1,5 @@
 <template>
-  <VanPopper v-bind="popperProps" :class="[n()]">
+  <VanPopper v-bind="popperProps" :nowrap="nowrap">
     <slot></slot>
     <template #content>
       <slot name="content">
@@ -14,13 +14,12 @@
 import { useAttrs, computed } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { TooltipProps } from './tooltip'
-import VanPopper, { PopperProps } from '../../popper';
+import VanPopper, { PopperProps } from '../../popper'
+import { useNowrap } from '../../popper/src/use-nowrap'
 defineOptions({
   name: 'VanTooltip'
 })
 const props = defineProps(TooltipProps)
-const { n } = createNamespace('tooltip')
-
 const attrs = useAttrs()
 
 const pick = (sourceObj: any, keys: string[]) => {
@@ -33,6 +32,8 @@ const pick = (sourceObj: any, keys: string[]) => {
 const popperProps = computed(() => {
   return { ...attrs, ...pick(props, Object.keys(PopperProps)) }
 })
+
+const nowrap = useNowrap()
  
 </script>
 

@@ -6,14 +6,14 @@
         content="Top Left prompts info"
         placement="top-start"
       >
-        <van-button>top-start</van-button>
+        top-start
       </van-popper>
       <van-popper
         effect="dark"
         content="Top Center prompts info"
         placement="top"
       >
-        <van-button>top</van-button>
+        <span>top</span>
       </van-popper>
       <van-popper
         effect="dark"
