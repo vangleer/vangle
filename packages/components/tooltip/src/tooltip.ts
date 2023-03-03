@@ -12,5 +12,9 @@ export const TooltipProps = {
   disabled: {
     type: Boolean,
   },
-  rawContent: Boolean
+  rawContent: Boolean,
+  transitionName: {
+    type: String,
+    default: 'van-popper-fade'
+  }
 }

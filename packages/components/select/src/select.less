@@ -1,0 +1,99 @@
+@N: .van-select;
+
+.van-select {
+  --van-select-hover-bg: var(--van-disabled-bg-color);
+  --van-select-active-color: var(--van-color-primary);
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+
+  &:not(.clearable) &__trigger {
+    .van-input__suffix .van-icon {
+      transition: transform var(--van-transition-duration);
+    }
+
+    .is-focus {
+      .van-input__suffix .van-icon {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  &__content {
+    padding: 6px 0;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    background-color: var(--van-color-white);
+    border-radius: var(--van-radius-base);
+    box-shadow: var(--van-box-shadow);
+    transition: all .1s;
+    will-change: height;
+    // overflow: hidden;
+    transform-origin: top center;
+    border: 1px solid var(--van-disabled-border-color);
+    z-index: 1;
+
+    &::after {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      background-color: #fff;
+      border: 1px solid var(--van-disabled-border-color);
+      border-bottom-color: transparent !important;
+      border-right-color: transparent !important;
+    }
+  }
+
+  &__menu {
+    @{N}__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  }
+
+  &__option {
+    margin: 0;
+    padding: 0;
+    padding: 0 32px 0 20px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--van-text-color-regular);
+    height: 34px;
+    line-height: 34px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover:not(.is-disabled) {
+      background-color: var(--van-select-hover-bg);
+    }
+
+    &.selected {
+      font-weight: 700;
+      color: var(--van-select-active-color);
+      background-color: var(--van-select-hover-bg);
+    }
+
+    &.is-disabled {
+      color: var(--van-disabled-text-color);
+      cursor: not-allowed;
+    }
+  }
+}
+
+.van-select-menu-enter-from,
+.van-select-menu-leave-to {
+  overflow: hidden;
+  transform: scaleY(.5);
+  opacity: 0;
+}

@@ -1,0 +1,72 @@
+@sides: {
+  top: bottom;
+  bottom: top;
+  left: right;
+  right: left;
+}
+
+@N: .van-popper;
+
+.van-popper {
+  --van-arrow-size: 10px;
+  --van-popper-content-bg: var(--van-color-white);
+  border-radius: var(--van-radius-middle);
+  color: var(--van-color-black);
+  background-color: var(--van-popper-content-bg);
+  padding: 4px 12px;
+  border: 1px solid var(--van-border-color);
+  position: absolute;
+  white-space: nowrap;
+  transition: opacity var(--van-transition-duration);
+  font-size: 13px;
+  z-index: 1000;
+  width: max-content;
+
+  &.is-dark {
+    --van-popper-content-bg: var(--van-color-black);
+    color: var(--van-color-white);
+    border: none;
+  }
+
+  &.is-light {
+    border-left: var(--van-border);
+    border-top: var(--van-border);
+  }
+
+  each(@sides, {
+    &.is-light[data-side^='@{value}'] {
+      @{N}__arrow {
+        border-@{key}: var(--van-border);
+      }
+
+      @{N}__arrow when (@value =top) {
+        border-right: var(--van-border);
+      }
+
+      @{N}__arrow when (@value =bottom) {
+        border-left: var(--van-border);
+      }
+
+      @{N}__arrow when (@value =left) {
+        border-top: var(--van-border);
+      }
+
+      @{N}__arrow when (@value =right) {
+        border-bottom: var(--van-border);
+      }
+    }
+  });
+
+&__arrow {
+  position: absolute;
+  width: var(--van-arrow-size);
+  height: var(--van-arrow-size);
+  background: var(--van-popper-content-bg);
+  transform: rotate(45deg);
+}
+}
+
+.van-popper-fade-enter-from,
+.van-popper-fade-leave-to {
+  opacity: 0;
+}

@@ -10,6 +10,10 @@
         {
           "link": "/icon",
           "text": "Icon 图标"
+        },
+        {
+          "link": "/popper",
+          "text": "Popper"
         }
       ]
     },
@@ -31,6 +35,10 @@
         {
           "link": "/switch",
           "text": "Switch 开关"
+        },
+        {
+          "link": "/select",
+          "text": "Select 选择器"
         },
         {
           "link": "/slider",

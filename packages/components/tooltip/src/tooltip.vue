@@ -1,73 +1,40 @@
 <template>
-  <div ref="tooltipRef" :class="[n()]" v-on="events">
+  <VanPopper v-bind="popperProps" :nowrap="nowrap">
     <slot></slot>
-    <Transition name="van-tooltip-fade">
-      <div v-if="visible" :class="[n('content'), `is-${effect}`]" :style="contentStyle" :data-side="placement">
-        <slot name="content">
-          <span v-if="rawContent" v-html="content"></span>
-          <template v-else>{{ content }}</template>
-        </slot>
-        <span :class="n('arrow')"></span>
-      </div>
-    </Transition>
-  </div>
+    <template #content>
+      <slot name="content">
+        <span v-if="rawContent" v-html="content"></span>
+        <template v-else>{{ content }}</template>
+      </slot>
+    </template>
+  </VanPopper>
 </template>
 
 <script lang="ts" setup>
-import { ref, CSSProperties, watch, onMounted } from 'vue'
+import { useAttrs, computed } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { TooltipProps } from './tooltip'
+import VanPopper, { PopperProps } from '../../popper'
+import { useNowrap } from '../../popper/src/use-nowrap'
 defineOptions({
   name: 'VanTooltip'
 })
 const props = defineProps(TooltipProps)
-const tooltipRef = ref<HTMLElement | null>(null)
-const { n } = createNamespace('tooltip')
-const visible = ref(false)
+const attrs = useAttrs()
 
-const contentStyle = ref<CSSProperties>({})
-
-watch(() => props.placement, () => {
-  getStyle()
-})
-watch(() => props.disabled, () => {
-  visible.value = false
-})
-
-const events = {
-  mouseenter() {
-    if (!props.disabled) visible.value = true
-    
-  },
-  mouseleave() {
-    if (!props.disabled) visible.value = false
-  }
+const pick = (sourceObj: any, keys: string[]) => {
+  return keys.reduce((obj: any, key) => {
+    obj[key] = sourceObj[key]
+    return obj
+  }, {})
 }
 
-onMounted(() => {
-  getStyle()
+const popperProps = computed(() => {
+  return { ...attrs, ...pick(props, Object.keys(PopperProps)) }
 })
 
-function getStyle() {
-  const tooltipRect = tooltipRef.value?.getBoundingClientRect()
-  if (tooltipRect) {
-    const [direction] = props.placement.split('-')
-
-    if (['top', 'bottom'].includes(direction)) {
-      const value = tooltipRect.height + 10
-      const y = direction === 'top' ? -value : value
-      contentStyle.value = {
-        transform: `translate(-50%, ${y}px)`
-      }
-    } else {
-      const value = tooltipRect.width + 10
-      const x = direction === 'left' ? -value : value
-      contentStyle.value = {
-        transform: `translate(${x}px, 50%)`
-      }
-    }
-  }
-} 
+const nowrap = useNowrap()
+ 
 </script>
 
 <style lang="less">

@@ -5,7 +5,7 @@ export const InputProps = {
     default: 'text'
   },
   modelValue: {
-    type: [String, Number],
+    type: [Number, String, Boolean, Object],
     default: ''
   },
   placeholder: {
