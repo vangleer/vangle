@@ -3,7 +3,13 @@ export const ScrollbarProps = {
     type: [String, Number]
   },
   native: {
-    type: Boolean,
-    default: true
+    type: Boolean
+  },
+  always: {
+    type: Boolean
+  },
+  minSize: {
+    type: Number,
+    default: 20,
   }
 }
