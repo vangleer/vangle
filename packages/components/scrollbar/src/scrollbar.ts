@@ -11,5 +11,9 @@ export const ScrollbarProps = {
   minSize: {
     type: Number,
     default: 20,
+  },
+  verticle: {
+    type: Boolean,
+    default: true
   }
 }

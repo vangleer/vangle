@@ -40,8 +40,7 @@
     position: absolute;
     background-color: var(--van-scrollbar-thumb-bg);
     border-radius: 10px;
-    transition: all .2s ease-in-out;
-    height: 100px;
+    cursor: pointer;
   }
 
   &__bar {
@@ -69,4 +68,14 @@
       }
     }
   }
+}
+
+.van-scrollbar-fade-enter-active,
+.van-scrollbar-fade-leave-active {
+  transition: all .2s ease-in-out;
+}
+
+.van-scrollbar-fade-enter-from,
+.van-scrollbar-fade-leave-to {
+  opacity: 0;
 }

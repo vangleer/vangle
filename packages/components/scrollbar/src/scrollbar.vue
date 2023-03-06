@@ -1,8 +1,12 @@
 <template>
-  <div :class="[n()]">
+  <div
+    :class="[n()]"
+    @mouseenter="handleShow(true)"
+    @mouseleave="handleShow(false)"
+  >
     <div
       ref="wrapRef"
-      :class="[n('wrap'), !native && n('wrap--hidden-default'), `is-${direction}`]"
+      :class="wrapClz"
       :style="wrapStyle"
       @scroll="handleScroll"
     >
@@ -10,22 +14,24 @@
         <slot></slot>
       </div>
     </div>
-    <!-- <div :class="[n('bar'), `is-${info.direction}`]">
-      <div :class="n('thumb')" :style="thumbStyle"></div>
-    </div> -->
-    <Bar
-      ref="barRef"
-      :width="sizeWidth"
-      :height="sizeHeight"
-      :always="always"
-      :ratio-x="ratioX"
-      :ratio-y="ratioY"
-    />
+    <Transition name="van-scrollbar-fade">
+      <Bar
+        v-show="showBar"
+        ref="barRef"
+        :verticle="verticle"
+        :width="sizeWidth"
+        :height="sizeHeight"
+        :always="always"
+        :ratio-x="ratioX"
+        :ratio-y="ratioY"
+      />
+    </Transition>
+    
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, CSSProperties, onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { createNamespace, addUnit } from '@vangle/utils'
 import { ScrollbarProps } from './scrollbar'
 import Bar from './bar.vue'
@@ -39,16 +45,15 @@ const { n } = createNamespace('scrollbar')
 const wrapRef = ref<HTMLElement>()
 const viewRef = ref<HTMLElement>()
 const barRef = ref()
+const showBar = ref(false)
 
 const sizeWidth = ref('0')
 const sizeHeight = ref('0')
 const ratioX = ref(1)
 const ratioY = ref(1)
 
+const wrapClz = computed(() => ([n('wrap'), !props.native && n('wrap--hidden-default'), props.verticle ? 'is-verticle' : 'is-horizontal']))
 const wrapStyle = computed(() => ({ height: addUnit(props.height as string) }))
-
-
-const direction = ref('verticle')
 
 function handleScroll(e: Event) {
   if (wrapRef.value) {
@@ -59,7 +64,9 @@ function handleScroll(e: Event) {
     })
   }
 }
-
+function handleShow(show: boolean) {
+  showBar.value = show
+}
 function update() {
   if (!wrapRef.value) return
   
