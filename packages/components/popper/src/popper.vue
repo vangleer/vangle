@@ -6,7 +6,7 @@
     <Transition :name="transitionName">
       <div v-if="!disabled && show" ref="contentRef" :class="[n(), `is-${effect}`, { 'is-pure': pure }]" :style="contentStyle" :data-side="placement">
         <slot name="content">{{ content }}</slot>
-        <span v-if="showArrow" ref="arrowRef" :class="n('arrow')" :style="arrowStyle"></span>
+        <span v-if="showArrow" ref="arrowRef" :data-side="side" :class="n('arrow')" :style="arrowStyle"></span>
       </div>
     </Transition>
   </Teleport>
@@ -19,7 +19,7 @@ import { PopperProps, PopperContextKey } from './popper'
 import { usePopperContainer } from './use-popper-container'
 import Trigger from './trigger.vue'
 import { useFloating } from './use-floating'
-import { offset, arrow } from '@floating-ui/dom'
+import { offset, arrow, shift, flip } from '@floating-ui/dom'
 defineOptions({
   name: 'VanPopper'
 })
@@ -29,17 +29,14 @@ const { n } = createNamespace('popper')
 const arrowRef = ref()
 const show = ref(false)
 const { selector } = usePopperContainer()
-const placement = computed({
-  get: () =>  props.placement,
-  set: () => {}
-})
+const placement = ref(props.placement)
 const strategy = computed({
   get: () =>  props.strategy,
   set: () => {}
 })
 
 const middleware = computed(() => {
-  const mds = [offset(props.offset)]
+  const mds = [shift(), flip(), offset(props.offset)]
   if (props.showArrow) {
     mds.push(arrow({ element: arrowRef.value }))
   }
@@ -49,22 +46,15 @@ const middleware = computed(() => {
 const { x, y, referenceRef, contentRef, middlewareData } = useFloating({ middleware, placement, strategy })
 
 const contentStyle = computed(() => ({ left: x.value + 'px', top: y.value + 'px' }))
-const staticSide = computed<string>(() => {
-  return {
-    top: 'bottom',
-    right: 'left',
-    bottom: 'top',
-    left: 'right',
-  }[placement.value.split('-')[0]] as string
+const side = computed(() => {
+  return placement.value.split('-')[0]
 })
-
-
 const arrowStyle = computed(() => {
   if (!props.showArrow) return {}
   const { arrow } = unref(middlewareData)
-  const p =  -5
-  return { left: arrow?.x + 'px', top: arrow?.y + 'px', [staticSide.value]: `${p}px` }
+  return { left: arrow?.x + 'px', top: arrow?.y + 'px' }
 })
+
 defineExpose({
   reference: contentRef
 })

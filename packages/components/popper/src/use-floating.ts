@@ -10,6 +10,7 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
   const contentRef = ref()
   const x = ref<number>()
   const y = ref<number>()
+  const arrowStyle = ref({})
   const middlewareData = ref<ComputePositionReturn['middlewareData']>({})
   const states = {
     x,
@@ -30,18 +31,16 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
       (states as any)[key].value = data[key]
     })
   }
+  // watch([referenceRef, contentRef], update, { flush: 'sync' })
+  // watch([middleware, placement, strategy], update, {
+  //   flush: 'sync',
+  // });
 
-  watch([referenceRef, contentRef], update, { flush: 'sync' })
-  watch([middleware, placement, strategy], update, {
-    flush: 'sync',
-  });
-
-  // onMounted(() => {
-  //   watchEffect(() => {
-  //     update()
-  //   })
-  // })
-
+  onMounted(() => {
+    watchEffect(() => {
+      update()
+    })
+  })
   return {
     ...states,
     update,
