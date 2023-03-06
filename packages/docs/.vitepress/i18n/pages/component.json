@@ -14,6 +14,10 @@
         {
           "link": "/popper",
           "text": "Popper"
+        },
+        {
+          "link": "/scrollbar",
+          "text": "Scrollbar"
         }
       ]
     },

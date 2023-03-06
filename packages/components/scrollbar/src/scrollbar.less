@@ -1,0 +1,71 @@
+.van-scrollbar {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+
+  &.is-horizontal div::-webkit-scrollbar {
+    height: var(--van-scrollbar-width);
+  }
+
+  div::-webkit-scrollbar {
+    width: var(--van-scrollbar-width);
+  }
+
+  div::-webkit-scrollbar-thumb {
+    background-color: var(--van-scrollbar-thumb-bg);
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+  }
+
+  div::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  &__wrap {
+    --van-scrollbar-width: 6px;
+    --van-scrollbar-thumb-bg: #0003;
+    overflow-y: auto;
+
+    &--hidden-default {
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  &__thumb {
+    position: absolute;
+    background-color: var(--van-scrollbar-thumb-bg);
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+    height: 100px;
+  }
+
+  &__bar {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    z-index: 1;
+    border-radius: 4px;
+
+    &.is-verticle {
+      width: 6px;
+      top: 2px;
+
+      >div {
+        width: 100%;
+      }
+    }
+
+    &.is-horizontal {
+      height: 6px;
+      left: 2px;
+
+      >div {
+        height: 100%;
+      }
+    }
+  }
+}
