@@ -12,7 +12,6 @@
 
 <script lang="ts" setup>
 import { useAttrs, computed } from 'vue'
-import { createNamespace } from '@vangle/utils'
 import { TooltipProps } from './tooltip'
 import VanPopper, { PopperProps } from '../../popper'
 import { useNowrap } from '../../popper/src/use-nowrap'

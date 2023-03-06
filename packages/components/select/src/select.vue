@@ -1,40 +1,47 @@
 <template>
-  <div :class="[n(), { 'clearable': clearable }]">
-    <div :class="n('trigger')" @click.stop="handleFocus" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave">
-      <VanInput
-        v-model="selectValue"
-        :suffix-icon="suffixIcon"
-        :clearable="clearable"
-        :readonly="!filterable"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        @clear="handleMouseleave"
-        @input="handleInput"
-      />
-    </div>
-    <Transition name="van-select-menu">
-      <div v-show="show" :class="[n('content')]" @click.stop>
-        <div :class="[n('menu')]">
-          <ul :class="[n('list')]">
+  <div ref="selectRef" :class="[n(), { 'clearable': clearable }]">
+    <VanTooltip v-bind="tooltipProps" :disabled="disabled">
+      <div :class="n('trigger')" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave">
+        <VanInput
+          v-model="selectValue"
+          :suffix-icon="suffixIcon"
+          :clearable="clearable"
+          :readonly="!filterable"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          @clear="handleMouseleave"
+        />
+      </div>
+      <template #content>
+        <div :class="[n('--dropdown')]" :style="contentStyle">
+          <ul :class="[n('--list')]">
             <slot />
           </ul>
         </div>
-      </div>
-    </Transition>
-  </div>
+      </template>
+    </VanTooltip>
+   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, provide, computed } from 'vue'
+import { ref, provide, computed, reactive } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import VanInput from '../../input'
 import { SelectContextKey, SelectProps, SelectValueType } from './select'
+import VanTooltip from '../../tooltip'
 defineOptions({
   name: 'VanSelect'
 })
 const props = defineProps(SelectProps)
 const emit = defineEmits(['update:modelValue', 'change'])
 const { n } = createNamespace('select')
+
+const tooltipProps = reactive<any>({
+  effect: 'light',
+  pure: true,
+  trigger: 'click',
+  transitionName: 'van-select-menu'
+})
 
 const show = ref(false)
 const suffixIcon = ref('arrow-down')
@@ -45,12 +52,17 @@ const selectValue = computed<SelectValueType>({
   }
 })
 const showClear = ref(false)
-const clearable = computed(() => showClear.value && props.clearable && props.modelValue)
+const selectRef = ref<HTMLElement>()
+const clearable = computed(() => showClear.value && props.clearable && !!props.modelValue)
 const filterable = computed(() => props.filterable)
-function handleFocus() {
-  if (props.disabled) return
-  show.value = true
-}
+
+document.getElementById('1')?.getBoundingClientRect
+
+const contentStyle = computed(() => {
+  const width = selectRef.value?.getBoundingClientRect().width || 0
+  return { minWidth: width + 'px' }
+})
+
 function onChange(value: SelectValueType) {
   emit('change', value)
   emit('update:modelValue', value)
@@ -79,21 +91,6 @@ function handleMouseleave() {
   }
 }
 
-function handleInput() {
-  show.value = true
-}
-
-function handleOutside() {
-  show.value = false
-}
-onMounted(() => {
-  if (props.disabled) return
-  document.addEventListener('click', handleOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleOutside)
-})
 </script>
 
 <style lang="less">

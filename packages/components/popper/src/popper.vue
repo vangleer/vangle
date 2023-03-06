@@ -4,7 +4,7 @@
   </Trigger>
   <Teleport :to="`#${selector}`">
     <Transition :name="transitionName">
-      <div v-if="!disabled && show" ref="contentRef" :class="[n(), `is-${effect}`]" :style="contentStyle" :data-side="placement">
+      <div v-if="!disabled && show" ref="contentRef" :class="[n(), `is-${effect}`, { 'is-pure': pure }]" :style="contentStyle" :data-side="placement">
         <slot name="content">{{ content }}</slot>
         <span v-if="showArrow" ref="arrowRef" :class="n('arrow')" :style="arrowStyle"></span>
       </div>

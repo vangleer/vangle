@@ -22,6 +22,10 @@ export const PopperProps = {
     type: String as PropType<'light' | 'dark'>,
     default: 'dark'
   },
+  pure: {
+    type: Boolean,
+    default: false
+  },
   content: {
     type: String
   },

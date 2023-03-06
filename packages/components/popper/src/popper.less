@@ -33,6 +33,10 @@
     border-top: var(--van-border);
   }
 
+  &.is-pure {
+    padding: 0px;
+  }
+
   each(@sides, {
     &.is-light[data-side^='@{value}'] {
       @{N}__arrow {
