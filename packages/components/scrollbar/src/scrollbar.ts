@@ -15,6 +15,9 @@ export const ScrollbarProps = {
   },
   vertical: {
     type: Boolean
+  },
+  maxHeight: {
+    type: [String, Number]
   }
 }
 

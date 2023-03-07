@@ -6,7 +6,7 @@
       ref="wrapRef"
       :class="wrapClz"
       :style="wrapStyle"
-      @scroll="handleScroll"
+      @scroll.passive="handleScroll"
     >
       <div ref="viewRef" :class="n('view')">
         <slot></slot>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, provide, ref, reactive } from 'vue'
+import { computed, onMounted, provide, ref, watch, CSSProperties, nextTick, onUpdated } from 'vue'
 import { createNamespace, addUnit } from '@vangle/utils'
 import { ScrollbarProps, ScrollbarContextKey } from './scrollbar'
 import Bar from './bar.vue'
@@ -45,7 +45,10 @@ const ratioX = ref(1)
 const ratioY = ref(1)
 
 const wrapClz = computed(() => ([n('wrap'), !props.native && n('wrap--hidden-default'), props.vertical ? 'is-vertical' : 'is-horizontal']))
-const wrapStyle = computed(() => ({ height: addUnit(props.height as string) }))
+const wrapStyle = computed<CSSProperties>(() => ({
+  height: addUnit(props.height as string),
+  maxHeight: addUnit(props.maxHeight as string)
+}))
 
 function handleScroll(e: Event) {
   if (wrapRef.value) {
@@ -88,8 +91,30 @@ provide(ScrollbarContextKey, {
   wrapRef
 })
 
+watch(() => [props.height, props.maxHeight], () => {
+  if (!props.native)
+    nextTick(() => {
+      update()
+      if (wrapRef.value) {
+        barRef.value?.handleScroll(wrapRef.value)
+      }
+    })
+})
+
 onMounted(() => {
-  update()
+  if (!props.native)
+    nextTick(() => {
+      update()
+    })
+})
+onUpdated(() => update())
+
+defineExpose({
+  update,
+  setScrollTop,
+  setScrollLeft,
+  handleScroll,
+  wrapRef
 })
 </script>
 

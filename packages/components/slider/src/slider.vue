@@ -46,7 +46,7 @@ defineOptions({
 })
 
 const props = defineProps(SliderProps)
-
+const emit = defineEmits(['input'])
 const { n } = createNamespace('slider')
 const slider = ref<HTMLElement | null>(null)
 const currentPosition = ref()
@@ -140,6 +140,7 @@ const setPosition = (newPosition: number) => {
   if (newPosition <= 0) newPosition = 0
   if (newPosition >= 100) newPosition = 100
   currentPosition.value = newPosition + '%'
+  emit('input', newPosition / 100 * props.max)
 }
 
 </script>
