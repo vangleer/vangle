@@ -69,6 +69,9 @@ export const PopperProps = {
   trigger: {
     type: String as PropType<TriggerType>,
     default: 'hover'
+  },
+  visible: {
+    type: Boolean
   }
 }
 

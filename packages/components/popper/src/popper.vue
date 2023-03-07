@@ -4,7 +4,13 @@
   </Trigger>
   <Teleport :to="`#${selector}`">
     <Transition :name="transitionName">
-      <div v-if="!disabled && show" ref="contentRef" :class="[n(), `is-${effect}`, { 'is-pure': pure }]" :style="contentStyle" :data-side="placement">
+      <div
+        v-if="!disabled && show"
+        ref="contentRef"
+        :class="[n(), `is-${effect}`, { 'is-pure': pure }]"
+        :style="contentStyle"
+        :data-side="placement"
+      >
         <slot name="content">{{ content }}</slot>
         <span v-if="showArrow" ref="arrowRef" :data-side="side" :class="n('arrow')" :style="arrowStyle"></span>
       </div>
@@ -43,7 +49,7 @@ const middleware = computed(() => {
   return mds
 })
 
-const { x, y, referenceRef, contentRef, middlewareData } = useFloating({ middleware, placement, strategy })
+const { x, y, referenceRef, contentRef, middlewareData, update } = useFloating({ middleware, placement, strategy })
 
 const contentStyle = computed(() => ({ left: x.value + 'px', top: y.value + 'px' }))
 const side = computed(() => {
@@ -56,7 +62,8 @@ const arrowStyle = computed(() => {
 })
 
 defineExpose({
-  reference: contentRef
+  reference: contentRef,
+  update
 })
 onMounted(() => {
   watch(
@@ -76,6 +83,10 @@ function onOpen() {
 function onClose() {
   show.value = false
 }
+
+watch(() => [props.visible], ([val]) => {
+  show.value = val
+})
 
 provide(PopperContextKey, {
   onClose,

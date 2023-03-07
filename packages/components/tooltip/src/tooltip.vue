@@ -1,5 +1,5 @@
 <template>
-  <VanPopper v-bind="popperProps" :nowrap="nowrap">
+  <VanPopper ref="popperRef" v-bind="popperProps" :nowrap="nowrap">
     <slot></slot>
     <template #content>
       <slot name="content">
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useAttrs, computed } from 'vue'
+import { useAttrs, computed, ref } from 'vue'
 import { TooltipProps } from './tooltip'
 import VanPopper, { PopperProps } from '../../popper'
 import { useNowrap } from '../../popper/src/use-nowrap'
@@ -20,7 +20,7 @@ defineOptions({
 })
 const props = defineProps(TooltipProps)
 const attrs = useAttrs()
-
+const popperRef = ref()
 const pick = (sourceObj: any, keys: string[]) => {
   return keys.reduce((obj: any, key) => {
     obj[key] = sourceObj[key]
@@ -33,6 +33,14 @@ const popperProps = computed(() => {
 })
 
 const nowrap = useNowrap()
+
+function update() {
+  popperRef.value.update()
+}
+
+defineExpose({
+  update
+})
  
 </script>
 

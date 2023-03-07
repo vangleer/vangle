@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, CSSProperties, ref, inject, onMounted, onUnmounted } from 'vue'
+import { computed, CSSProperties, ref, inject, onMounted, onBeforeUnmount } from 'vue'
 import { ScrollbarContextKey } from './scrollbar'
 import { createNamespace } from '@vangle/utils'
 defineOptions({
@@ -118,10 +118,6 @@ onMounted(() => {
   ctx?.wrapRef.value.addEventListener('mouseleave', mouseLeave)
 })
 
-onUnmounted(() => {
-  ctx?.wrapRef.value.removeEventListener('mouseenter', mouseEnter)
-  ctx?.wrapRef.value.removeEventListener('mouseleave', mouseLeave)
-})
 defineExpose({
   show,
   hide

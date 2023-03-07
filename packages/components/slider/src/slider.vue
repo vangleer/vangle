@@ -12,26 +12,24 @@
       ref="slider"
       :class="[
         n('runway'),
-        showInput && !range && 'show-input',
+        { 'is-disabled': disabled },
       ]"
       :style="{ height }"
     >
       <div :class="n('bar')" :style="barStyle" />
       <div
-        :class="n('button-wrapper')"
+        :class="[n('button-wrapper')]"
         :style="wrapperStyle"
-        @mouseenter="handleMouseEnter"
-        @mouseleave="handleMouseLeave"
         @mousedown="onButtonDown"
-        @touchstart="onButtonDown"
-        @focus="handleMouseEnter"
-        @blur="handleMouseLeave"
+        @touchstart.passive="onButtonDown"
         @keydown.left="onLeftKeyDown"
         @keydown.right="onRightKeyDown"
         @keydown.down.prevent="onLeftKeyDown"
         @keydown.up.prevent="onRightKeyDown"
       >
-        <div :class="n('button')"></div>
+        <VanTooltip ref="tooltipRef" :placement="placement" :disabled="!showTooltip" :visible="visible" :content="tooltipValue + ''">
+          <div :class="[n('button'), { dragging: dragging }]"></div>
+        </VanTooltip>
       </div>
     </div>
   </div>
@@ -41,15 +39,20 @@
 import { computed, reactive, ref, CSSProperties } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { SliderProps } from './slider'
+import VanTooltip from '../../tooltip'
 defineOptions({
   name: 'VanSlider'
 })
 
 const props = defineProps(SliderProps)
-const emit = defineEmits(['input'])
+const emit = defineEmits(['input', 'update:modelValue'])
 const { n } = createNamespace('slider')
 const slider = ref<HTMLElement | null>(null)
 const currentPosition = ref()
+const tooltipRef = ref()
+const visible = ref(false)
+
+const tooltipValue = computed(() => props.formatTooltip ? props.formatTooltip(props.modelValue as number) : props.modelValue)
 const barStyle = computed<CSSProperties>(() => {
   return props.vertical
     ? {
@@ -82,17 +85,12 @@ const initData = reactive({
   oldValue: props.modelValue,
 })
 
-function handleMouseEnter() {
-  initData.hovering = true
-}
-function handleMouseLeave() {
-  initData.hovering = false
-}
+const dragging = ref(false)
 
 const onButtonDown = (e: MouseEvent | TouchEvent) => {
-  const {clientX, clientY} = getClientXY(e)
-  initData.startX = clientX
-  initData.startY = clientY
+  if (props.disabled) return
+  if (dragging.value) return
+  dragging.value = true
   const sliderInfo: DOMRect = slider.value!.getBoundingClientRect()
   const sliderLeft = sliderInfo.left
   const sliderTop = sliderInfo.top
@@ -109,6 +107,7 @@ const onButtonDown = (e: MouseEvent | TouchEvent) => {
     setPosition(diff)
   }
   const mouseUp = () => {
+    dragging.value = false
     window.removeEventListener('mousemove', mouseMove)
     window.removeEventListener('mouseup', mouseUp)
   }
@@ -140,7 +139,11 @@ const setPosition = (newPosition: number) => {
   if (newPosition <= 0) newPosition = 0
   if (newPosition >= 100) newPosition = 100
   currentPosition.value = newPosition + '%'
-  emit('input', newPosition / 100 * props.max)
+  const value = Math.floor(newPosition / 100 * props.max)
+  emit('input', value)
+  emit('update:modelValue', value)
+  tooltipRef.value.update()
+  visible.value = true
 }
 
 </script>

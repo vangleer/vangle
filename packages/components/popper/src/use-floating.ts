@@ -10,7 +10,6 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
   const contentRef = ref()
   const x = ref<number>()
   const y = ref<number>()
-  const arrowStyle = ref({})
   const middlewareData = ref<ComputePositionReturn['middlewareData']>({})
   const states = {
     x,
@@ -20,13 +19,13 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
     middlewareData,
   } as const
   async function update() {
+
     if (!referenceRef.value || !contentRef.value) return
     const data: any = await computePosition(referenceRef.value, contentRef.value, {
       middleware: unref(middleware),
       placement: unref(placement),
       strategy: unref(strategy)
     })
-
     Object.keys(states).forEach(key => {
       (states as any)[key].value = data[key]
     })
@@ -43,6 +42,8 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
   })
   return {
     ...states,
+    x,
+    y,
     update,
     referenceRef,
     contentRef

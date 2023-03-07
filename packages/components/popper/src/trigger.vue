@@ -49,14 +49,17 @@ const onClick = composeEventHandlers(props.onClick, (e) => {
   }
 })
 const onMousedown = composeEventHandlers(props.onMouseDown, () => {
-  // onClose()
-  // isMousedown = true
-  // document.addEventListener('mouseup', onMouseup, { once: true })
+  isMousedown = true
+  onOpen()
+  document.addEventListener('mouseup', onMouseup, { once: true })
 })
 const onMouseenter = composeEventHandlers(props.onMouseEnter, () => {
   props.trigger === 'hover' && onOpen()
 })
-const onMouseleave = composeEventHandlers(props.onMouseLeave, () => props.trigger === 'hover' && onClose())
+const onMouseleave = composeEventHandlers(props.onMouseLeave, () => {
+  if (isMousedown) return
+  props.trigger === 'hover' && onClose()
+})
 
 const events = {
   blur: onBlur,

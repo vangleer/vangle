@@ -4,13 +4,15 @@
   --van-slider-height: @slider-height;
 }
 
+@N: van-slider;
+
 .van-slider {
   --van-slider-main-bg-color: var(--van-color-primary);
   --van-slider-runway-bg-color: var(--van-border-color);
   --van-slider-stop-bg-color: var(--van-color-white);
   --van-slider-disabled-color: #a8abb2;
   --van-slider-border-radius: 3px;
-  --van-slider-height: 6px;
+  --van-slider-bar-height: 6px;
   --van-slider-button-size: 20px;
   --van-slider-button-wrapper-size: 36px;
   --van-slider-button-wrapper-offset: -15px;
@@ -19,30 +21,53 @@
   height: @slider-height;
   display: flex;
   align-items: center;
+  position: relative;
 
   &.is-vertical {
-    width: var(--van-slider-height);
+    width: @slider-height;
     height: auto;
+    justify-content: center;
 
-    .van-slider__runway {
-      width: var(--van-slider-height);
+
+    .@{N}__runway,
+    .@{N}__bar {
+      width: var(--van-slider-bar-height);
+      max-width: var(--van-slider-bar-height);
+    }
+
+    .@{N}__button-wrapper {
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50%);
     }
   }
 
   &__runway {
     flex: 1;
-    height: var(--van-slider-height);
+    height: var(--van-slider-bar-height);
     background-color: var(--van-slider-runway-bg-color);
     border-radius: var(--van-slider-border-radius);
     position: relative;
     cursor: pointer;
+
+    &.is-disabled {
+      .@{N}__button {
+        border: solid 2px var(--van-disabled-border-color);
+        cursor: not-allowed;
+
+        &:hover,
+        &.hover,
+        &.dragging {
+          transform: scale(1);
+        }
+      }
+    }
   }
 
   &__bar {
-    height: var(--van-slider-height);
+    height: var(--van-slider-bar-height);
     background-color: var(--van-slider-main-bg-color);
-    border-top-left-radius: var(--van-slider-border-radius);
-    border-bottom-left-radius: var(--van-slider-border-radius);
+    border-radius: var(--van-slider-border-radius);
     position: absolute;
   }
 
@@ -59,15 +84,6 @@
     justify-content: center;
     user-select: none;
     outline: none;
-
-    &:hover,
-    &.hover {
-      cursor: grab;
-    }
-
-    &.dragging {
-      cursor: grabbing;
-    }
   }
 
   &__button {
@@ -75,11 +91,11 @@
     width: var(--van-slider-button-size);
     height: var(--van-slider-button-size);
     vertical-align: middle;
-    border: solid 3px var(--van-slider-main-bg-color);
+    border: solid 2px var(--van-slider-main-bg-color);
     background-color: var(--van-color-white);
     border-radius: 50%;
     box-sizing: border-box;
-    transition: var(--transition-duration-fast);
+    transition: all .1s;
     user-select: none;
 
     &:hover,
