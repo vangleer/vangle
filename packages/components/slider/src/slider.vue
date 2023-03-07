@@ -24,7 +24,7 @@
         :class="[n('button-wrapper')]"
         :style="wrapperStyle"
         @mousedown="onButtonDown"
-        @touchstart="onButtonDown"
+        @touchstart.passive="onButtonDown"
       >
         <VanTooltip
           ref="tooltipRef"
@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, CSSProperties, onUnmounted } from 'vue'
+import { computed, ref, CSSProperties, onUnmounted, watch } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { SliderProps } from './slider'
 import VanTooltip from '../../tooltip'
@@ -60,7 +60,11 @@ let timerId = ref()
 const sliderStyle = computed(() => ({
   '--van-slider-main-bg-color': props.color
 }))
-const tooltipValue = computed(() => props.formatTooltip ? props.formatTooltip(props.modelValue as number) : props.modelValue)
+const tooltipValue = computed(() => 
+  props.formatTooltip 
+    ? props.formatTooltip(props.modelValue as number)
+    : props.modelValue
+)
 const barStyle = computed<CSSProperties>(() => {
   return props.vertical
     ? {
@@ -141,6 +145,24 @@ function setUpFocus() {
   }, 300)
 }
 
+function handleKeyDown(e: KeyboardEvent) {
+  e.preventDefault()
+  const keyCode = e.keyCode
+  if ([37, 39].includes(keyCode) && !props.vertical) {
+    setPosition(parseInt(currentPosition.value) - (38 - keyCode))
+  } else if ([38, 40].includes(keyCode) && props.vertical) {
+    setPosition(parseInt(currentPosition.value) - (39 - keyCode))
+  }
+}
+
+function setUpKeyEvent() {
+  if (isFocus.value) {
+    window.addEventListener('keydown', handleKeyDown)
+  } else {
+    window.removeEventListener('keydown', handleKeyDown)
+  }
+}
+
 const setPosition = (newPosition: number) => {
   if (newPosition <= 0) newPosition = 0
   if (newPosition >= 100) newPosition = 100
@@ -152,8 +174,17 @@ const setPosition = (newPosition: number) => {
   visible.value = true
 }
 
-onUnmounted(() => {
+function cleanUp() {
   clearTimeout(timerId.value)
+  window.removeEventListener('keydown', handleKeyDown)
+}
+
+watch(isFocus, (val) => {
+  setUpKeyEvent()
+})
+
+onUnmounted(() => {
+  cleanUp()
 })
 
 </script>
