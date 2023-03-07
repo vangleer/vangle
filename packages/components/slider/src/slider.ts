@@ -36,5 +36,9 @@ export const SliderProps = {
   placement: {
     type: String,
     default: 'top'
+  },
+  color: {
+    type: String,
+    default: ''
   }
 }

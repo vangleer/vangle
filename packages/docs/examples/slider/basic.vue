@@ -5,15 +5,15 @@
   </div>
   <div class="slider-demo-block">
     <span class="demonstration">Customized initial value</span>
-    <van-slider v-model="value2" />
+    <van-slider v-model="value2" color="var(--van-color-success)" />
   </div>
   <div class="slider-demo-block">
     <span class="demonstration">Hide Tooltip</span>
-    <van-slider v-model="value3" :show-tooltip="false" />
+    <van-slider v-model="value3" :show-tooltip="false" color="var(--van-color-warning)" />
   </div>
   <div class="slider-demo-block">
     <span class="demonstration">Format Tooltip</span>
-    <van-slider v-model="value4" :format-tooltip="formatTooltip" />
+    <van-slider v-model="value4" :format-tooltip="formatTooltip" color="var(--van-color-danger)" />
   </div>
   <div class="slider-demo-block">
     <span class="demonstration">Disabled</span>

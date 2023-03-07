@@ -4,6 +4,7 @@
       n(),
       props.vertical && 'is-vertical'
     ]"
+    :style="sliderStyle"
     :aria-valuemin="min"
     :aria-valuemax="max"
     :aria-orientation="vertical ? 'vertical' : 'horizontal'"
@@ -51,7 +52,9 @@ const slider = ref<HTMLElement | null>(null)
 const currentPosition = ref()
 const tooltipRef = ref()
 const visible = ref(false)
-
+const sliderStyle = computed(() => ({
+  '--van-slider-main-bg-color': props.color
+}))
 const tooltipValue = computed(() => props.formatTooltip ? props.formatTooltip(props.modelValue as number) : props.modelValue)
 const barStyle = computed<CSSProperties>(() => {
   return props.vertical
