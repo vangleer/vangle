@@ -1,8 +1,6 @@
 <template>
   <div
     :class="[n()]"
-    @mouseenter="handleShow(true)"
-    @mouseleave="handleShow(false)"
   >
     <div
       ref="wrapRef"
@@ -14,26 +12,21 @@
         <slot></slot>
       </div>
     </div>
-    <Transition name="van-scrollbar-fade">
-      <Bar
-        v-show="showBar"
-        ref="barRef"
-        :verticle="verticle"
-        :width="sizeWidth"
-        :height="sizeHeight"
-        :always="always"
-        :ratio-x="ratioX"
-        :ratio-y="ratioY"
-      />
-    </Transition>
-    
+    <Bar
+      ref="barRef"
+      :width="sizeWidth"
+      :height="sizeHeight"
+      :always="always"
+      :ratio-x="ratioX"
+      :ratio-y="ratioY"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, provide, ref, reactive } from 'vue'
 import { createNamespace, addUnit } from '@vangle/utils'
-import { ScrollbarProps } from './scrollbar'
+import { ScrollbarProps, ScrollbarContextKey } from './scrollbar'
 import Bar from './bar.vue'
 defineOptions({
   name: 'VanScrollbar'
@@ -45,14 +38,13 @@ const { n } = createNamespace('scrollbar')
 const wrapRef = ref<HTMLElement>()
 const viewRef = ref<HTMLElement>()
 const barRef = ref()
-const showBar = ref(false)
 
 const sizeWidth = ref('0')
 const sizeHeight = ref('0')
 const ratioX = ref(1)
 const ratioY = ref(1)
 
-const wrapClz = computed(() => ([n('wrap'), !props.native && n('wrap--hidden-default'), props.verticle ? 'is-verticle' : 'is-horizontal']))
+const wrapClz = computed(() => ([n('wrap'), !props.native && n('wrap--hidden-default'), props.vertical ? 'is-vertical' : 'is-horizontal']))
 const wrapStyle = computed(() => ({ height: addUnit(props.height as string) }))
 
 function handleScroll(e: Event) {
@@ -64,9 +56,13 @@ function handleScroll(e: Event) {
     })
   }
 }
-function handleShow(show: boolean) {
-  showBar.value = show
+function setScrollTop(num: number) {
+  wrapRef.value!.scrollTop = num
 }
+function setScrollLeft(num: number) {
+  wrapRef.value!.scrollLeft = num
+}
+
 function update() {
   if (!wrapRef.value) return
   
@@ -84,10 +80,13 @@ function update() {
 
   sizeHeight.value = height < offsetHeight ? `${height}px` : ''
   sizeWidth.value = width < offsetWidth ? `${width}px` : ''
-
-  console.log(ratioY.value, ratioX.value)
-  console.log(sizeHeight.value, sizeWidth.value)
 }
+
+provide(ScrollbarContextKey, {
+  setScrollTop,
+  setScrollLeft,
+  wrapRef
+})
 
 onMounted(() => {
   update()

@@ -1,3 +1,4 @@
+import { InjectionKey, Ref } from 'vue'
 export const ScrollbarProps = {
   height: {
     type: [String, Number]
@@ -12,8 +13,15 @@ export const ScrollbarProps = {
     type: Number,
     default: 20,
   },
-  verticle: {
-    type: Boolean,
-    default: true
+  vertical: {
+    type: Boolean
   }
 }
+
+interface ScrollbarContext {
+  wrapRef: Ref<HTMLElement>
+  setScrollTop: (num: number) => void
+  setScrollLeft: (num: number) => void
+}
+
+export const ScrollbarContextKey: InjectionKey<ScrollbarContext> = Symbol('ScrollbarContextKey')
