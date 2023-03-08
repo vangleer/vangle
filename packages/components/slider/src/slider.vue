@@ -53,34 +53,46 @@ const props = defineProps(SliderProps)
 const emit = defineEmits(['input', 'update:modelValue'])
 const { n } = createNamespace('slider')
 const slider = ref<HTMLElement | null>(null)
-const currentPosition = ref()
 const tooltipRef = ref()
 const visible = ref(false)
 let timerId = ref()
 const sliderStyle = computed(() => ({
   '--van-slider-main-bg-color': props.color
 }))
+const currentPosition = computed({
+  get: () => props.modelValue as number,
+  set: (val) => {
+    const { min, max } = props
+    const value = Math.floor(val / max * max)
+    emit('input', value)
+    emit('update:modelValue', value)
+  }
+})
 const tooltipValue = computed(() => 
   props.formatTooltip 
     ? props.formatTooltip(props.modelValue as number)
     : props.modelValue
 )
 const barStyle = computed<CSSProperties>(() => {
+  const value = currentPosition.value * diffValue.value + '%'
   return props.vertical
     ? {
-        height: currentPosition.value
+        height: value
       }
     : {
-        width: currentPosition.value,
+        width: value,
         height: '100%'
       }
 })
 
+const diffValue = computed(() => (100 / (props.max - props.min)))
+
 const wrapperStyle = computed(() => {
+  const value = currentPosition.value * diffValue.value + '%'
   return (
     props.vertical
-      ? { top: currentPosition.value }
-      : { left: currentPosition.value }
+      ? { top: value }
+      : { left: value }
   ) as CSSProperties
 })
 const isFocus = ref(false)
@@ -101,9 +113,9 @@ const onButtonDown = (e: MouseEvent | TouchEvent) => {
     const { clientX, clientY } = getClientXY(e)
     let diff = 0
     if (props.vertical) {
-      diff = (clientY - sliderTop) / sliderHeight * 100
+      diff = (clientY - sliderTop) / sliderHeight * (props.max - props.min)
     } else {
-      diff = (clientX - sliderLeft) / sliderWidth * 100
+      diff = (clientX - sliderLeft) / sliderWidth * (props.max - props.min)
     }
     setPosition(diff)
   }
@@ -149,9 +161,9 @@ function handleKeyDown(e: KeyboardEvent) {
   e.preventDefault()
   const keyCode = e.keyCode
   if ([37, 39].includes(keyCode) && !props.vertical) {
-    setPosition(parseInt(currentPosition.value) - (38 - keyCode))
+    setPosition(currentPosition.value - (38 - keyCode))
   } else if ([38, 40].includes(keyCode) && props.vertical) {
-    setPosition(parseInt(currentPosition.value) - (39 - keyCode))
+    setPosition(currentPosition.value - (39 - keyCode))
   }
 }
 
@@ -164,12 +176,11 @@ function setUpKeyEvent() {
 }
 
 const setPosition = (newPosition: number) => {
+  const { min, max } = props
   if (newPosition <= 0) newPosition = 0
-  if (newPosition >= 100) newPosition = 100
-  currentPosition.value = newPosition + '%'
-  const value = Math.floor(newPosition / 100 * props.max)
-  emit('input', value)
-  emit('update:modelValue', value)
+  if (newPosition >= max - min) newPosition = max - min
+  currentPosition.value = newPosition
+  
   tooltipRef.value.update()
   visible.value = true
 }
