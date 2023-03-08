@@ -26,3 +26,28 @@ export const TreeProps = {
     })
   }
 }
+export declare type TreeData = TreeNodeData[]
+export declare type TreeKey = string | number
+export declare type LoadFunction = (
+  rootNode: Node,
+  loadedCallback: (data: TreeData) => void
+) => void
+
+export interface TreeStoreOptions {
+  key: TreeKey
+  data: TreeData
+  lazy: boolean
+  props: TreeOptionProps
+  load: LoadFunction
+  currentNodeKey: TreeKey
+  checkStrictly: boolean
+  checkDescendants: boolean
+  defaultCheckedKeys: TreeKey[]
+  defaultExpandedKeys: TreeKey[]
+  autoExpandParent: boolean
+  defaultExpandAll: boolean
+}
+
+export class TreeStore {
+
+}

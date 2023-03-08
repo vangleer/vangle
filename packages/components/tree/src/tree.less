@@ -1,4 +1,6 @@
-.van-tree {
+@N: van-tree;
+
+.@{N} {
   --van-tree-node-hover-bg-color: var(--van-disabled-bg-color);
   --van-tree-text-color: var(--van-text-color-regular);
   --van-tree-expand-icon-color: var(--van-text-color-placeholder);
@@ -16,15 +18,47 @@
       align-items: center;
       height: 26px;
       cursor: pointer;
+      will-change: height;
 
       &:hover {
         background: var(--van-tree-node-hover-bg-color);
+      }
+
+      &.is-expand {
+        .@{N}__node__expand-icon {
+          transform: rotate(90deg);
+        }
       }
     }
 
     &__expand-icon {
       padding: 10px;
       color: var(--van-tree-text-color);
+      transition: transform .2s;
     }
   }
+}
+
+// .van-true-collapse-enter-active,
+// .van-true-collapse-leave-active {
+//   transition: all 0.3s;
+// }
+
+// .van-true-collapse-enter-from,
+// .van-true-collapse-leave-to {
+//   opacity: 0;
+//   transform: scaleY(0.5);
+// }
+
+.collapse-transition {
+  transition: var(--van-transition-duration) height ease-in-out,
+    var(--van-transition-duration) padding-top ease-in-out,
+    var(--van-transition-duration) padding-bottom ease-in-out;
+}
+
+.van-collapse-transition-leave-active,
+.van-collapse-transition-enter-active {
+  transition: var(--van-transition-duration) max-height ease-in-out,
+    var(--van-transition-duration) padding-top ease-in-out,
+    var(--van-transition-duration) padding-bottom ease-in-out;
 }
