@@ -32,19 +32,19 @@ const handleCheckChange = (
 }
 
 const loadNode = (node: Node, resolve: (data: Tree[]) => void) => {
-  // if (node.level === 0) {
-  //   return resolve([{ name: 'Root1' }, { name: 'Root2' }])
-  // }
-  // if (node.level > 3) return resolve([])
+  if (node.level === 0) {
+    return resolve([{ name: 'Root1' }, { name: 'Root2' }])
+  }
+  if (node.level > 3) return resolve([])
 
   let hasChild = true
-  // if (node.name === 'region1') {
-  //   hasChild = true
-  // } else if (node.name === 'region2') {
-  //   hasChild = false
-  // } else {
-  //   hasChild = Math.random() > 0.5
-  // }
+  if (node.name === 'region1') {
+    hasChild = true
+  } else if (node.name === 'region2') {
+    hasChild = false
+  } else {
+    hasChild = Math.random() > 0.5
+  }
 
   setTimeout(() => {
     let data: Tree[] = []

@@ -30,6 +30,21 @@ export const TreeProps = {
   },
   load: {
     type: Function
+  },
+  defaultExpandAll: {
+    type: Boolean
+  },
+  nodeKey: {
+    type: String,
+    default: 'id'
+  },
+  defaultExpandedKeys: {
+    type: Array,
+    default: () => ([])
+  },
+  defaultCheckedKeys: {
+    type: Array,
+    default: () => ([])
   }
 }
 export declare type TreeData = TreeNodeData[]
