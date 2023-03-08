@@ -15,7 +15,8 @@ export const CheckboxProps = {
     type: String,
     default: undefined,
   },
-  border: Boolean
+  border: Boolean,
+  indeterminate: Boolean
 }
 export const CheckboxGroupProps = {
   modelValue: {

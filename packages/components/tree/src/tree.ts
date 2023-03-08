@@ -24,6 +24,12 @@ export const TreeProps = {
       label: 'label',
       disabled: 'disabled'
     })
+  },
+  showCheckbox: {
+    type: Boolean
+  },
+  load: {
+    type: Function
   }
 }
 export declare type TreeData = TreeNodeData[]

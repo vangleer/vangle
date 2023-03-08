@@ -70,3 +70,17 @@ const on = {
   },
 }
 </script>
+<style>
+.collapse-transition {
+  transition: var(--van-transition-duration) height ease-in-out,
+    var(--van-transition-duration) padding-top ease-in-out,
+    var(--van-transition-duration) padding-bottom ease-in-out;
+}
+
+.van-collapse-transition-leave-active,
+.van-collapse-transition-enter-active {
+  transition: var(--van-transition-duration) max-height ease-in-out,
+    var(--van-transition-duration) padding-top ease-in-out,
+    var(--van-transition-duration) padding-bottom ease-in-out;
+}
+</style>

@@ -1,16 +1,28 @@
 ---
-title: Tree
-lang: en-US
+title: Tree 树形控件
+lang: zh-CN
 ---
 
-# Tree
+# Tree 树形控件
 
-Commonly used Tree.
+用清晰的层级结构展示信息，可展开或折叠。
 
-## Basic usage
+## 基础用法
 
-:::demo description of Tree
+基础的树形结构展示
+
+:::demo
 
 tree/basic
+
+:::
+
+## 可选择
+
+适用于需要选择层级时使用。
+
+:::demo 
+
+tree/checked
 
 :::
