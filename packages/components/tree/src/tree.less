@@ -1,0 +1,30 @@
+.van-tree {
+  --van-tree-node-hover-bg-color: var(--van-disabled-bg-color);
+  --van-tree-text-color: var(--van-text-color-regular);
+  --van-tree-expand-icon-color: var(--van-text-color-placeholder);
+  position: relative;
+  cursor: default;
+  color: var(--van-tree-text-color);
+  font-size: var(--van-font-size-middle);
+
+  &__node {
+    white-space: nowrap;
+    outline: none;
+
+    &__content {
+      display: flex;
+      align-items: center;
+      height: 26px;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--van-tree-node-hover-bg-color);
+      }
+    }
+
+    &__expand-icon {
+      padding: 10px;
+      color: var(--van-tree-text-color);
+    }
+  }
+}

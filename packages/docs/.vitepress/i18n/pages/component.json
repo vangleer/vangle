@@ -18,6 +18,10 @@
         {
           "link": "/scrollbar",
           "text": "Scrollbar"
+        },
+        {
+          "link": "/tree",
+          "text": "Tree"
         }
       ]
     },
