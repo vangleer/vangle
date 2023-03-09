@@ -32,7 +32,7 @@
 
 <script lang="ts" setup>
 import { ref, h as H } from 'vue'
-import type { TreeNodeType as Node } from '@valgle/components/tree'
+import type { Node } from '@valgle/components/tree'
 
 interface Tree {
   id: number

@@ -3,9 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-type Node = {
-  [key: string]: any
-}
+import type { Node } from '@valgle/components/tree'
 
 interface Tree {
   name: string

@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { TreeNodeType as Node } from '@valgle/components/tree'
+import type { Node } from '@valgle/components/tree'
 
 interface Tree {
   id: number

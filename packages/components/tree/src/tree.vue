@@ -4,7 +4,8 @@
 <script lang="ts">
 import { defineComponent, h, reactive, computed, watch, ref } from 'vue'
 import { createNamespace, isFunction } from '@vangle/utils'
-import { TreeProps, TreeNodeType } from './tree'
+import { TreeProps, Node, TreeNodeData, TreeStore } from './tree'
+import { addClass } from './utils'
 import { VanIcon } from '../../icon'
 import VanCollapseTransition from '../../collapse-transition'
 import VanCheckbox from '../../checkbox'
@@ -23,8 +24,12 @@ export default defineComponent({
     const filterValue = ref('')
     const dataProps = computed(() => ({ ...defaultProps, ...props.props }))
     const isLoading = computed(() => props.load && isFunction(props.load))
-    const currentNode = ref<TreeNodeType>()
-    const store = reactive({
+    const currentNode = ref<Node>()
+      const dragState = ref({
+      draggingNode: {} as Node,
+      dropNode: {} as Node
+    })
+    const store = reactive<TreeStore>({
       childNodes: getNodes(props.data),
       children: props.data
     })
@@ -35,23 +40,12 @@ export default defineComponent({
       store.childNodes = getNodes(props.data)
       store.children = props.data
     }
-    const dragState = ref({
-      draggingNode: {} as TreeNodeType,
-      dropNode: {} as TreeNodeType
-    })
-    function addClass(el: HTMLElement, className: string, isRemove: boolean = false) {
-      if (!isRemove) {
-        el.classList.add(className)
-      } else {
-        el.classList.remove(className)
-      }
-    }
 
     function emitDrag(eventName: string, e: DragEvent) {
       const { draggingNode, dropNode } = dragState.value
       emit(eventName, draggingNode, dropNode, e)
     }
-    function createDragEvents(node: TreeNodeType) {
+    function createDragEvents(node: Node) {
       return {
         onDragstart(e: DragEvent) {
           e.stopPropagation()
@@ -111,12 +105,12 @@ export default defineComponent({
       
       refresh()
     }
-    function hasChild(node?: TreeNodeType) {
+    function hasChild(node?: Node) {
       return node && node.childNodes && node.childNodes.length
     }
-    function loadData(node?: TreeNodeType) {
+    function loadData(node?: Node) {
       if (!isLoading.value) return
-      props.load!(node || { level: 0 }, (data: TreeNodeType[]) => {
+      props.load!(node || { level: 0 }, (data: Node[]) => {
         if (!node) {
           store.childNodes = getNodes(data)
         } else {
@@ -127,14 +121,14 @@ export default defineComponent({
         }
       })
     }
-    loadData()
-    function handleNodeClick(node: TreeNodeType) {
+    
+    function handleNodeClick(node: Node) {
       if (node.loading || !props.expandOnClickNode) return
       node.expand = !node.expand
       currentNode.value = node
       if (props.accordion) {
         const siblings = node.parent?.childNodes || store.childNodes
-        siblings.forEach((n: TreeNodeType) => {
+        siblings.forEach((n: Node) => {
           if (n !== node) n.expand = false
         })
       }
@@ -145,11 +139,10 @@ export default defineComponent({
       emit(node.expand ? 'node-expand' : 'node-collapse', node.data, node)
       emit('node-click', node)
     }
-    function handleContextMenu(e: Event, node: TreeNodeType) {
+    function handleContextMenu(e: Event, node: Node) {
       emit('check-contextmenu', e, node.data, node)
     }
-    function handleChecked(node: TreeNodeType, value: boolean) {
-      
+    function handleChecked(node: Node, value: boolean) {
       node.checked = node.indeterminate ? true : value
 
       if (node.indeterminate) {
@@ -161,12 +154,12 @@ export default defineComponent({
       checkIndeterminate(node.parent!)
     }
     
-    function checkIndeterminate(node: TreeNodeType) {
+    function checkIndeterminate(node: Node) {
       if (!node) return
       let root: any = node
       while(root) {
         if (hasChild(root)) {
-          const checkedChildNodes = root.childNodes.filter((item: TreeNodeType) => item.checked)
+          const checkedChildNodes = root.childNodes.filter((item: Node) => item.checked)
           if (!checkedChildNodes.length) {
             root.checked = false
             root.indeterminate = false
@@ -190,7 +183,7 @@ export default defineComponent({
       return root
     }
     
-    function checkAll(node: TreeNodeType, value: boolean) {
+    function checkAll(node: Node, value: boolean) {
       if (!hasChild(node)) return
       node.childNodes!.forEach(n => {
         n.checked = value
@@ -199,7 +192,7 @@ export default defineComponent({
       })
     }
 
-    function getNodes(data: any[], level = 0, parent: TreeNodeType | null = null): TreeNodeType[] {
+    function getNodes(data: TreeNodeData[], level = 0, parent: Node | null = null): Node[] {
       if (!data) return []
       if (!data.length && parent) {
         parent.expand = false
@@ -215,7 +208,7 @@ export default defineComponent({
         const checked = props.defaultCheckedKeys.includes(keyValue)
         const expand = !!props.defaultExpandAll || props.defaultExpandedKeys.includes(keyValue)
         
-        const node: TreeNodeType = {
+        const node: Node = {
           [nodeKey]: keyValue,
           data: item,
           label: item[labelKey],
@@ -229,6 +222,7 @@ export default defineComponent({
           isLeaf: item[isLeafKey],
           disabled: item[disabledKey]
         }
+
         if (item[childrenKey] && item[childrenKey].length) {
           node.childNodes = getNodes(item[childrenKey], level + 1, node)
         } else {
@@ -246,7 +240,7 @@ export default defineComponent({
         return node
       })
     }
-    const getCheckbox = (node: TreeNodeType) => {
+    const getCheckbox = (node: Node) => {
       return props.showCheckbox && h(
         VanCheckbox,
         {
@@ -258,6 +252,78 @@ export default defineComponent({
         }
       )
     }
+    function getCheckedNodes() {
+      return getNode(store.childNodes!)
+    }
+    function getCheckedKeys(): Node[] {
+      const nodes = getNode(store.childNodes!)
+      return nodes.map(node => (node as any)[props.nodeKey])
+    }
+    
+    function getNode(childNodes: Node[]): Node[] {
+      if (!childNodes) return []
+      let results: Node[] = []
+      forEachTree(childNodes, (node) => {
+        if (node.checked) {
+          results.push(node)
+        }
+      })
+      return results
+    }
+    function setChecked(childNodes: Node[], keys: any[]) {
+      if (!childNodes) return []
+      forEachTree(childNodes, (node) => {
+        if (keys.includes((node as any)[props.nodeKey])) {
+          node.checked = true
+          checkAll(node, node.checked)
+          checkIndeterminate(node.parent!)
+        } else {
+           node.checked = node.indeterminate = false
+        }
+      })
+    }
+    function setCheckedKeys(keys: any[]) {
+      setChecked(store.childNodes!, keys)
+    }
+    function setCheckedNodes(data: any[]) {
+      const keys = data.map(item => item[props.nodeKey])
+      setChecked(store.childNodes!, keys)
+    }
+    function filterLabel(data: any) {
+      if (isFunction(props.filterNodeMethod)) {
+        return props.filterNodeMethod!(filterValue.value, data)
+      }
+      return true
+    }
+    function filter(value: any) {
+      filterValue.value = value
+    }
+
+    function getCurrentKey() {
+      return (currentNode.value as any)[props.nodeKey]
+    }
+    function getCurrentNode() {
+      return currentNode.value
+    }
+
+    function forEachTree(nodes: Node[], callback: (node: Node) => void) {
+      if (!nodes) return 
+      nodes.forEach(node => {
+        callback(node)
+        if (hasChild(node)) {
+          forEachTree(node.childNodes!, callback)
+        }
+      })
+    }
+    expose({
+      getCheckedKeys,
+      getCheckedNodes,
+      setCheckedKeys,
+      setCheckedNodes,
+      getCurrentKey,
+      getCurrentNode,
+      filter
+    })
 
     /**
      * 渲染label
@@ -265,7 +331,7 @@ export default defineComponent({
      * 2. 如果有插槽使用插槽并传入参数
      * 3. 否则使用默认
      */
-    function renderLabel(node: TreeNodeType) {
+     function renderLabel(node: Node) {
       if (isFunction(props.renderContent)) {
         return props.renderContent!(h, { node, data: node.data, store: node.store })
       } else if (slots.default) {
@@ -275,8 +341,7 @@ export default defineComponent({
       }
     }
 
-    // <VanIcon v-if="loading" :class="{ 'is-loading': loading }" name="loading" />
-    function renderContext(data: TreeNodeType[]): any[] {
+    function renderContext(data: Node[]): any[] {
       if (!data) return []
       let nodes = []
       for (let i = 0; i < data.length; i++) {
@@ -292,7 +357,7 @@ export default defineComponent({
         const extraNodeClassName = dataProps.value.class && isFunction(dataProps.value.class) ? dataProps.value.class(item.data, item) : dataProps.value.class
         const content = h(
           'div',
-          { 
+          {
             class: [n('node__content'), { 'is-expand': item.expand, 'is-checked': item.checked }],
             style: { paddingLeft: item.level * paddingLeft + 'px' },
             onClick() {
@@ -331,82 +396,10 @@ export default defineComponent({
 
       return nodes
     }
-
     function renderEmptyBlock() {
       return !props.data.length && h('div', { class: n('empty-block') }, h('span', { class: n('empty-text') }, props.emptyText) )
     }
-    function getCheckedNodes() {
-      return getNode(store.childNodes!)
-    }
-    function getCheckedKeys(keys: any[], flag: boolean): TreeNodeType[] {
-      const nodes = getNode(store.childNodes!)
-      return nodes.map(node => (node as any)[props.nodeKey])
-    }
-    
-    function getNode(childNodes: TreeNodeType[]): TreeNodeType[] {
-      if (!childNodes) return []
-      let results: TreeNodeType[] = []
-      forEachTree(childNodes, (node) => {
-        if (node.checked) {
-          results.push(node)
-        }
-      })
-      return results
-    }
-    function setChecked(childNodes: TreeNodeType[], keys: any[]) {
-      if (!childNodes) return []
-      forEachTree(childNodes, (node) => {
-        if (keys.includes((node as any)[props.nodeKey])) {
-          node.checked = true
-          checkAll(node, node.checked)
-          checkIndeterminate(node.parent!)
-        } else {
-           node.checked = node.indeterminate = false
-        }
-      })
-    }
-    function setCheckedKeys(keys: any[]) {
-      setChecked(store.childNodes!, keys)
-    }
-    function setCheckedNodes(data: any[]) {
-      const keys = data.map(item => item[props.nodeKey])
-      setChecked(store.childNodes!, keys)
-    }
-    function filterLabel(data: any) {
-      if (isFunction(props.filterNodeMethod)) {
-        return props.filterNodeMethod!(filterValue.value, data)
-      }
-      return true
-    }
-    function filter(value: any) {
-      filterValue.value = value
-    }
-
-    function getCurrentKey() {
-      return currentNode.value?[props.nodeKey]
-    }
-    function getCurrentNode() {
-      return currentNode.value
-    }
-
-    function forEachTree(nodes: TreeNodeType[], callback: (node: TreeNodeType) => void) {
-      if (!nodes) return 
-      nodes.forEach(node => {
-        callback(node)
-        if (hasChild(node)) {
-          forEachTree(node.childNodes!, callback)
-        }
-      })
-    }
-    expose({
-      getCheckedKeys,
-      getCheckedNodes,
-      setCheckedKeys,
-      setCheckedNodes,
-      getCurrentKey,
-      getCurrentNode,
-      filter
-    })
+    loadData()
     return () => {
       return h('div', { class: n() }, [store.childNodes.length ? renderContext(store.childNodes) : renderEmptyBlock()])
     }

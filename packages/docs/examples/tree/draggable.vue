@@ -16,50 +16,44 @@
 </template>
 
 <script lang="ts" setup>
-import type Node from 'element-plus/es/components/tree/src/model/node'
-import type { DragEvents } from 'element-plus/es/components/tree/src/model/useDragNode'
-import type {
-  AllowDropType,
-  NodeDropType,
-} from 'element-plus/es/components/tree/src/tree.type'
+import type { Node } from '@valgle/components/tree'
 
-const handleDragStart = (node: Node, ev: DragEvents) => {
+
+const handleDragStart = (node: Node, ev: DragEvent) => {
   console.log('drag start', node)
 }
 const handleDragEnter = (
   draggingNode: Node,
   dropNode: Node,
-  ev: DragEvents
+  ev: DragEvent
 ) => {
   console.log('tree drag enter:', dropNode.label)
 }
 const handleDragLeave = (
   draggingNode: Node,
   dropNode: Node,
-  ev: DragEvents
+  ev: DragEvent
 ) => {
   console.log('tree drag leave:', dropNode.label)
 }
-const handleDragOver = (draggingNode: Node, dropNode: Node, ev: DragEvents) => {
+const handleDragOver = (draggingNode: Node, dropNode: Node, ev: DragEvent) => {
   console.log('tree drag over:', dropNode.label)
 }
 const handleDragEnd = (
   draggingNode: Node,
   dropNode: Node,
-  dropType: NodeDropType,
-  ev: DragEvents
+  ev: DragEvent
 ) => {
-  console.log('tree drag end:', dropNode && dropNode.label, dropType)
+  console.log('tree drag end:', dropNode && dropNode.label)
 }
 const handleDrop = (
   draggingNode: Node,
   dropNode: Node,
-  dropType: NodeDropType,
-  ev: DragEvents
+  ev: DragEvent
 ) => {
-  console.log('tree drop:', dropNode.label, dropType)
+  console.log('tree drop:', dropNode.label)
 }
-const allowDrop = (draggingNode: Node, dropNode: Node, type: AllowDropType) => {
+const allowDrop = (draggingNode: Node, dropNode: Node, type: string) => {
   if (dropNode.data.label === 'Level two 3-1') {
     return type !== 'inner'
   } else {

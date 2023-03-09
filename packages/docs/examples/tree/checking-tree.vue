@@ -20,9 +20,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-type Node = {
-  [key: string]: any
-}
+import type { Node } from '@valgle/components/tree'
 
 interface Tree {
   id: number
