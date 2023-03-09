@@ -4,14 +4,15 @@ export interface TreeNodeData {
 }
 export interface TreeOptionProps {
   children?: string
-  label?: string | ((data: TreeNodeData, node: Node) => string)
-  disabled?: string | ((data: TreeNodeData, node: Node) => string)
-  isLeaf?: string | ((data: TreeNodeData, node: Node) => boolean)
+  label?: string | ((data: TreeNodeData, node: TreeNodeType) => string)
+  disabled?: string | ((data: TreeNodeData, node: TreeNodeType) => string)
+  isLeaf?: string | ((data: TreeNodeData, node: TreeNodeType) => boolean)
   class?: (
     data: TreeNodeData,
-    node: Node
+    node: TreeNodeType
   ) => string | { [key: string]: boolean } | string
 }
+export type RenderContentFn = (h: any, source: { node: TreeNodeType, data: any, store: TreeNodeType['store'] }) => void
 export const TreeProps = {
   data: {
     type: Array,
@@ -45,30 +46,34 @@ export const TreeProps = {
   defaultCheckedKeys: {
     type: Array,
     default: () => ([])
+  },
+  renderContent: {
+    type: Function as PropType<RenderContentFn>
+  },
+  expandOnClickNode: {
+    type: Boolean,
+    default: true
+  },
+  accordion: {
+    type: Boolean
+  },
+  filterNodeMethod: {
+    type: Function
   }
 }
-export declare type TreeData = TreeNodeData[]
-export declare type TreeKey = string | number
-export declare type LoadFunction = (
-  rootNode: Node,
-  loadedCallback: (data: TreeData) => void
-) => void
 
-export interface TreeStoreOptions {
-  key: TreeKey
-  data: TreeData
-  lazy: boolean
-  props: TreeOptionProps
-  load: LoadFunction
-  currentNodeKey: TreeKey
-  checkStrictly: boolean
-  checkDescendants: boolean
-  defaultCheckedKeys: TreeKey[]
-  defaultExpandedKeys: TreeKey[]
-  autoExpandParent: boolean
-  defaultExpandAll: boolean
-}
-
-export class TreeStore {
-
+export interface TreeNodeType {
+  level: number,
+  label: string | number,
+  isLeaf?: boolean
+  checked?: boolean
+  childNodes?: TreeNodeType[],
+  expand?: boolean,
+  disabled?: boolean,
+  parent?: TreeNodeType | null,
+  indeterminate?: boolean,
+  loaded?: boolean
+  loading?: boolean
+  data?: any,
+  store?: any
 }

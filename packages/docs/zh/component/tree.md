@@ -62,3 +62,53 @@ tree/default-state
 tree/checking-tree
 
 :::
+
+## 自定义节点内容
+
+节点的内容支持自定义，可以在节点区添加按钮或图标等内容
+
+:::demo 可以通过两种方法进行树节点内容的自定义：`render-content` 和 scoped slot。 使用 `render-content` 指定渲染函数，该函数返回需要的节点区内容即可。 渲染函数的用法请参考 Vue 文档。 使用 scoped slot 会传入两个参数 `node` 和 `data`，分别表示当前节点的 Node 对象和当前节点的数据。 注意：由于 JSFiddle 不支持 JSX 语法，所以 `render-content` 示例无法在那里运行。 但是在实际的项目中，只要正确地配置了相关依赖，就可以正常运行。
+
+tree/customized-node
+
+:::
+
+## 自定义节点类名
+
+节点的类名支持自定义。
+
+:::demo 使用 `props.class` 来建立节点的类名。
+
+tree/custom-node-class
+
+:::
+
+## 树节点过滤
+
+树节点是可以被过滤的
+
+:::demo 调用 Tree 实例对象的 `filter` 方法来过滤树节点。 方法的参数就是过滤关键字。 需要注意的是，此时需要设置 `filter-node-method` 属性，其值为过滤函数。
+
+tree/filtering
+
+:::
+
+## 手风琴模式
+
+对于同一级的节点，每次只能展开一个
+
+:::demo
+
+tree/accordion
+
+:::
+
+## 可拖拽节点
+
+通过 `draggable` 属性可让节点变为可拖拽
+
+:::demo
+
+tree/draggable
+
+:::
