@@ -8,7 +8,6 @@ import { TreeProps, TreeNodeType } from './tree'
 import { VanIcon } from '../../icon'
 import VanCollapseTransition from '../../collapse-transition'
 import VanCheckbox from '../../checkbox'
-
 let seedId = 1
 const paddingLeft = 18
 const defaultProps = {
@@ -16,7 +15,6 @@ const defaultProps = {
   label: 'label',
   disabled: 'disabled'
 }
-export type AllowDropType = 'inner' | 'prev' | 'next';
 export default defineComponent({
   name: 'VanTree',
   props: TreeProps,
@@ -25,7 +23,8 @@ export default defineComponent({
     const filterValue = ref('')
     const dataProps = computed(() => ({ ...defaultProps, ...props.props }))
     const isLoading = computed(() => props.load && isFunction(props.load))
-    const store: any = reactive({
+    const currentNode = ref<TreeNodeType>()
+    const store = reactive({
       childNodes: getNodes(props.data),
       children: props.data
     })
@@ -132,6 +131,7 @@ export default defineComponent({
     function handleNodeClick(node: TreeNodeType) {
       if (node.loading || !props.expandOnClickNode) return
       node.expand = !node.expand
+      currentNode.value = node
       if (props.accordion) {
         const siblings = node.parent?.childNodes || store.childNodes
         siblings.forEach((n: TreeNodeType) => {
@@ -142,7 +142,11 @@ export default defineComponent({
         node.loading = true
         loadData(node)
       }
+      emit(node.expand ? 'node-expand' : 'node-collapse', node.data, node)
       emit('node-click', node)
+    }
+    function handleContextMenu(e: Event, node: TreeNodeType) {
+      emit('check-contextmenu', e, node.data, node)
     }
     function handleChecked(node: TreeNodeType, value: boolean) {
       
@@ -293,6 +297,9 @@ export default defineComponent({
             style: { paddingLeft: item.level * paddingLeft + 'px' },
             onClick() {
               handleNodeClick(item)
+            },
+            onContextmenu(e: Event) {
+              handleContextMenu(e, item)
             }
           },
           [icon, checkbox, loading, label]
@@ -326,7 +333,7 @@ export default defineComponent({
     }
 
     function renderEmptyBlock() {
-      return !props.data.length && h('div', { class: n('empty-block') }, h('span', { class: n('empty-text') }, 'No Data') )
+      return !props.data.length && h('div', { class: n('empty-block') }, h('span', { class: n('empty-text') }, props.emptyText) )
     }
     function getCheckedNodes() {
       return getNode(store.childNodes!)
@@ -335,34 +342,26 @@ export default defineComponent({
       const nodes = getNode(store.childNodes!)
       return nodes.map(node => (node as any)[props.nodeKey])
     }
-
+    
     function getNode(childNodes: TreeNodeType[]): TreeNodeType[] {
       if (!childNodes) return []
       let results: TreeNodeType[] = []
-      childNodes.forEach(node => {
-        if (hasChild(node)) {
-          const nodes = getNode(node.childNodes!)
-          results.push(...nodes)
-        } else {
-          if (node.checked) {
-            results.push(node)
-          }
+      forEachTree(childNodes, (node) => {
+        if (node.checked) {
+          results.push(node)
         }
       })
       return results
     }
     function setChecked(childNodes: TreeNodeType[], keys: any[]) {
       if (!childNodes) return []
-      childNodes.forEach(node => {
+      forEachTree(childNodes, (node) => {
         if (keys.includes((node as any)[props.nodeKey])) {
           node.checked = true
           checkAll(node, node.checked)
           checkIndeterminate(node.parent!)
         } else {
            node.checked = node.indeterminate = false
-          if (hasChild(node)) {
-            setChecked(node.childNodes!, keys)
-          }
         }
       })
     }
@@ -382,16 +381,34 @@ export default defineComponent({
     function filter(value: any) {
       filterValue.value = value
     }
-  
+
+    function getCurrentKey() {
+      return currentNode.value?[props.nodeKey]
+    }
+    function getCurrentNode() {
+      return currentNode.value
+    }
+
+    function forEachTree(nodes: TreeNodeType[], callback: (node: TreeNodeType) => void) {
+      if (!nodes) return 
+      nodes.forEach(node => {
+        callback(node)
+        if (hasChild(node)) {
+          forEachTree(node.childNodes!, callback)
+        }
+      })
+    }
     expose({
       getCheckedKeys,
       getCheckedNodes,
       setCheckedKeys,
       setCheckedNodes,
+      getCurrentKey,
+      getCurrentNode,
       filter
     })
     return () => {
-      return h('div', { class: n() }, [renderContext(store.childNodes), renderEmptyBlock()])
+      return h('div', { class: n() }, [store.childNodes.length ? renderContext(store.childNodes) : renderEmptyBlock()])
     }
   }
 })

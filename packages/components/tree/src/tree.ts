@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+import { PropType, ExtractPropTypes } from 'vue'
 export interface TreeNodeData {
   [key: string]: any
 }
@@ -25,6 +25,10 @@ export const TreeProps = {
       label: 'label',
       disabled: 'disabled'
     })
+  },
+  emptyText: {
+    type: String,
+    default: 'no Data'
   },
   showCheckbox: {
     type: Boolean
@@ -70,7 +74,7 @@ export const TreeProps = {
     type: Function
   }
 }
-
+export type TreeKey = string | number
 export interface TreeNodeType {
   level: number,
   label: string | number,
