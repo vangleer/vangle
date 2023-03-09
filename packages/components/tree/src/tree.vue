@@ -5,7 +5,7 @@
 import { defineComponent, h, reactive, computed, watch, ref, provide } from 'vue'
 import { createNamespace, isFunction } from '@vangle/utils'
 import { TreeProps, Node, TreeNodeData, TreeStore, TreeContextKeys } from './tree'
-import { addClass } from './utils'
+import { useDrag } from './use-drag'
 import { VanIcon } from '../../icon'
 import VanCollapseTransition from '../../collapse-transition'
 import VanCheckbox from '../../checkbox'
@@ -25,14 +25,12 @@ export default defineComponent({
     const dataProps = computed(() => ({ ...defaultProps, ...props.props }))
     const isLoading = computed(() => props.load && isFunction(props.load))
     const currentNode = ref<Node>()
-      const dragState = ref({
-      draggingNode: {} as Node,
-      dropNode: {} as Node
-    })
+    
     const store = reactive<TreeStore>({
       childNodes: getNodes(props.data),
       children: props.data
     })
+    const { createDragEvents } = useDrag(props, emit, refresh)
     provide(TreeContextKeys, props)
     watch(() => props.data, () => {
       refresh()
@@ -42,70 +40,6 @@ export default defineComponent({
       store.children = props.data
     }
 
-    function emitDrag(eventName: string, e: DragEvent) {
-      const { draggingNode, dropNode } = dragState.value
-      emit(eventName, draggingNode, dropNode, e)
-    }
-    function createDragEvents(node: Node) {
-      return {
-        onDragstart(e: DragEvent) {
-          e.stopPropagation()
-          dragState.value.draggingNode = node
-          dragState.value.dropNode = node
-          emitDrag('node-drag-start', e)
-        },
-        onDragenter(e: DragEvent) {
-          e.stopPropagation()
-          addClass(e.target as HTMLElement, 'is-dragging')
-          dragState.value.dropNode = node
-          emitDrag('node-drag-enter', e)
-        },
-        onDragleave(e: DragEvent) {
-          e.stopPropagation()
-          addClass(e.target as HTMLElement, 'is-dragging', true)
-          dragState.value.dropNode = node
-          emitDrag('node-drag-leave', e)
-        },
-        ondragover(e: DragEvent) {
-          e.preventDefault()
-          e.stopPropagation()
-          dragState.value.dropNode = node
-          emitDrag('node-drag-over', e)
-        },
-        ondragend(e: DragEvent) {
-          e.stopPropagation()
-          dragState.value.dropNode = node
-          emitDrag('node-drag-end', e)
-        },
-        onDrop(e: DragEvent) {
-          e.stopPropagation()
-          dragState.value.dropNode = node
-          addClass(e.target as HTMLElement, 'is-dragging', true)
-          if (isFunction(props.allowDrop) && !props.allowDrop!(dragState.value.draggingNode, dragState.value.dropNode, '')) {
-            return false
-          }
-          dragChange()
-          emitDrag('node-drop', e)
-        }
-      }
-    }
-    function dragChange() {
-      const { draggingNode, dropNode } = dragState.value
-      const draggingParentData = draggingNode?.parent?.data || store
-      const dropParentData = dropNode?.parent?.data || store
-
-      const isBrother = draggingParentData === dropParentData
-      const removeIndex = draggingParentData.children.findIndex((d: any) => d === draggingNode.data)
-      const index = dropParentData.children.findIndex((d: any) => d === dropNode.data)
-      if (isBrother) {
-        [dropParentData.children[removeIndex], dropParentData.children[index]] = [dropParentData.children[index], dropParentData.children[removeIndex]]
-      } else {
-        draggingParentData.children.splice(removeIndex, 1)
-        dropParentData.children.push(draggingNode.data)
-      }
-      
-      refresh()
-    }
     function hasChild(node?: Node) {
       return node && node.childNodes && node.childNodes.length
     }

@@ -75,7 +75,7 @@ export const TreeProps = {
     type: Function
   }
 }
-
+export type TreePropsType = ExtractPropTypes<typeof TreeProps>
 export const TreeNodeProps = {
   node: {
     type: Object as PropType<Node>,
@@ -91,7 +91,7 @@ export const TreeNodeProps = {
   filterLabel: Function
 }
 
-export const TreeContextKeys: InjectionKey<ExtractPropTypes<typeof TreeProps>> = Symbol('TreeContextKeys')
+export const TreeContextKeys: InjectionKey<TreePropsType> = Symbol('TreeContextKeys')
 export type TreeKey = string | number
 export interface Node {
   id?: number,
