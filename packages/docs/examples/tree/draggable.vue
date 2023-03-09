@@ -67,7 +67,7 @@ const allowDrop = (draggingNode: Node, dropNode: Node, type: AllowDropType) => {
   }
 }
 const allowDrag = (draggingNode: Node) => {
-  return !draggingNode.data.label.includes('Level three 3-1-1')
+  return draggingNode.data.label !== 'Level three 3-1-1'
 }
 
 const data = [

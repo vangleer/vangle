@@ -7,7 +7,18 @@ lang: zh-CN
 
 用清晰的层级结构展示信息，可展开或折叠。
 
-## 基础用法
+
+## 可拖拽节点
+
+通过 `draggable` 属性可让节点变为可拖拽
+
+:::demo
+
+tree/draggable
+
+:::
+
+<!-- ## 基础用法
 
 基础的树形结构展示
 
@@ -101,14 +112,4 @@ tree/filtering
 
 tree/accordion
 
-:::
-
-## 可拖拽节点
-
-通过 `draggable` 属性可让节点变为可拖拽
-
-:::demo
-
-tree/draggable
-
-:::
+::: -->

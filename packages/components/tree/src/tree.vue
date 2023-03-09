@@ -2,7 +2,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, defineComponent, h, reactive, computed, watch, ref } from 'vue'
+import { defineComponent, h, reactive, computed, watch, ref } from 'vue'
 import { createNamespace, isFunction } from '@vangle/utils'
 import { TreeProps, TreeNodeType } from './tree'
 import { VanIcon } from '../../icon'
@@ -16,23 +16,102 @@ const defaultProps = {
   label: 'label',
   disabled: 'disabled'
 }
+export type AllowDropType = 'inner' | 'prev' | 'next';
 export default defineComponent({
   name: 'VanTree',
   props: TreeProps,
   setup(props, { emit, expose, slots }) {
     const { n } = createNamespace('tree')
-    onMounted(() => {
-      console.log(props.data)
-    })
     const filterValue = ref('')
     const dataProps = computed(() => ({ ...defaultProps, ...props.props }))
     const isLoading = computed(() => props.load && isFunction(props.load))
     const store: any = reactive({
-      childNodes: getNodes(props.data)
+      childNodes: getNodes(props.data),
+      children: props.data
     })
     watch(() => props.data, () => {
-      store.childNodes = getNodes(props.data)
+      refresh()
     })
+    function refresh() {
+      store.childNodes = getNodes(props.data)
+      store.children = props.data
+    }
+    const dragState = ref({
+      draggingNode: {} as TreeNodeType,
+      dropNode: {} as TreeNodeType
+    })
+    function addClass(el: HTMLElement, className: string, isRemove: boolean = false) {
+      if (!isRemove) {
+        el.classList.add(className)
+      } else {
+        el.classList.remove(className)
+      }
+    }
+
+    function emitDrag(eventName: string, e: DragEvent) {
+      const { draggingNode, dropNode } = dragState.value
+      emit(eventName, draggingNode, dropNode, e)
+    }
+    function createDragEvents(node: TreeNodeType) {
+      return {
+        onDragstart(e: DragEvent) {
+          e.stopPropagation()
+          dragState.value.draggingNode = node
+          dragState.value.dropNode = node
+          emitDrag('node-drag-start', e)
+        },
+        onDragenter(e: DragEvent) {
+          e.stopPropagation()
+          addClass(e.target as HTMLElement, 'is-dragging')
+          dragState.value.dropNode = node
+          emitDrag('node-drag-enter', e)
+        },
+        onDragleave(e: DragEvent) {
+          e.stopPropagation()
+          addClass(e.target as HTMLElement, 'is-dragging', true)
+          dragState.value.dropNode = node
+          emitDrag('node-drag-leave', e)
+        },
+        ondragover(e: DragEvent) {
+          e.preventDefault()
+          e.stopPropagation()
+          dragState.value.dropNode = node
+          emitDrag('node-drag-over', e)
+        },
+        ondragend(e: DragEvent) {
+          e.stopPropagation()
+          dragState.value.dropNode = node
+          emitDrag('node-drag-end', e)
+        },
+        onDrop(e: DragEvent) {
+          e.stopPropagation()
+          dragState.value.dropNode = node
+          addClass(e.target as HTMLElement, 'is-dragging', true)
+          if (isFunction(props.allowDrop) && !props.allowDrop!(dragState.value.draggingNode, dragState.value.dropNode, '')) {
+            return false
+          }
+          dragChange()
+          emitDrag('node-drop', e)
+        }
+      }
+    }
+    function dragChange() {
+      const { draggingNode, dropNode } = dragState.value
+      const draggingParentData = draggingNode?.parent?.data || store
+      const dropParentData = dropNode?.parent?.data || store
+
+      const isBrother = draggingParentData === dropParentData
+      const removeIndex = draggingParentData.children.findIndex((d: any) => d === draggingNode.data)
+      const index = dropParentData.children.findIndex((d: any) => d === dropNode.data)
+      if (isBrother) {
+        [dropParentData.children[removeIndex], dropParentData.children[index]] = [dropParentData.children[index], dropParentData.children[removeIndex]]
+      } else {
+        draggingParentData.children.splice(removeIndex, 1)
+        dropParentData.children.push(draggingNode.data)
+      }
+      
+      refresh()
+    }
     function hasChild(node?: TreeNodeType) {
       return node && node.childNodes && node.childNodes.length
     }
@@ -89,7 +168,6 @@ export default defineComponent({
             root.indeterminate = false
           }
           else if (checkedChildNodes.length < root.childNodes.length) {
-            console.log('命中这里')
             break
           }
           else {
@@ -107,7 +185,6 @@ export default defineComponent({
       }
       return root
     }
-
     
     function checkAll(node: TreeNodeType, value: boolean) {
       if (!hasChild(node)) return
@@ -120,7 +197,10 @@ export default defineComponent({
 
     function getNodes(data: any[], level = 0, parent: TreeNodeType | null = null): TreeNodeType[] {
       if (!data) return []
-
+      if (!data.length && parent) {
+        parent.expand = false
+        parent.isLeaf = true
+      }
       const childrenKey = dataProps.value.children as string
       const labelKey = dataProps.value.label as string
       const isLeafKey = dataProps.value.isLeaf as string
@@ -217,10 +297,12 @@ export default defineComponent({
           },
           [icon, checkbox, loading, label]
         )
+        const draggable = props.draggable && isFunction(props.allowDrag) && props.allowDrag!(item)
+        const drages = draggable ? createDragEvents(item) : {}
         if (childNodes.length) {
           child = h(
             'div',
-            { class: [n('node'), extraNodeClassName] },
+            { class: [n('node'), extraNodeClassName], draggable, ...drages },
             [
               content,
               h(
@@ -235,7 +317,7 @@ export default defineComponent({
           )
         } else {
           if (!filterLabel(item.data)) continue
-          child = h('div', { class: [n('node'), extraNodeClassName] }, content)
+          child = h('div', { class: [n('node'), extraNodeClassName], draggable, ...drages }, content)
         }
         nodes.push(child)
       }

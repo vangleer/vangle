@@ -59,6 +59,15 @@ export const TreeProps = {
   },
   filterNodeMethod: {
     type: Function
+  },
+  draggable: {
+    type: Boolean
+  },
+  allowDrop: {
+    type: Function
+  },
+  allowDrag: {
+    type: Function
   }
 }
 
