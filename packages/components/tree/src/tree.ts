@@ -1,4 +1,5 @@
 import { InjectionKey, PropType, ExtractPropTypes } from 'vue'
+export const GAP = 18
 export interface TreeNodeData {
   [key: string]: any
 }
@@ -75,6 +76,21 @@ export const TreeProps = {
   }
 }
 
+export const TreeNodeProps = {
+  node: {
+    type: Object as PropType<Node>,
+    required: true
+  },
+  renderContent: TreeProps['renderContent'],
+  showCheckbox: TreeProps['showCheckbox'],
+  props: TreeProps['props'],
+  accordion: TreeProps['accordion'],
+  allowDrop: TreeProps['allowDrop'],
+  allowDrag: TreeProps['allowDrag'],
+  draggable: TreeProps['draggable'],
+  filterLabel: Function
+}
+
 export const TreeContextKeys: InjectionKey<ExtractPropTypes<typeof TreeProps>> = Symbol('TreeContextKeys')
 export type TreeKey = string | number
 export interface Node {
@@ -91,7 +107,8 @@ export interface Node {
   loaded?: boolean
   loading?: boolean
   data?: any,
-  store?: any
+  store?: any,
+  draggable?: boolean
 }
 
 export type TreeStore = {

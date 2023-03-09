@@ -6,6 +6,7 @@ import { defineComponent, h, reactive, computed, watch, ref, provide } from 'vue
 import { createNamespace, isFunction } from '@vangle/utils'
 import { TreeProps, Node, TreeNodeData, TreeStore, TreeContextKeys } from './tree'
 import { addClass } from './utils'
+import TreeNode from './tree-node.vue'
 import { VanIcon } from '../../icon'
 import VanCollapseTransition from '../../collapse-transition'
 import VanCheckbox from '../../checkbox'
@@ -42,70 +43,6 @@ export default defineComponent({
       store.children = props.data
     }
 
-    function emitDrag(eventName: string, e: DragEvent) {
-      const { draggingNode, dropNode } = dragState.value
-      emit(eventName, draggingNode, dropNode, e)
-    }
-    function createDragEvents(node: Node) {
-      return {
-        onDragstart(e: DragEvent) {
-          e.stopPropagation()
-          dragState.value.draggingNode = node
-          dragState.value.dropNode = node
-          emitDrag('node-drag-start', e)
-        },
-        onDragenter(e: DragEvent) {
-          e.stopPropagation()
-          addClass(e.target as HTMLElement, 'is-dragging')
-          dragState.value.dropNode = node
-          emitDrag('node-drag-enter', e)
-        },
-        onDragleave(e: DragEvent) {
-          e.stopPropagation()
-          addClass(e.target as HTMLElement, 'is-dragging', true)
-          dragState.value.dropNode = node
-          emitDrag('node-drag-leave', e)
-        },
-        ondragover(e: DragEvent) {
-          e.preventDefault()
-          e.stopPropagation()
-          dragState.value.dropNode = node
-          emitDrag('node-drag-over', e)
-        },
-        ondragend(e: DragEvent) {
-          e.stopPropagation()
-          dragState.value.dropNode = node
-          emitDrag('node-drag-end', e)
-        },
-        onDrop(e: DragEvent) {
-          e.stopPropagation()
-          dragState.value.dropNode = node
-          addClass(e.target as HTMLElement, 'is-dragging', true)
-          if (isFunction(props.allowDrop) && !props.allowDrop!(dragState.value.draggingNode, dragState.value.dropNode, '')) {
-            return false
-          }
-          dragChange()
-          emitDrag('node-drop', e)
-        }
-      }
-    }
-    function dragChange() {
-      const { draggingNode, dropNode } = dragState.value
-      const draggingParentData = draggingNode?.parent?.data || store
-      const dropParentData = dropNode?.parent?.data || store
-
-      const isBrother = draggingParentData === dropParentData
-      const removeIndex = draggingParentData.children.findIndex((d: any) => d === draggingNode.data)
-      const index = dropParentData.children.findIndex((d: any) => d === dropNode.data)
-      if (isBrother) {
-        [dropParentData.children[removeIndex], dropParentData.children[index]] = [dropParentData.children[index], dropParentData.children[removeIndex]]
-      } else {
-        draggingParentData.children.splice(removeIndex, 1)
-        dropParentData.children.push(draggingNode.data)
-      }
-      
-      refresh()
-    }
     function hasChild(node?: Node) {
       return node && node.childNodes && node.childNodes.length
     }
@@ -123,36 +60,8 @@ export default defineComponent({
       })
     }
     
-    function handleNodeClick(node: Node) {
-      if (node.loading || !props.expandOnClickNode) return
-      node.expand = !node.expand
-      currentNode.value = node
-      if (props.accordion) {
-        const siblings = node.parent?.childNodes || store.childNodes
-        siblings.forEach((n: Node) => {
-          if (n !== node) n.expand = false
-        })
-      }
-      if (isLoading.value && !node.loaded) {
-        node.loading = true
-        loadData(node)
-      }
-      emit(node.expand ? 'node-expand' : 'node-collapse', node.data, node)
-      emit('node-click', node)
-    }
-    function handleContextMenu(e: Event, node: Node) {
-      emit('check-contextmenu', e, node.data, node)
-    }
     function handleChecked(node: Node, value: boolean) {
-      node.checked = node.indeterminate ? true : value
-
-      if (node.indeterminate) {
-        node.indeterminate = false
-      }
-
       emit('check-change', node, value, node.indeterminate)
-      checkAll(node, node.checked)
-      checkIndeterminate(node.parent!)
     }
     
     function checkIndeterminate(node: Node) {
@@ -241,18 +150,7 @@ export default defineComponent({
         return node
       })
     }
-    const getCheckbox = (node: Node) => {
-      return props.showCheckbox && h(
-        VanCheckbox,
-        {
-          label: '',
-          modelValue: node.checked,
-          indeterminate: node.indeterminate,
-          disabled: node.disabled,
-          'onUpdate:modelValue': (val) => handleChecked(node, val)
-        }
-      )
-    }
+    
     function getCheckedNodes() {
       return getNode(store.childNodes!)
     }
@@ -325,74 +223,46 @@ export default defineComponent({
       getCurrentNode,
       filter
     })
-
-    /**
-     * 渲染label
-     * 1. 如果用户传入渲染函数则使用用户的渲染
-     * 2. 如果有插槽使用插槽并传入参数
-     * 3. 否则使用默认
-     */
-     function renderLabel(node: Node) {
-      if (isFunction(props.renderContent)) {
-        return props.renderContent!(h, { node, data: node.data, store: node.store })
-      } else if (slots.default) {
-        return slots.default({ node, data: node.data, store: node.store })
-      } else {
-        return h('span', { class: n('node__label') }, node.label)
+    function handleNodeClick(node: Node) {
+      if (node.loading || !props.expandOnClickNode) return
+      node.expand = !node.expand
+      currentNode.value = node
+      if (props.accordion) {
+        const siblings = node.parent?.childNodes || store.childNodes
+        siblings.forEach((n: Node) => {
+          if (n !== node) n.expand = false
+        })
       }
+      if (isLoading.value && !node.loaded) {
+        node.loading = true
+        loadData(node)
+      }
+      emit(node.expand ? 'node-expand' : 'node-collapse', node.data, node)
+      emit('node-click', node)
     }
-
     function renderContext(data: Node[]): any[] {
       if (!data) return []
       let nodes = []
+      const dProps = {
+        showCheckbox: props.showCheckbox,
+        renderContent: props.renderContent,
+        props: dataProps.value,
+        accordion: props.accordion,
+        allowDrop: props.allowDrop
+      }
       for (let i = 0; i < data.length; i++) {
-        const item = data[i]
-        // 处理过滤
-        const childNodes = (item.childNodes || []).filter(n => filterLabel(n.data))
-
-        let child = null
-        const icon = h(VanIcon, { name: 'caret-right', class: [n('node__expand-icon'), { 'is-leaf': item.isLeaf }] })
-        const loading = item.loading && h(VanIcon, { name: 'loading', class: [n('node__loading-icon'), { 'is-loading': true }] })
-        const label = renderLabel(item)
-        const checkbox = getCheckbox(item)
-        const extraNodeClassName = dataProps.value.class && isFunction(dataProps.value.class) ? dataProps.value.class(item.data, item) : dataProps.value.class
-        const content = h(
-          'div',
-          {
-            class: [n('node__content'), { 'is-expand': item.expand, 'is-checked': item.checked }],
-            style: { paddingLeft: item.level * paddingLeft + 'px' },
-            onClick() {
-              handleNodeClick(item)
-            },
-            onContextmenu(e: Event) {
-              handleContextMenu(e, item)
+        nodes.push(
+          h(
+            TreeNode,
+            {
+              node: data[i],
+              ...dProps,
+              filterLabel,
+              onNodeClick: handleNodeClick,
+              onNodeChecked: handleChecked
             }
-          },
-          [icon, checkbox, loading, label]
-        )
-        const draggable = props.draggable && isFunction(props.allowDrag) && props.allowDrag!(item)
-        const drages = draggable ? createDragEvents(item) : {}
-        if (childNodes.length) {
-          child = h(
-            'div',
-            { class: [n('node'), extraNodeClassName], draggable, ...drages },
-            [
-              content,
-              h(
-                VanCollapseTransition,
-                () => item.expand && h(
-                  'div',
-                  { class: 'node_children' },
-                  renderContext(item.childNodes!)
-                )
-              )
-            ]
           )
-        } else {
-          if (!filterLabel(item.data)) continue
-          child = h('div', { class: [n('node'), extraNodeClassName], draggable, ...drages }, content)
-        }
-        nodes.push(child)
+        )
       }
 
       return nodes
