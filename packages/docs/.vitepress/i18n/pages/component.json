@@ -12,16 +12,8 @@
           "text": "Icon 图标"
         },
         {
-          "link": "/popper",
-          "text": "Popper"
-        },
-        {
           "link": "/scrollbar",
-          "text": "Scrollbar"
-        },
-        {
-          "link": "/tree",
-          "text": "Tree"
+          "text": "Scrollbar 滚动条"
         }
       ]
     },
@@ -60,6 +52,10 @@
         {
           "link": "/collapse",
           "text": "Collapse 折叠面板"
+        },
+        {
+          "link": "/tree",
+          "text": "Tree 树形控件"
         }
       ]
     },
