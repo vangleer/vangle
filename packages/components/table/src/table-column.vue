@@ -1,14 +1,12 @@
 <template>
-  <div :class="[n('column')]">
-    
-  </div>
+  <div :class="[n('column')]"></div>
 </template>
 
 <script lang="ts" setup>
 import { inject, onMounted } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { TableColumnProps, TableContextKey } from './table'
-import { createColumnName } from './utils'
+import { columnId } from './utils'
 defineOptions({
   name: 'VanTableColumn'
 })
@@ -19,8 +17,20 @@ const { n } = createNamespace('table')
 
 const ctx = inject(TableContextKey)
 
+function fn() {
+  let width: number | undefined = parseInt(props.width as any)
+  if (isNaN(width)) {
+    width = undefined
+  }
+  return {
+    ...props,
+    width,
+    id: columnId()
+  }
+}
+
 onMounted(() => {
-  ctx?.store.columns.push({ ...props, name: `${ctx?.tableName}_${createColumnName()}` })
+  ctx?.store.columns.push(fn())
 })
 </script>
 

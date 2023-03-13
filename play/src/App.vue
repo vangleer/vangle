@@ -1,10 +1,33 @@
 <template>
-  <VanButton type="primary">啦啦啦啦</VanButton>
+  <van-table :data="tableData" style="width: 100%" stripe>
+    <van-table-column prop="date" label="Date" width="180" />
+    <van-table-column prop="name" label="Name" width="180" />
+    <van-table-column prop="address" label="Address" />
+  </van-table>
 </template>
 
-<script setup lang="ts">
-// import '../../packages/vangle/dist/style.css'
-// import { VanButton } from '../../packages/vangle/dist'
+<script lang="ts" setup>
+import { VanTable, VanTableColumn } from '@vangle/components'
+const tableData = [
+  {
+    date: '2016-05-03',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-02',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-04',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-01',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+]
 </script>
-
-<style scoped></style>
