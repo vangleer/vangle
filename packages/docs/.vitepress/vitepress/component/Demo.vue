@@ -11,16 +11,27 @@
       <div class="van-divider"></div>
 
       <div class="op-btns">
-        <span class="op-btn" @click="toggleSourceVisible()">查看源代码</span>
+        <VanTooltip content="复制代码" :show-arrow="false">
+          <span class="op-btn" @click="handleCopy">
+            <VanIcon name="document-copy" />
+          </span>
+        </VanTooltip>
+        <VanTooltip content="查看源代码" :show-arrow="false">
+          <span class="op-btn" @click="toggleSourceVisible()">
+            <VanIcon name="arrow-left" />
+            <VanIcon name="arrow-right" style="margin-left: -2px;" />
+          </span>
+        </VanTooltip>
+        <!-- <span class="op-btn" @click="toggleSourceVisible()">查看源代码</span> -->
       </div>
 
       <div v-show="sourceVisible"></div>
 
-      <Transition name="van-collapse-transition">
+      <VanCollapseTransition>
         <div v-show="sourceVisible" class="example-source-wrapper">
           <div class="example-source language-vue" v-html="decodedSource"></div>
         </div>
-      </Transition>
+      </VanCollapseTransition>
       
       <Transition name="van-fade-in-linear">
         <div
@@ -28,7 +39,8 @@
           class="example-float-control"
           @click="toggleSourceVisible()"
         >
-          <span>隐藏代码</span>
+          <VanIcon name="caret-top" />
+          <span style="padding-left: 8px;">隐藏代码</span>
         </div>
       </Transition>
     </div>
@@ -37,8 +49,9 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-const demos = import.meta.globEager('../../../examples/**/*.vue')
-
+import { VanIcon, VanTooltip, VanMessage } from '@vangle/components'
+import VanCollapseTransition from '@vangle/components/collapse-transition'
+import { demos, sourceCode } from '../../../examples'
 const props = defineProps<{
   source: string
   path: string
@@ -46,13 +59,11 @@ const props = defineProps<{
   description?: string
 }>()
 
-const n = 'button/basic'
-
 const formatPathDemos = computed(() => {
   const demoObj = {}
 
   Object.keys(demos || {}).forEach(key => {
-    demoObj[key.replace('../../../examples/', '').replace('.vue', '')] =
+    demoObj[key.replace('./', '').replace('.vue', '')] =
       demos[key].default
   })
 
@@ -70,6 +81,17 @@ const decodedDescription = computed(() =>
 
 function toggleSourceVisible() {
   sourceVisible.value = !sourceVisible.value
+}
+
+function handleCopy() {
+  var aux = document.createElement('textarea')
+  aux.innerHTML = sourceCode[`./${props.path}.vue`]
+  document.body.appendChild(aux)
+  aux.select()
+  document.execCommand('copy')
+  document.body.removeChild(aux)
+  
+  VanMessage.success('复制成功')
 }
 </script>
 
@@ -91,6 +113,13 @@ function toggleSourceVisible() {
     align-items: center;
     justify-content: flex-end;
     height: 2.5rem;
+    cursor: pointer;
+    .op-btn {
+      margin-left: 10px;
+      &:hover {
+        color: var(--van-color-primary);
+      }
+    }
   }
   .example-float-control {
     display: flex;
@@ -109,7 +138,7 @@ function toggleSourceVisible() {
     right: 0;
     bottom: 0;
     z-index: 10;
-
+    background-color: var(--bg-color, '#fff');
     &:hover {
       color: var(--van-color-primary);
     }
@@ -129,5 +158,13 @@ function toggleSourceVisible() {
   margin: 0px 0;
   border-top: 1px solid var(--border-color);
 }
+.van-fade-in-linear-enter-active,
+.van-fade-in-linear-leave-active {
+  transition: all .3s;
+}
 
+.van-fade-in-linear-enter-from,
+.van-fade-in-linear-leave-to {
+  opacity: 0;
+}
 </style>
