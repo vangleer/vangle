@@ -5,6 +5,7 @@
   --van-table-header-text-color: var(--van-text-color-secondary);
   --van-table-striped-color-odd: transparent;
   --van-table-striped-color-even: #fafafa;
+  --van-table-tr-bg-color: var(--van-table-white);
   color: var(--van-table-header-text-color);
 
   .@{N} &__header,
@@ -20,6 +21,16 @@
     }
   }
 
+  &--border {
+    .@{N}__cell {
+      border: var(--van-border);
+    }
+
+    th.@{N}__cell {
+      border-bottom: 0;
+    }
+  }
+
   div table {
     border-collapse: collapse;
     font-size: var(--van-font-size-middle);
@@ -29,8 +40,12 @@
     font-weight: 500;
   }
 
-  tr {
+  &__cell {
     border-bottom: var(--van-border);
+  }
+
+  tr {
+    background-color: var(--van-table-tr-bg-color);
 
     th,
     td {

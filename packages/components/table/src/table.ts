@@ -1,6 +1,6 @@
 
-import { InjectionKey, PropType } from 'vue'
-type TableData = {
+import { InjectionKey, PropType, ExtractPropTypes, Ref } from 'vue'
+export type TableData = {
   [key: string]: any
 }
 export type TableLayout = 'fixed' | 'auto'
@@ -17,10 +17,19 @@ export const TableProps = {
     type: String
   },
   border: Boolean,
-  stripe: Boolean
+  stripe: Boolean,
+  rowClassName: {
+    type: [Function, String]
+  },
+  height: {
+    type: [String, Number]
+  }
 }
 
+export type TableTypes = ExtractPropTypes<typeof TableProps>
+
 export const TableColumnProps = {
+  id: Number,
   prop: {
     type: String
   },
@@ -30,11 +39,14 @@ export const TableColumnProps = {
   }
 }
 
+export type TableColumnTypes = ExtractPropTypes<typeof TableColumnProps>
+
 export interface Store {
-  columns: TableData[]
+  columns: TableColumnTypes[]
 }
 
 export interface Table {
+  columns: Ref<TableData[]>
   store: any,
   tableName: string
 }

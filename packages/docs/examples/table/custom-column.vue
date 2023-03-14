@@ -1,22 +1,20 @@
 <template>
   <van-table :data="tableData" style="width: 100%">
-    <van-table-column label="Date" prop="date" width="180">
-      <!-- <template #default="scope">
+    <van-table-column label="Date" width="290">
+      <template #default="scope">
         <div style="display: flex; align-items: center">
           <VanIcon name="timer" />
           <span style="margin-left: 10px">{{ scope.row.date }}</span>
         </div>
-      </template> -->
+      </template>
     </van-table-column>
     <van-table-column label="Name" width="180">
       <template #default="scope">
         <VanTooltip effect="light" trigger="hover" placement="top" width="auto">
+          <VanButton>{{ scope.row.name }}</VanButton>
           <template #content>
             <div>name: {{ scope.row.name }}</div>
             <div>address: {{ scope.row.address }}</div>
-          </template>
-          <template>
-            <VanButton>{{ scope.row.name }}</VanButton>
           </template>
         </VanTooltip>
       </template>
@@ -38,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { VanIcon, VanTooltip, VanButton, VanTable, VanTableColumn } from '@vangle/components'
+import { VanIcon, VanTooltip, VanButton } from '@vangle/components'
 
 interface User {
   date: string

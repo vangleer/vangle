@@ -15,7 +15,7 @@
           <hColgroup :columns="store.columns" :table-layout="tableLayout" />
           <thead>
             <tr>
-              <th v-for="col in store.columns" colspan="1" rowspan="1">
+              <th v-for="col in store.columns" :class="n('cell')">
                 <div class="cell">{{ col.label }}</div>
               </th>
             </tr>
@@ -23,34 +23,35 @@
         </table>
       </div>
       <div :class="[n('body-wrapper')]">
-        <table 
-          :class="n('body')"
-          :style="tableStyle"
-          border="0"
-          cellpadding="0"
-          cellspacing="0"
-        >
-          <hColgroup :columns="store.columns" :table-layout="tableLayout" />
-          <tbody>
-            <tr v-for="row in data">
-              <td v-for="col in store.columns" colspan="1" rowspan="1">
-                <div class="cell">{{ row[col.prop] }}</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <VanScrollbar :height="height">
+          <table 
+            :class="n('body')"
+            :style="tableStyle"
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+          >
+            <hColgroup :columns="store.columns" :table-layout="tableLayout" />
+            <TableBody
+              :data="data"
+              :rowClassName="rowClassName"
+              :store="store"
+            />
+          </table>
+        </VanScrollbar>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, provide, reactive, ref, computed, CSSProperties } from 'vue'
+import { getCurrentInstance, onMounted, provide, reactive, ref, computed, CSSProperties, watchEffect } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { TableProps, TableContextKey, Store } from './table'
 import { tableId } from './utils'
 import { hColgroup } from './h-helper'
-
+import { VanScrollbar } from '@vangle/components'
+import TableBody from './table-body.vue'
 defineOptions({
   name: 'VanTable'
 })
@@ -69,28 +70,28 @@ table.store = store
 
 provide(TableContextKey, table)
 
-const claz = computed(() => [n(), props.stripe ? n('--striped') : ''])
+const claz = computed(() => [n(), { [n('--striped')]: props.stripe, [n('--border')]: props.border }])
 
 const tableStyle = computed<CSSProperties>(() => {
-  const style: CSSProperties = { width: props.width, tableLayout: props.tableLayout }
+  const style = { width: props.width, tableLayout: props.tableLayout }
   return style
 })
 
 onMounted(() => {
-  let tableWidth = tableRef.value!.offsetWidth
-  const ws = store.columns.filter(item => {
-    if (item.width) {
-      tableWidth -= item.width
+  watchEffect(() => {
+    let tableWidth = tableRef.value!.offsetWidth
+    const ws = store.columns.filter(item => {
+      if (item.width) {
+        tableWidth -= item.width as number
+      }
+      return !item.width
+    })
+    if (ws.length !== store.columns.length) {
+      tableWidth /= ws.length
+      ws.forEach(w => w.width = tableWidth)
     }
-    return !item.width
   })
-  if (ws.length !== store.columns.length) {
-    tableWidth /= ws.length
-    ws.forEach(w => w.width = tableWidth)
-  }
-  console.log([...store.columns], 'fn()')
 })
-
 </script>
 
 <style lang="less">
