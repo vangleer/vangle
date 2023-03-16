@@ -29,6 +29,7 @@ const pick = (sourceObj: any, keys: string[]) => {
 }
 
 const popperProps = computed(() => {
+  console.log(attrs, 'attrsattrsattrs')
   return { ...attrs, ...pick(props, Object.keys(PopperProps)) }
 })
 

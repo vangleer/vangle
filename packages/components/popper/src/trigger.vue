@@ -79,6 +79,8 @@ const setEvents = <T extends (e: Event) => void>(
     Object.entries(events).forEach(([name, handler]) => {
       el[type](name, handler)
     })
+
+    el.addEventListener('mouseup', e => e.stopPropagation())
   }
 }
 

@@ -18,6 +18,10 @@
         {
           "link": "/tag",
           "text": "Tag"
+        },
+        {
+          "link": "/date-picker",
+          "text": "DatePicker"
         }
       ]
     },

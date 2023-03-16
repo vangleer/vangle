@@ -39,7 +39,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-
 import type { TagType } from '@vangle/components'
 
 type Item = { type: TagType; label: string }

@@ -72,6 +72,10 @@ export const PopperProps = {
   },
   visible: {
     type: Boolean
+  },
+  popperClass: {
+    type: String,
+    default: ''
   }
 }
 

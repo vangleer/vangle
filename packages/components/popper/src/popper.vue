@@ -7,7 +7,7 @@
       <div
         v-if="!disabled && show"
         ref="contentRef"
-        :class="[n(), `is-${effect}`, { 'is-pure': pure }]"
+        :class="[n(), `is-${effect}`, { 'is-pure': pure }, popperClass]"
         :style="contentStyle"
         :data-side="placement"
       >
