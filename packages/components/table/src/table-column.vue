@@ -38,7 +38,6 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
-      console.log(id, 'onBeforeUnmount888')
       const index = ctx?.store.columns.findIndex((c: TableData) => c.id === id)
       ctx?.store.columns.splice(index, 1)
     })
