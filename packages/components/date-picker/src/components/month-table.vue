@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, onMounted } from 'vue'
+import { computed, inject } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { DatePickerContextKey } from '../date-picker'
 import dayjs, { Dayjs } from 'dayjs'
@@ -59,9 +59,6 @@ function getIndex(row: number, col: number) {
   return (row - 1) * 4 + col - 1
 }
 
-onMounted(() => {
-  console.log(MONTHS.value)
-})
 </script>
 
 <style lang="less">

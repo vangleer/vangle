@@ -90,7 +90,6 @@ function change(type: ManipulateType, num: number) {
 
 watch(() => props.date, () => {
   insertDate.value = dayjs(props.date.toDate())
-  console.log(insertDate.value.month())
 }, { immediate: true })
 </script>
 

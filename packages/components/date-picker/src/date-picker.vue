@@ -1,6 +1,6 @@
 <template>
   <VanTooltip ref="tooltipRef" v-bind="tooltipProps">
-    <VanInput class="van-date-editor" v-model="value" placeholder="Pick a day" />
+    <VanInput prefix-icon="calendar" class="van-date-editor" v-model="value" placeholder="Pick a day" />
     <template #content>
       <VanPickerPanel :class="n()" :type="type" :date="date" @pick="handlePick" />
     </template>
@@ -75,7 +75,6 @@ const date = computed<Dayjs>({
 })
 const value = computed(() => {
   const d = dayjs(props.modelValue)
-  console.log(format.value, 'format.value')
   return d.isValid() ? d.format(format.value) : ''
 })
 
