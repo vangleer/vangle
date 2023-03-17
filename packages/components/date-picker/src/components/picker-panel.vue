@@ -4,22 +4,22 @@
       <div :class="[n('body')]">
         <div :class="[n('header')]">
           <span :class="n('prev-btn')">
-            <button v-if="type !== 'month'" :class="n('icon-btn')" @click="change('year', -1)">
+            <button :class="n('icon-btn')" @click="change('year', -1)">
               <VanIcon name="d-arrow-left" />
             </button>
-            <button v-if="type !== 'year'" :class="n('icon-btn')" @click="change('month', -1)">
+            <button v-if="type === 'date'" :class="n('icon-btn')" @click="change('month', -1)">
               <VanIcon name="arrow-left" />
             </button>
           </span>
           <div :class="[n('header-label')]">
             <button>{{ year }}</button>
-            <button v-if="type !== 'year'">{{ month }}</button>
+            <button v-if="type === 'date'">{{ month }}</button>
           </div>
           <span :class="n('next-btn')">
-            <button v-if="type !== 'year'" :class="n('icon-btn')" @click="change('month', 1)">
+            <button v-if="type === 'date'" :class="n('icon-btn')" @click="change('month', 1)">
               <VanIcon name="arrow-right" />
             </button>
-            <button v-if="type !== 'month'" :class="n('icon-btn')" @click="change('year', 1)">
+            <button :class="n('icon-btn')" @click="change('year', 1)">
               <VanIcon name="d-arrow-right" />
             </button>
           </span>
@@ -79,11 +79,18 @@ function handlePick(cell: DateCell) {
 }
 
 function change(type: ManipulateType, num: number) {
-  insertDate.value = dayjs(insertDate.value.toDate()).add(num, type)
+  if (props.type === 'year') {
+    insertDate.value = dayjs(insertDate.value.toDate()).add(num * 10, type)
+  } else if (props.type === 'month') {
+    insertDate.value = dayjs(insertDate.value.toDate()).add(num, 'year')
+  } else {
+    insertDate.value = dayjs(insertDate.value.toDate()).add(num, type)
+  }
 }
 
 watch(() => props.date, () => {
   insertDate.value = dayjs(props.date.toDate())
+  console.log(insertDate.value.month())
 }, { immediate: true })
 </script>
 

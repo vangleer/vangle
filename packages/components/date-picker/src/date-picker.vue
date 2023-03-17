@@ -75,6 +75,7 @@ const date = computed<Dayjs>({
 })
 const value = computed(() => {
   const d = dayjs(props.modelValue)
+  console.log(format.value, 'format.value')
   return d.isValid() ? d.format(format.value) : ''
 })
 

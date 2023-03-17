@@ -52,7 +52,7 @@ function handlePick(row: number, col: number) {
 }
 
 function isSelect(row: number, col: number) {
-  return currentYear.value === getText(row, col)
+  return datePicker?.date.value.year() === getText(row, col)
 }
 
 function getText(row: number, col: number) {

@@ -35,25 +35,24 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits(['pick'])
-const currentYear = computed(() => props.date.year())
-const currentNumber = computed(() => props.date.year() % 10)
+
 const datePicker = inject(DatePickerContextKey)
 
 const { n } = createNamespace('month-table')
 const MONTHS = computed(() => props.date.locale('en').localeData().monthsShort())
 
 function handlePick(row: number, col: number) {
-  const year = getIndex(row, col)
-  if (year) {
+  const month = getIndex(row, col)
+  if (month) {
     const cell = {
-      date: dayjs(props.date.set('year', year))
+      date: dayjs(props.date.set('month', month))
     }
     emit('pick', cell)
   }
 }
 
 function isSelect(row: number, col: number) {
-  return currentYear.value === getIndex(row, col)
+  return datePicker?.date.value.year() === props.date.year() && datePicker?.date.value.format('MMM') === MONTHS.value[getIndex(row, col)]
 }
 
 function getIndex(row: number, col: number) {
