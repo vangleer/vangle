@@ -25,7 +25,16 @@
           </span>
         </div>
         <div :class="[n('content')]">
-          <DateTable :date="insertDate" @pick="handlePick" />
+          <DateTable
+            v-if="type === 'date'"
+            :date="insertDate"
+            @pick="handlePick"
+          />
+          <YearTable
+            v-else-if="type === 'year'"
+            :date="insertDate"
+            @pick="handlePick"
+          />
         </div>
       </div>
     </div>
@@ -38,13 +47,15 @@ import { VanIcon } from '@vangle/components'
 import { createNamespace } from '@vangle/utils'
 import { DateCell } from '../date-picker'
 import DateTable from './date-table.vue'
+import YearTable from './year-table.vue'
 import dayjs, { Dayjs, ManipulateType } from 'dayjs'
 defineOptions({
   name: 'VanPickerPanel'
 })
 
 const props = withDefaults(defineProps<{
-  date: Dayjs
+  date: Dayjs,
+  type: string
 }>(), {
   date: () => dayjs()
 })

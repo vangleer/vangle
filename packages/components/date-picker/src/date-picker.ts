@@ -4,13 +4,14 @@ import type { Dayjs } from 'dayjs'
 
 export const DatePickerProps = {
   modelValue: [String, Number, Date],
-  format: {
-    type: String,
-    default: 'YYYY-MM-DD'
-  },
+  format: String,
   valueFormat: String,
   disabledDate: {
     type: Function as PropType<(time: Date) => boolean>
+  },
+  type: {
+    type: String as PropType<'date' | 'year' | 'month'>,
+    default: 'date'
   }
 }
 

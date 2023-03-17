@@ -2,7 +2,7 @@
   <VanTooltip ref="tooltipRef" v-bind="tooltipProps">
     <VanInput class="van-date-editor" v-model="value" placeholder="Pick a day" />
     <template #content>
-      <VanPickerPanel :class="n()" :date="date" @pick="handlePick" />
+      <VanPickerPanel :class="n()" :type="type" :date="date" @pick="handlePick" />
     </template>
   </VanTooltip>
 </template>
@@ -52,6 +52,16 @@ const tooltipProps = reactive<any>({
   popperClass: 'van-picker__popper'
 })
 
+const formats = {
+  year: 'YYYY',
+  month: 'YYYY-MM',
+  date: 'YYYY-MM-DD'
+}
+
+const format = computed(() => {
+  return props.format ? props.format : formats[props.type]
+})
+
 const date = computed<Dayjs>({
   get: () => props.modelValue ? dayjs(props.modelValue) : dayjs(),
   set: (val) => {
@@ -65,7 +75,7 @@ const date = computed<Dayjs>({
 })
 const value = computed(() => {
   const d = dayjs(props.modelValue)
-  return d.isValid() ? d.format(props.format) : ''
+  return d.isValid() ? d.format(format.value) : ''
 })
 
 function handlePick(cell: DateCell) {
