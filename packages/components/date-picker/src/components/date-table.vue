@@ -43,7 +43,6 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits(['pick'])
 
 const datePicker = inject(DatePickerContextKey)
-console.log(datePicker, 'datePicker')
 const tableRows = ref<DateCell[][]>([[], [], [], [], [], []])
 
 const WEEKS_CONSTANT = computed(() => props.date

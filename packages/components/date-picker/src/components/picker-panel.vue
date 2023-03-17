@@ -4,22 +4,22 @@
       <div :class="[n('body')]">
         <div :class="[n('header')]">
           <span :class="n('prev-btn')">
-            <button :class="n('icon-btn')" @click="change('year', -1)">
+            <button v-if="type !== 'month'" :class="n('icon-btn')" @click="change('year', -1)">
               <VanIcon name="d-arrow-left" />
             </button>
-            <button :class="n('icon-btn')" @click="change('month', -1)">
+            <button v-if="type !== 'year'" :class="n('icon-btn')" @click="change('month', -1)">
               <VanIcon name="arrow-left" />
             </button>
           </span>
           <div :class="[n('header-label')]">
             <button>{{ year }}</button>
-            <button>{{ month }}</button>
+            <button v-if="type !== 'year'">{{ month }}</button>
           </div>
           <span :class="n('next-btn')">
-            <button :class="n('icon-btn')" @click="change('month', 1)">
+            <button v-if="type !== 'year'" :class="n('icon-btn')" @click="change('month', 1)">
               <VanIcon name="arrow-right" />
             </button>
-            <button :class="n('icon-btn')" @click="change('year', 1)">
+            <button v-if="type !== 'month'" :class="n('icon-btn')" @click="change('year', 1)">
               <VanIcon name="d-arrow-right" />
             </button>
           </span>
@@ -32,6 +32,11 @@
           />
           <YearTable
             v-else-if="type === 'year'"
+            :date="insertDate"
+            @pick="handlePick"
+          />
+          <MonthTable
+            v-else-if="type === 'month'"
             :date="insertDate"
             @pick="handlePick"
           />
@@ -48,6 +53,7 @@ import { createNamespace } from '@vangle/utils'
 import { DateCell } from '../date-picker'
 import DateTable from './date-table.vue'
 import YearTable from './year-table.vue'
+import MonthTable from './month-table.vue'
 import dayjs, { Dayjs, ManipulateType } from 'dayjs'
 defineOptions({
   name: 'VanPickerPanel'
