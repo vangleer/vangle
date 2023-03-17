@@ -1,15 +1,17 @@
 ---
-title: DatePicker
-lang: en-US
+title: DatePicker 日期选择器
+lang: zh-CN
 ---
 
-# DatePicker
+# DatePicker 日期选择器
 
-Commonly used DatePicker.
+用于选择或输入日期
 
-## Basic usage
+## 选择某一天
 
-:::demo description of DatePicker
+以”日“为基本单位，基础的日期选择控件
+
+:::demo 基本单位由 `type` 属性指定。 通过 `shortcuts` 配置快捷选项， 通过 `disabledDate` 函数，来设置禁用掉的日期。
 
 date-picker/basic
 

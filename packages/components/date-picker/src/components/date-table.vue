@@ -7,11 +7,14 @@
         </th>
       </tr>
       <tr v-for="row, rowKey in rows" :key="rowKey">
-        <td v-for="col, colKey in row" :key="`${rowKey + colKey}`">
+        <td
+          v-for="col, colKey in row"
+          :key="`${rowKey + colKey}`"
+          :class="[col.type, { disabled: col.disabled }]"
+        >
           <div
             :class="[
-              n('cell'),
-              { disabled: col.disabled, current: col.current }
+              n('cell'), { selected: col.isSelected }
             ]"
             @click="handlePick(col)"
           >
@@ -24,24 +27,23 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { createNamespace } from '@vangle/utils'
-import { DateCell } from '../date-picker'
+import { computed, ref, inject } from 'vue'
+import { createNamespace, isFunction } from '@vangle/utils'
+import { DateCell, DatePickerContextKey, DateCellType } from '../date-picker'
 import dayjs, { Dayjs } from 'dayjs'
 defineOptions({
   name: 'VanPickerPanel'
 })
-
 const props = withDefaults(defineProps<{
-  date: Dayjs,
-  pickeDate: Dayjs
+  date: Dayjs
 }>(), {
-  date: () => dayjs(),
-  pickeDate: () => dayjs()
+  date: () => dayjs()
 })
 
 const emit = defineEmits(['pick'])
 
+const datePicker = inject(DatePickerContextKey)
+console.log(datePicker, 'datePicker')
 const tableRows = ref<DateCell[][]>([[], [], [], [], [], []])
 
 const WEEKS_CONSTANT = computed(() => props.date
@@ -67,12 +69,22 @@ const rows = computed(() => {
     for (let col = 0; col < cols; col++) {
       const cellDate = startDate.value.add(count, 'day')
       const text = cellDate.date()
+      
+      const disabled = isFunction(datePicker?.disabledDate) && datePicker!.disabledDate!(cellDate.toDate())
+      
+      const isSelected = cellDate.dayOfYear() === datePicker?.date.value.dayOfYear()
+      let type: DateCellType = 'normal'
+      if (count < monthDstartDay) {
+        type = 'prev-month'
+      } else if (count - monthDstartDay >= lastDate) {
+        type = 'next-month'
+      }
       rows_[row][col] = {
-        type: 'day',
+        type,
         date: cellDate,
         text,
-        current: cellDate.dayOfYear() === props.pickeDate.dayOfYear(),
-        disabled: count < monthDstartDay || count - monthDstartDay >= lastDate
+        isSelected,
+        disabled
       }
       count++
     }
@@ -84,30 +96,24 @@ const rows = computed(() => {
 const { n } = createNamespace('date-table')
 
 function handlePick(cell: DateCell) {
-  // date.value = cell.date as Dayjs
+  if (cell.disabled) return
   emit('pick', cell)
 }
 </script>
 
 <style lang="less">
-.van-date-table {
+@N: van-date-table;
+.@{N} {
   width: 100%;
-
+  color: var(--van-text-color-regular);
   &__cell {
     text-align: center;
-
-    &.disabled {
-      color: var(--van-disabled-text-color);
-      cursor: not-allowed;
-    }
-
-    &.current {
+    &.selected {
+      color: var(--van-color-white);
       .van-date-table__cell-text {
-        color: var(--van-color-white);
         background-color: var(--van-color-primary);
       }
     }
-
     &-text {
       display: inline-flex;
       justify-content: center;
@@ -115,11 +121,23 @@ function handlePick(cell: DateCell) {
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      cursor: pointer;
+    }
+  }
+  td {
+    cursor: pointer;
+    &:hover {
+      color: var(--van-color-primary);
+    }
+  }
+  .prev-month, .next-month {
+    color: var(--van-disabled-text-color);
+  }
 
-      &:hover {
-        color: var(--van-color-primary);
-      }
+  .disabled {
+    cursor: not-allowed;
+    background-color: var(--van-disabled-bg-color);
+    &:hover {
+      color: var(--van-disabled-text-color);
     }
   }
 }

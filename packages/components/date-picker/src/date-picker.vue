@@ -1,5 +1,5 @@
 <template>
-  <VanTooltip v-bind="tooltipProps">
+  <VanTooltip ref="tooltipRef" v-bind="tooltipProps">
     <VanInput class="van-date-editor" v-model="value" placeholder="Pick a day" />
     <template #content>
       <VanPickerPanel :class="n()" :date="date" @pick="handlePick" />
@@ -8,13 +8,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed } from 'vue'
+import { reactive, computed, provide, ref, nextTick } from 'vue'
 import { VanTooltip, VanInput } from '@vangle/components'
 import VanPickerPanel from './components/picker-panel.vue'
 import { createNamespace } from '@vangle/utils'
-import { DateCell, DatePickerProps, DatePickerTypes } from './date-picker'
+import { DateCell, DatePickerProps, DatePickerTypes, DatePickerContextKey } from './date-picker'
 
-import dayjs, { Dayjs, ManipulateType } from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat.js'
 import advancedFormat from 'dayjs/plugin/advancedFormat.js'
 import localeData from 'dayjs/plugin/localeData.js'
@@ -43,6 +43,7 @@ const emit = defineEmits<{
 }>()
 
 const { n } = createNamespace('date-picker')
+const tooltipRef = ref()
 const tooltipProps = reactive<any>({
   effect: 'light',
   pure: true,
@@ -57,6 +58,9 @@ const date = computed<Dayjs>({
     const d = val.toDate()
     const value = props.valueFormat ? val.format(props.valueFormat) : d
     emit('update:modelValue', value)
+    nextTick(() => {
+      tooltipRef.value.close()
+    })
   }
 })
 const value = computed(() => {
@@ -67,6 +71,11 @@ const value = computed(() => {
 function handlePick(cell: DateCell) {
   date.value = cell.date
 }
+
+provide(DatePickerContextKey, {
+  date,
+  disabledDate: props.disabledDate
+})
 
 </script>
 

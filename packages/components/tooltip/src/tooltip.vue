@@ -29,7 +29,6 @@ const pick = (sourceObj: any, keys: string[]) => {
 }
 
 const popperProps = computed(() => {
-  console.log(attrs, 'attrsattrsattrs')
   return { ...attrs, ...pick(props, Object.keys(PopperProps)) }
 })
 
@@ -39,8 +38,17 @@ function update() {
   popperRef.value.update()
 }
 
+function open() {
+  popperRef.value.onOpen()
+}
+function close() {
+  popperRef.value.onClose()
+}
+
 defineExpose({
-  update
+  update,
+  open,
+  close
 })
  
 </script>

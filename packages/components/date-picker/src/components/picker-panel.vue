@@ -25,7 +25,7 @@
           </span>
         </div>
         <div :class="[n('content')]">
-          <DateTable :date="insertDate" :picke-date="date" @pick="handlePick" />
+          <DateTable :date="insertDate" @pick="handlePick" />
         </div>
       </div>
     </div>
@@ -62,7 +62,6 @@ function handlePick(cell: DateCell) {
 }
 
 function change(type: ManipulateType, num: number) {
-  console.log(props.date.format('YYYY-MM-DD'), insertDate.value.format('YYYY-MM-DD'))
   insertDate.value = dayjs(insertDate.value.toDate()).add(num, type)
 }
 

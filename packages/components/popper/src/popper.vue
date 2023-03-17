@@ -63,7 +63,9 @@ const arrowStyle = computed(() => {
 
 defineExpose({
   reference: contentRef,
-  update
+  update,
+  onClose,
+  onOpen
 })
 onMounted(() => {
   watch(
