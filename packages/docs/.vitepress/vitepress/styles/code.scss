@@ -193,6 +193,9 @@ html.dark {
   animation: logo-wave 6s infinite linear;
 }
 .VPNavBar {
+  &::-webkit-slider-thumb {
+    display: none;
+  }
   .VPImage.logo {
     height: 32px;
   }
@@ -216,5 +219,34 @@ html.dark {
   }
   100% {
     transform: translate(-42%, -42%);
+  }
+}
+
+.VPSidebar,
+body {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+}
+.VPSidebar {
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background-color: #0003;
+    }
+  }
+}
+body {
+  &::-webkit-scrollbar-thumb {
+    background-color: #0003;
   }
 }

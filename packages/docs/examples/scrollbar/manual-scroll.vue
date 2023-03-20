@@ -46,8 +46,8 @@ const formatTooltip = (value: number) => {
   margin: 10px;
   text-align: center;
   border-radius: 4px;
-  background: var(--van-color-primary);
-  color: #fff;
+  background: var(--van-color-warning-8);
+  color: var(--van-color-warning);
 }
 .van-slider {
   margin-top: 20px;

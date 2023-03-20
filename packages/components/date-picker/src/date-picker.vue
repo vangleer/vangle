@@ -3,10 +3,14 @@
     <div class="van-date-editor">
       <VanInput
         v-model="value"
-        prefix-icon="calendar"
-        placeholder="Pick a day"
+        :prefix-icon="!$slots['prefix-icon'] ? prefixIcon : ''"
+        :placeholder="placeholder"
         clearable
-      />
+      >
+        <template #prefix>
+          <slot name="prefix-icon" />
+        </template>
+      </VanInput>
     </div>
     <template #content>
       <VanPickerPanel :class="n()" :type="type" :date="date" @pick="handlePick" :shortcuts="shortcuts" />
@@ -47,6 +51,7 @@ const props = defineProps(DatePickerProps)
 
 const emit = defineEmits<{
   (e: 'update:modelValue', val: DatePickerTypes['modelValue']): void
+  (e: 'change', val: Date | string | number): void
 }>()
 
 const { n } = createNamespace('date-picker')
@@ -75,6 +80,7 @@ const date = computed<Dayjs>({
     const d = val.toDate()
     const value = props.valueFormat ? val.format(props.valueFormat) : d
     emit('update:modelValue', value)
+    emit('change', value)
     nextTick(() => {
       tooltipRef.value.close()
     })

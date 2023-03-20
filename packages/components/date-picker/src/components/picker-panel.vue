@@ -1,7 +1,7 @@
 <template>
   <div :class="[n()]" @mouseup.stop>
     <div :class="[n('wrapper')]">
-      <div :class="[n('sidebar')]">
+      <div v-if="shortcuts && shortcuts.length" :class="[n('sidebar')]">
         <button v-for="item in shortcuts" :key="item.text" :class="n('shortcut')" @click="handleClick(item)">
           {{ item.text }}
         </button>
@@ -54,7 +54,7 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import { VanIcon } from '@vangle/components'
-import { createNamespace, isFunction } from '@vangle/utils'
+import { createNamespace } from '@vangle/utils'
 import { DateCell } from '../date-picker'
 import DateTable from './date-table.vue'
 import YearTable from './year-table.vue'

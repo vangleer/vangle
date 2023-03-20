@@ -22,7 +22,7 @@
   margin: 10px;
   text-align: center;
   border-radius: 4px;
-  background: var(--van-color-danger);
-  color: #fff;
+  background: var(--van-color-danger-8);
+  color: var(--van-color-danger);
 }
 </style>

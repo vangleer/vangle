@@ -9,6 +9,7 @@ export const DatePickerProps = {
   disabledDate: {
     type: Function as PropType<(time: Date) => boolean>
   },
+  placeholder: String,
   type: {
     type: String as PropType<'date' | 'year' | 'month'>,
     default: 'date'
@@ -16,6 +17,10 @@ export const DatePickerProps = {
   shortcuts: {
     type: Array as PropType<Array<{ text: string, value: Date | Function }>>,
     default: () => []
+  },
+  prefixIcon: {
+    type: String,
+    default: 'calendar'
   }
 }
 

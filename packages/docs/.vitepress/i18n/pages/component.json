@@ -14,14 +14,6 @@
         {
           "link": "/scrollbar",
           "text": "Scrollbar 滚动条"
-        },
-        {
-          "link": "/tag",
-          "text": "Tag"
-        },
-        {
-          "link": "/date-picker",
-          "text": "DatePicker"
         }
       ]
     },
@@ -31,6 +23,10 @@
         {
           "link": "/input",
           "text": "Input 输入框"
+        },
+        {
+          "link": "/date-picker",
+          "text": "DatePicker 日期选择器"
         },
         {
           "link": "/checkbox",
@@ -68,6 +64,10 @@
         {
           "link": "/table",
           "text": "Table 表格"
+        },
+        {
+          "link": "/tag",
+          "text": "Tag 标签"
         }
       ]
     },
