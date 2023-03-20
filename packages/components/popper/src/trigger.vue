@@ -50,7 +50,9 @@ const onClick = composeEventHandlers(props.onClick, (e) => {
 })
 const onMousedown = composeEventHandlers(props.onMouseDown, () => {
   isMousedown = true
-  onOpen()
+  if (props.trigger !== 'click' && props.trigger === 'hover') {
+    onOpen()
+  }
   document.addEventListener('mouseup', onMouseup, { once: true })
 })
 const onMouseenter = composeEventHandlers(props.onMouseEnter, () => {

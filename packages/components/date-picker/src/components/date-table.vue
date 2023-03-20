@@ -71,7 +71,7 @@ const rows = computed(() => {
       
       const disabled = isFunction(datePicker?.disabledDate) && datePicker!.disabledDate!(cellDate.toDate())
       
-      const isSelected = cellDate.dayOfYear() === datePicker?.date.value.dayOfYear()
+      const isSelected = cellDate.format('YYYY-MM-DD') === datePicker?.date.value.format('YYYY-MM-DD')
       let type: DateCellType = 'normal'
       if (count < monthDstartDay) {
         type = 'prev-month'
