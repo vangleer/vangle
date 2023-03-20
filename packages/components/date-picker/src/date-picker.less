@@ -13,6 +13,31 @@
   border-radius: var(--van-border-radius-base);
   line-height: 30px;
 
+  &__wrapper {
+    display: flex;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    padding-top: 6px;
+    border-right: var(--van-border);
+  }
+
+  &__shortcut {
+    padding: 1px 6px 1px 12px;
+    text-align: left;
+
+    &:hover {
+      color: var(--van-color-primary);
+    }
+  }
+
   &__header {
     display: flex;
     align-items: center;
@@ -47,8 +72,7 @@
 }
 
 .van-date-picker {
-  width: 322px;
-  height: 300px;
+  min-width: 322px;
 }
 
 .van-picker__popper {

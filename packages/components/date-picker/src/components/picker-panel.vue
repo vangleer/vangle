@@ -1,6 +1,11 @@
 <template>
   <div :class="[n()]" @mouseup.stop>
     <div :class="[n('wrapper')]">
+      <div :class="[n('sidebar')]">
+        <button v-for="item in shortcuts" :key="item.text" :class="n('shortcut')" @click="handleClick(item)">
+          {{ item.text }}
+        </button>
+      </div>
       <div :class="[n('body')]">
         <div :class="[n('header')]">
           <span :class="n('prev-btn')">
@@ -49,7 +54,7 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import { VanIcon } from '@vangle/components'
-import { createNamespace } from '@vangle/utils'
+import { createNamespace, isFunction } from '@vangle/utils'
 import { DateCell } from '../date-picker'
 import DateTable from './date-table.vue'
 import YearTable from './year-table.vue'
@@ -58,10 +63,11 @@ import dayjs, { Dayjs, ManipulateType } from 'dayjs'
 defineOptions({
   name: 'VanPickerPanel'
 })
-
+type Shortcut = { text: string, value: Date | Function }
 const props = withDefaults(defineProps<{
   date: Dayjs,
-  type: string
+  type: string,
+  shortcuts: Array<Shortcut>
 }>(), {
   date: () => dayjs()
 })
@@ -75,6 +81,12 @@ const year = computed(() => insertDate.value.get('year'))
 const month = computed(() => insertDate.value.format('MMMM'))
 
 function handlePick(cell: DateCell) {
+  emit('pick', cell)
+}
+
+function handleClick(item: Shortcut) {
+  const d = typeof item.value === 'function' ? item.value() : item.value
+  const cell: DateCell = { date: dayjs(d) }
   emit('pick', cell)
 }
 

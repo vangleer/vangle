@@ -12,6 +12,10 @@ export const DatePickerProps = {
   type: {
     type: String as PropType<'date' | 'year' | 'month'>,
     default: 'date'
+  },
+  shortcuts: {
+    type: Array as PropType<Array<{ text: string, value: Date | Function }>>,
+    default: () => []
   }
 }
 

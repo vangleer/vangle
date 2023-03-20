@@ -9,7 +9,7 @@
       />
     </div>
     <template #content>
-      <VanPickerPanel :class="n()" :type="type" :date="date" @pick="handlePick" />
+      <VanPickerPanel :class="n()" :type="type" :date="date" @pick="handlePick" :shortcuts="shortcuts" />
     </template>
   </VanTooltip>
 </template>
