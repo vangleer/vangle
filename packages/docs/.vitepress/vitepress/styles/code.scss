@@ -79,6 +79,8 @@ html.dark {
   --prism-selection-background: #444444;
   --prism-inline-background: #2d2d2d;
 
+  @include common;
+
   --van-text-color-primary: #e5eaf3;
   --van-text-color-regular: #cfd3dc;
   --van-border-color: #4c4d4f;
@@ -98,8 +100,7 @@ html.dark {
   .van-popper {
     --van-popper-content-bg: #1d1e1f;
   }
-
-  @include common;
+  --code-bg-color: #262727;
 }
 
 .content-container .vp-doc .example {

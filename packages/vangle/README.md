@@ -22,6 +22,12 @@ Vue3 UI Components Library
 
 [在线预览 gitee]( http://vangleer.gitee.io/vangle)
 
+## 相关链接
+
+[手把手从零搭建一个 vue3 组件库 (一)](https://juejin.cn/post/7132779669492858893)
+[手把手从零搭建一个 vue3 组件库 (二)：为组件编写文档](https://juejin.cn/post/7134695989687877645)
+[手把手从零搭建一个 vue3 组件库 (三)：模拟 element-plus 组件库文档](https://juejin.cn/post/7134695989687877645)
+
 ## 克隆代码到本地
 
 ```shell
