@@ -79,6 +79,26 @@ html.dark {
   --prism-selection-background: #444444;
   --prism-inline-background: #2d2d2d;
 
+  --van-text-color-primary: #e5eaf3;
+  --van-text-color-regular: #cfd3dc;
+  --van-border-color: #4c4d4f;
+  --van-disabled-bg-color: #262727;
+  --van-disabled-text-color: #8d9095;
+  --van-disabled-border-color: #4c4d4f;
+  --van-bg-color: #141414;
+  .van-table {
+    --van-table-striped-color-even: #1d1d1d;
+  }
+  .van-collapse {
+    --van-collapse-bg-color: transparent;
+  }
+  .van-button {
+    --van-button-bg-color: transparent;
+  }
+  .van-popper {
+    --van-popper-content-bg: #1d1e1f;
+  }
+
   @include common;
 }
 

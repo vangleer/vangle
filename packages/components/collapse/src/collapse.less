@@ -1,7 +1,7 @@
 .van-collapse {
   --van-collapse-header-height: 48px;
   --van-collapse-header-font-size: 13px;
-
+  --van-collapse-bg-color: var(--van-color-white);
 }
 
 .van-collapse-item {
@@ -36,7 +36,7 @@
       align-items: center;
       height: var(--van-collapse-header-height);
       line-height: var(--van-collapse-header-height);
-      background-color: var(--van-color-white);
+      background-color: var(--van-collapse-bg-color);
       color: var(--van-text-color-primary);
       cursor: pointer;
       border-bottom: 1px solid var(--van-border-color);
@@ -49,7 +49,7 @@
 
   &__wrap {
     will-change: height;
-    background-color: var(--van-color-white);
+    background-color: var(--van-collapse-bg-color);
     box-sizing: border-box;
     border-bottom: 1px solid var(--van-border-color);
     transition: height 0.3s;
