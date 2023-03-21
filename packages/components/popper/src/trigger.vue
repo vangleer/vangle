@@ -49,14 +49,19 @@ const onClick = composeEventHandlers(props.onClick, (e) => {
   }
 })
 const onMousedown = composeEventHandlers(props.onMouseDown, () => {
-  // onClose()
-  // isMousedown = true
-  // document.addEventListener('mouseup', onMouseup, { once: true })
+  isMousedown = true
+  if (props.trigger !== 'click' && props.trigger === 'hover') {
+    onOpen()
+  }
+  document.addEventListener('mouseup', onMouseup, { once: true })
 })
 const onMouseenter = composeEventHandlers(props.onMouseEnter, () => {
   props.trigger === 'hover' && onOpen()
 })
-const onMouseleave = composeEventHandlers(props.onMouseLeave, () => props.trigger === 'hover' && onClose())
+const onMouseleave = composeEventHandlers(props.onMouseLeave, () => {
+  if (isMousedown) return
+  props.trigger === 'hover' && onClose()
+})
 
 const events = {
   blur: onBlur,
@@ -76,6 +81,8 @@ const setEvents = <T extends (e: Event) => void>(
     Object.entries(events).forEach(([name, handler]) => {
       el[type](name, handler)
     })
+
+    el.addEventListener('mouseup', e => e.stopPropagation())
   }
 }
 

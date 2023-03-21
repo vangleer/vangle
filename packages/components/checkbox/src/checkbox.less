@@ -11,7 +11,7 @@
   margin-right: 30px;
   user-select: none;
 
-  &.is-checked {
+  &.is-checked:not(.is-indeterminate) {
     .@{N}__label {
       color: var(--van-checkbox-checked-text-color);
     }
@@ -22,6 +22,29 @@
 
       &::after {
         transform: rotate(45deg) scaleY(1);
+      }
+    }
+  }
+
+  &.is-indeterminate {
+    .@{N}__inner {
+      background-color: var(--van-checkbox-checked-bg-color);
+      border-color: var(--van-checkbox-checked-input-border-color);
+
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        background-color: var(--van-checkbox-checked-icon-color);
+        height: 2px;
+        transform: scale(.5);
+        left: 0;
+        right: 0;
+        top: 5px;
       }
     }
   }

@@ -80,6 +80,27 @@ html.dark {
   --prism-inline-background: #2d2d2d;
 
   @include common;
+
+  --van-text-color-primary: #e5eaf3;
+  --van-text-color-regular: #cfd3dc;
+  --van-border-color: #4c4d4f;
+  --van-disabled-bg-color: #262727;
+  --van-disabled-text-color: #8d9095;
+  --van-disabled-border-color: #4c4d4f;
+  --van-bg-color: #141414;
+  .van-table {
+    --van-table-striped-color-even: #1d1d1d;
+  }
+  .van-collapse {
+    --van-collapse-bg-color: transparent;
+  }
+  .van-button {
+    --van-button-bg-color: transparent;
+  }
+  .van-popper {
+    --van-popper-content-bg: #1d1e1f;
+  }
+  --code-bg-color: #262727;
 }
 
 .content-container .vp-doc .example {
@@ -193,6 +214,9 @@ html.dark {
   animation: logo-wave 6s infinite linear;
 }
 .VPNavBar {
+  &::-webkit-slider-thumb {
+    display: none;
+  }
   .VPImage.logo {
     height: 32px;
   }
@@ -216,5 +240,34 @@ html.dark {
   }
   100% {
     transform: translate(-42%, -42%);
+  }
+}
+
+.VPSidebar,
+body {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+}
+.VPSidebar {
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background-color: #0003;
+    }
+  }
+}
+body {
+  &::-webkit-scrollbar-thumb {
+    background-color: #0003;
   }
 }

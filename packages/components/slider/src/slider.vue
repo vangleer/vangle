@@ -4,123 +4,134 @@
       n(),
       props.vertical && 'is-vertical'
     ]"
+    :style="sliderStyle"
     :aria-valuemin="min"
     :aria-valuemax="max"
     :aria-orientation="vertical ? 'vertical' : 'horizontal'"
+    @click.prevent
   >
     <div
       ref="slider"
       :class="[
         n('runway'),
-        showInput && !range && 'show-input',
+        { 'is-disabled': disabled },
       ]"
       :style="{ height }"
+      @mousedown="onButtonDown"
     >
       <div :class="n('bar')" :style="barStyle" />
       <div
-        :class="n('button-wrapper')"
+        :class="[n('button-wrapper')]"
         :style="wrapperStyle"
-        @mouseenter="handleMouseEnter"
-        @mouseleave="handleMouseLeave"
         @mousedown="onButtonDown"
-        @touchstart="onButtonDown"
-        @focus="handleMouseEnter"
-        @blur="handleMouseLeave"
-        @keydown.left="onLeftKeyDown"
-        @keydown.right="onRightKeyDown"
-        @keydown.down.prevent="onLeftKeyDown"
-        @keydown.up.prevent="onRightKeyDown"
+        @touchstart.passive="onButtonDown"
       >
-        <div :class="n('button')"></div>
+        <VanTooltip
+          ref="tooltipRef"
+          :placement="placement"
+          :disabled="!showTooltip"
+          :visible="visible"
+          :content="tooltipValue + ''"
+        >
+          <div :class="[n('button'), { dragging: dragging }]"></div>
+        </VanTooltip>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, CSSProperties } from 'vue'
+import { computed, ref, CSSProperties, onUnmounted, watch } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { SliderProps } from './slider'
+import VanTooltip from '../../tooltip'
 defineOptions({
   name: 'VanSlider'
 })
 
 const props = defineProps(SliderProps)
-
+const emit = defineEmits(['input', 'update:modelValue'])
 const { n } = createNamespace('slider')
 const slider = ref<HTMLElement | null>(null)
-const currentPosition = ref()
+const tooltipRef = ref()
+const visible = ref(false)
+let timerId = ref()
+const sliderStyle = computed(() => ({
+  '--van-slider-main-bg-color': props.color
+}))
+const currentPosition = computed({
+  get: () => props.modelValue as number,
+  set: (val) => {
+    const { min, max } = props
+    const value = Math.floor(val / max * max)
+    emit('input', value)
+    emit('update:modelValue', value)
+  }
+})
+const tooltipValue = computed(() => 
+  props.formatTooltip 
+    ? props.formatTooltip(props.modelValue as number)
+    : props.modelValue
+)
 const barStyle = computed<CSSProperties>(() => {
+  const value = currentPosition.value * diffValue.value + '%'
   return props.vertical
     ? {
-        height: currentPosition.value
+        height: value
       }
     : {
-        width: currentPosition.value,
+        width: value,
         height: '100%'
       }
 })
 
+const diffValue = computed(() => (100 / (props.max - props.min)))
+
 const wrapperStyle = computed(() => {
+  const value = currentPosition.value * diffValue.value + '%'
   return (
     props.vertical
-      ? { top: currentPosition.value }
-      : { left: currentPosition.value }
+      ? { top: value }
+      : { left: value }
   ) as CSSProperties
 })
-
-const initData = reactive({
-  hovering: false,
-  dragging: false,
-  isClick: false,
-  startX: 0,
-  currentX: 0,
-  startY: 0,
-  currentY: 0,
-  startPosition: 0,
-  newPosition: 0,
-  oldValue: props.modelValue,
-})
-
-function handleMouseEnter() {
-  initData.hovering = true
-}
-function handleMouseLeave() {
-  initData.hovering = false
-}
+const isFocus = ref(false)
+const dragging = ref(false)
 
 const onButtonDown = (e: MouseEvent | TouchEvent) => {
-  const {clientX, clientY} = getClientXY(e)
-  initData.startX = clientX
-  initData.startY = clientY
+  if (props.disabled) return
+  if (dragging.value) return
+  dragging.value = true
+  isFocus.value = true
   const sliderInfo: DOMRect = slider.value!.getBoundingClientRect()
   const sliderLeft = sliderInfo.left
   const sliderTop = sliderInfo.top
   const sliderWidth = sliderInfo.width
   const sliderHeight = sliderInfo.height
-  const mouseMove = (e: MouseEvent) => {
+  const isTouch = e.type.startsWith('touch')
+  const mouseMove = (e: MouseEvent | TouchEvent) => {
+    const { clientX, clientY } = getClientXY(e)
     let diff = 0
     if (props.vertical) {
-      diff = (e.clientY - sliderTop) / sliderHeight * 100
+      diff = (clientY - sliderTop) / sliderHeight * (props.max - props.min)
     } else {
-      diff = (e.clientX - sliderLeft) / sliderWidth * 100
+      diff = (clientX - sliderLeft) / sliderWidth * (props.max - props.min)
     }
-
     setPosition(diff)
   }
+  mouseMove(e)
+  const moveType = isTouch ? 'touchmove' : 'mousemove'
+  const endType = isTouch ? 'touchend' : 'mouseup'
   const mouseUp = () => {
-    window.removeEventListener('mousemove', mouseMove)
-    window.removeEventListener('mouseup', mouseUp)
+    dragging.value = false
+    window.removeEventListener(moveType, mouseMove)
+    window.removeEventListener(endType, mouseUp)
+    setUpFocus()
   }
-  window.addEventListener('mousemove', mouseMove)
-  window.addEventListener('mouseup', mouseUp)
+  window.addEventListener(moveType, mouseMove)
+  window.addEventListener(endType, mouseUp)
 }
-const onLeftKeyDown = () => {
 
-}
-const onRightKeyDown = () => {
-  
-}
 const getClientXY = (event: MouseEvent | TouchEvent) => {
   let clientX: number
   let clientY: number
@@ -136,11 +147,56 @@ const getClientXY = (event: MouseEvent | TouchEvent) => {
     clientY,
   }
 }
-const setPosition = (newPosition: number) => {
-  if (newPosition <= 0) newPosition = 0
-  if (newPosition >= 100) newPosition = 100
-  currentPosition.value = newPosition + '%'
+
+function setUpFocus() {
+  timerId.value = setTimeout(() => {
+    document.addEventListener('click', () => {
+      isFocus.value = false
+      visible.value = false
+    }, { once: true })
+  }, 300)
 }
+
+function handleKeyDown(e: KeyboardEvent) {
+  e.preventDefault()
+  const keyCode = e.keyCode
+  if ([37, 39].includes(keyCode) && !props.vertical) {
+    setPosition(currentPosition.value - (38 - keyCode))
+  } else if ([38, 40].includes(keyCode) && props.vertical) {
+    setPosition(currentPosition.value - (39 - keyCode))
+  }
+}
+
+function setUpKeyEvent() {
+  if (isFocus.value) {
+    window.addEventListener('keydown', handleKeyDown)
+  } else {
+    window.removeEventListener('keydown', handleKeyDown)
+  }
+}
+
+const setPosition = (newPosition: number) => {
+  const { min, max } = props
+  if (newPosition <= 0) newPosition = 0
+  if (newPosition >= max - min) newPosition = max - min
+  currentPosition.value = newPosition
+  
+  tooltipRef.value.update()
+  visible.value = true
+}
+
+function cleanUp() {
+  clearTimeout(timerId.value)
+  window.removeEventListener('keydown', handleKeyDown)
+}
+
+watch(isFocus, (val) => {
+  setUpKeyEvent()
+})
+
+onUnmounted(() => {
+  cleanUp()
+})
 
 </script>
 

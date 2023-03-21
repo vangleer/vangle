@@ -1,0 +1,80 @@
+.van-date-editor {
+  --el-date-editor-width: 220px;
+  width: var(--el-date-editor-width);
+  display: inline-flex;
+  position: relative;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.van-picker-panel {
+  color: var(--van-text-color-regular);
+  background: var(--van-bg-color-overlay);
+  border-radius: var(--van-border-radius-base);
+  line-height: 30px;
+
+  &__wrapper {
+    display: flex;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    padding-top: 6px;
+    border-right: var(--van-border);
+  }
+
+  &__shortcut {
+    padding: 1px 6px 1px 12px;
+    text-align: left;
+
+    &:hover {
+      color: var(--van-color-primary);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin: 12px;
+
+    &-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      text-align: center;
+
+      button {
+        font-size: 16px;
+        padding: 0 6px;
+      }
+    }
+  }
+
+  &__icon-btn {
+    padding: 0 6px;
+
+    :hover {
+      color: var(--van-color-primary);
+    }
+  }
+
+  &__content {
+    position: relative;
+    margin: 15px;
+  }
+}
+
+.van-date-picker {
+  min-width: 322px;
+}
+
+.van-picker__popper {
+  box-shadow: var(--van-box-shadow-light);
+}

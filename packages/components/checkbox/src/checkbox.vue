@@ -1,5 +1,5 @@
 <template>
-  <label :class="[n(), { 'is-checked': checked, 'is-disabled': disabled }]">
+  <label :class="[n(), { 'is-checked': checked, 'is-disabled': disabled, 'is-indeterminate': indeterminate }]" @click.stop>
     <span :class="[n('input')]">
       <input :class="[n('original')]" type="checkbox" :value="checked" :disabled="disabled">
       <span :class="n('inner')" @click="handleChecked"></span>

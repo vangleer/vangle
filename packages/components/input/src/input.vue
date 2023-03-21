@@ -1,7 +1,10 @@
 <template>
   <div :class="[n(), { 'is-disabled': disabled }]">
-    <div :class="[n('wrapper'), { 'is-focus': focus }]">
-      
+    <div
+      :class="[n('wrapper'), { 'is-focus': focus }]"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+    >
       <span v-if="$slots.prefix || prefixIcon" :class="n('prefix')">
         <slot name="prefix"></slot>
         <VanIcon v-if="prefixIcon" :name="prefixIcon" />
@@ -15,7 +18,6 @@
         :autofocus="autofocus"
         :readonly="readonly"
         :disabled="disabled"
-        @focus="onFocus"
         @blur="onBlur"
         v-bind="$attrs"
       >
@@ -23,7 +25,7 @@
         <template v-if="showPassword">
           <VanIcon :name="passwordView ? 'view' : 'hide'" @click="handleViewPassword" />
         </template>
-        <VanIcon v-if="clearable" name="circle-close" @click.stop="clear" />
+        <VanIcon v-show="showClear" name="circle-close" @click.stop="clear" />
       </span>
       <span v-if="$slots.suffix || suffixIcon" :class="n('suffix')">
         <slot name="suffix"></slot>
@@ -49,9 +51,10 @@ const inputRef = ref<HTMLInputElement>()
 const focus = ref(props.autofocus)
 const passwordView = ref(true)
 const cType = ref(props.type)
-const value = computed({
+const showClear = ref(false)
+const value = computed<any>({
   get: () => props.modelValue,
-  set: (val: string | number) => {
+  set: (val: any) => {
     emit('update:modelValue', val)
   }
 })
@@ -76,6 +79,14 @@ const handleViewPassword = () => {
   } else {
     cType.value = props.type
   }
+}
+
+function handleMouseEnter() {
+  showClear.value = props.clearable && value.value
+}
+
+function handleMouseLeave() {
+  showClear.value = false
 }
 
 defineExpose({

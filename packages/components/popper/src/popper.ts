@@ -22,6 +22,10 @@ export const PopperProps = {
     type: String as PropType<'light' | 'dark'>,
     default: 'dark'
   },
+  pure: {
+    type: Boolean,
+    default: false
+  },
   content: {
     type: String
   },
@@ -65,6 +69,13 @@ export const PopperProps = {
   trigger: {
     type: String as PropType<TriggerType>,
     default: 'hover'
+  },
+  visible: {
+    type: Boolean
+  },
+  popperClass: {
+    type: String,
+    default: ''
   }
 }
 

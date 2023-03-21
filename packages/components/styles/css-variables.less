@@ -29,6 +29,7 @@
   --van-disabled-opacity: 0.5;
   --van-overlay-color-lighter: rgba(0, 0, 0, .5);
   --van-box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, .04), 0px 8px 20px rgba(0, 0, 0, .08);
+  --van-box-shadow-light: 0px 0px 12px rgba(0, 0, 0, .12);
   --van-font-line-height-primary: 24px;
   --van-transition-duration: .3s;
 
@@ -49,7 +50,14 @@ each(@iconSizes, {
   --van-icon-size-@{key}: @value;
 });
 
+@a: 3, 5, 7, 8, 9;
+
 each(@colors, {
   --van-color-@{key}: @value;
+  --van-color-@{key}-3: tint(@value, 30%);
+  --van-color-@{key}-5: tint(@value, 50%);
+  --van-color-@{key}-7: tint(@value, 70%);
+  --van-color-@{key}-8: tint(@value, 80%);
+  --van-color-@{key}-9: tint(@value, 90%);
 });
 }

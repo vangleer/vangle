@@ -1,0 +1,82 @@
+.van-scrollbar {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  --van-scrollbar-width: 6px;
+  --van-scrollbar-thumb-bg: #0003;
+
+  &.is-horizontal div::-webkit-scrollbar {
+    height: var(--van-scrollbar-width);
+  }
+
+  div::-webkit-scrollbar {
+    width: var(--van-scrollbar-width);
+  }
+
+  div::-webkit-scrollbar-thumb {
+    background-color: var(--van-scrollbar-thumb-bg);
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+  }
+
+  div::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  &__wrap {
+
+    overflow-y: auto;
+
+    &--hidden-default {
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  &__thumb {
+    position: absolute;
+    background-color: var(--van-scrollbar-thumb-bg);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  &__bar {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    z-index: 1;
+    border-radius: 4px;
+
+    &.is-vertical {
+      width: 6px;
+      top: 2px;
+
+      >div {
+        width: 100%;
+      }
+    }
+
+    &.is-horizontal {
+      height: 6px;
+      left: 2px;
+
+      >div {
+        height: 100%;
+      }
+    }
+  }
+}
+
+.van-scrollbar-fade-enter-active,
+.van-scrollbar-fade-leave-active {
+  transition: all .2s ease-in-out;
+}
+
+.van-scrollbar-fade-enter-from,
+.van-scrollbar-fade-leave-to {
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0);
+}

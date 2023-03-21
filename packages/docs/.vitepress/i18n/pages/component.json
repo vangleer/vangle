@@ -12,8 +12,8 @@
           "text": "Icon 图标"
         },
         {
-          "link": "/popper",
-          "text": "Popper"
+          "link": "/scrollbar",
+          "text": "Scrollbar 滚动条"
         }
       ]
     },
@@ -23,6 +23,10 @@
         {
           "link": "/input",
           "text": "Input 输入框"
+        },
+        {
+          "link": "/date-picker",
+          "text": "DatePicker 日期选择器"
         },
         {
           "link": "/checkbox",
@@ -52,6 +56,18 @@
         {
           "link": "/collapse",
           "text": "Collapse 折叠面板"
+        },
+        {
+          "link": "/tree",
+          "text": "Tree 树形控件"
+        },
+        {
+          "link": "/table",
+          "text": "Table 表格"
+        },
+        {
+          "link": "/tag",
+          "text": "Tag 标签"
         }
       ]
     },

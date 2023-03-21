@@ -1,0 +1,67 @@
+@N: van-table;
+
+.van-table {
+  --van-table-text-color: var(--van-text-color-regular);
+  --van-table-header-text-color: var(--van-text-color-secondary);
+  --van-table-striped-color-odd: transparent;
+  --van-table-striped-color-even: #fafafa;
+  --van-table-tr-bg-color: var(--van-table-white);
+  color: var(--van-table-header-text-color);
+
+  .@{N} &__header,
+  .@{N} &__body {
+    margin: 0;
+  }
+
+  &--striped {
+    .@{N}__body {
+      tr:nth-child(even) {
+        background-color: var(--van-table-striped-color-even);
+      }
+    }
+  }
+
+  &--border {
+    .@{N}__cell {
+      border: var(--van-border);
+    }
+
+    th.@{N}__cell {
+      border-bottom: 0;
+    }
+  }
+
+  div table {
+    border-collapse: collapse;
+    font-size: var(--van-font-size-middle);
+  }
+
+  thead {
+    font-weight: 500;
+  }
+
+  &__cell {
+    border-bottom: var(--van-border);
+  }
+
+  tr {
+    background-color: var(--van-table-tr-bg-color);
+
+    th,
+    td {
+      text-align: left;
+      color: inherit;
+      padding: 8px 0;
+
+      .cell {
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        word-break: break-all;
+        line-height: 23px;
+        padding: 0 12px;
+      }
+    }
+  }
+}

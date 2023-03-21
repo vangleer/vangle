@@ -35,6 +35,6 @@ const options = [
   {
     value: 'Option5',
     label: 'Option5',
-  },
+  }
 ]
 </script>

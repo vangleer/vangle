@@ -19,31 +19,31 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
     middlewareData,
   } as const
   async function update() {
+
     if (!referenceRef.value || !contentRef.value) return
     const data: any = await computePosition(referenceRef.value, contentRef.value, {
       middleware: unref(middleware),
       placement: unref(placement),
       strategy: unref(strategy)
     })
-
     Object.keys(states).forEach(key => {
       (states as any)[key].value = data[key]
     })
   }
+  // watch([referenceRef, contentRef], update, { flush: 'sync' })
+  // watch([middleware, placement, strategy], update, {
+  //   flush: 'sync',
+  // });
 
-  watch([referenceRef, contentRef], update, { flush: 'sync' })
-  watch([middleware, placement, strategy], update, {
-    flush: 'sync',
-  });
-
-  // onMounted(() => {
-  //   watchEffect(() => {
-  //     update()
-  //   })
-  // })
-
+  onMounted(() => {
+    watchEffect(() => {
+      update()
+    })
+  })
   return {
     ...states,
+    x,
+    y,
     update,
     referenceRef,
     contentRef

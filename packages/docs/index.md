@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: Vangle
-  text: 下一代的前端组件库
+  text: 高质量前端组件库
   tagline: 基于 Vue 3，面向设计师和开发者的组件库
   image:
     src: /images/logo-rect.png
@@ -18,12 +18,12 @@ hero:
 
 features:
   - icon: ⚡️
-    title: 这是一个闪电图标
-    details: wawawa
+    title: Composition API
+    details: yes...
   - icon: 🖖
-    title: 这是一个手掌图标
+    title: 全面拥抱 Typescript
     details: good...
   - icon: 🛠️
-    title: 这是一个修理图标
-    details: cocococo
+    title: 组件丰富 16+
+    details: very good...
 ---
