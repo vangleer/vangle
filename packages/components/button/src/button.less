@@ -24,7 +24,8 @@
       --van-button-border-color: @value;
 
       &.is-plain {
-        --van-button-bg-color: var(--van-color-white);
+        // --van-button-bg-color: var(--van-color-white);
+        --van-button-bg-color: ~'var(--van-color-@{key}-9)';
         --van-button-text-color: @value;
         --van-button-border-color: @value;
       }

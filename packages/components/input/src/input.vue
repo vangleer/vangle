@@ -18,6 +18,7 @@
         :autofocus="autofocus"
         :readonly="readonly"
         :disabled="disabled"
+        @focus="onFocus"
         @blur="onBlur"
         v-bind="$attrs"
       >
