@@ -8,7 +8,7 @@
 
 ## 完整效果展示
 
-![图片](./images/06.gif)
+![整体效果](https://img-blog.csdnimg.cn/8e2cd84af18e46bf95ca7479e6d93d20.gif#pic_center)
 
 ## Tree 目录结构
 
@@ -257,7 +257,9 @@ export default defineComponent({
 - renderContext 使用转换后的数据渲染，需要考虑有子节点和没有子节点的情况
 
 - 初次渲染的效果
-![图片](./images/01.png)
+
+![初次渲染的效果](https://img-blog.csdnimg.cn/37b5afe549544a889098a280471e430b.png#pic_center)
+
 
 ## expand 展开效果
 
@@ -314,7 +316,8 @@ function handleNodeClick(node: Node) {
 
 - 添加expand效果
 
-![expand效果](./images/02.gif)
+![expand效果](https://img-blog.csdnimg.cn/8fd0d3727c574061a33ca202d3af9438.gif#pic_center)
+
 
 ## 处理默认插槽
 
@@ -415,8 +418,7 @@ function renderContext(data: Node[]): any[] {
 
 - 添加选择框的效果
 
-![checked效果](./images/03.png)
-
+![添加选择框的效果](https://img-blog.csdnimg.cn/3a253ee2284b4528837f8d2195092e06.png#pic_center)
 
 ### 选择逻辑（全选、部分选择、取消全选）
 
@@ -448,8 +450,8 @@ function hasChild(node?: Node) {
   return node && node.childNodes && node.childNodes.length
 }
 ```
-![全选效果](./images/04.gif)
 
+![全选](https://img-blog.csdnimg.cn/7d694ff238614eb68871b170f698bb51.gif#pic_center)
 
 - 处理父级节点选择状态
 
@@ -510,8 +512,8 @@ if (checkedCount > 0 && parent) { // +
   checkIndeterminate(parent)
 }
 ```
+![选中](https://img-blog.csdnimg.cn/fde87f0b4cb24a209fa96e66a0a32227.gif#pic_center)
 
-![全选效果](./images/05.gif)
 
 
 ## 最后
