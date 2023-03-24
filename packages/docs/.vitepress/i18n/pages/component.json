@@ -14,6 +14,10 @@
         {
           "link": "/scrollbar",
           "text": "Scrollbar 滚动条"
+        },
+        {
+          "link": "/progress",
+          "text": "Progress"
         }
       ]
     },
