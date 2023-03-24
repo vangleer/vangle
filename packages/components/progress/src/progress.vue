@@ -76,7 +76,7 @@ const text = computed(() => {
 
 const styles = computed(() => {
   const color = getColor(props.color)
-  const trackColor = getColor(props.trackColor)
+  const trackColor = getColor(props.trackColor, '--van-progress-track-color')
   return {
     '--van-progress-stroke-width': props.strokeWidth + 'px',
     ...color,
@@ -134,9 +134,9 @@ const trackPath = computed(() => {
           `
 })
 
-function getColor(colorData: typeof props.color): CSSProperties {
+function getColor(colorData: typeof props.color, colorKey?: string): CSSProperties {
   const style: CSSProperties | any = {}
-  const colorKey = '--van-progress-stroke-color'
+  colorKey = colorKey || '--van-progress-stroke-color'
   if (colorData) {
     if (isString(colorData)) { // 如果是字符串直接设置即可
       style[colorKey] = colorData
