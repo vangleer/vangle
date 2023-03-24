@@ -3,14 +3,17 @@
 
 .van-progress {
   --van-progress-stroke-width: 6px;
-  --van-progress-bg-track: var(--van-border-color-lighter);
+  --van-progress-track-color: var(--van-border-color-lighter);
   --van-progress-stroke-color: var(--van-color-primary);
   --van-progress-text-width: 50px;
   --van-progress-text-color: var(--van-color-primary);
 
   position: relative;
-  display: flex;
-  align-items: center;
+
+  &--line {
+    display: flex;
+    align-items: center;
+  }
 
   &__bar {
     width: 100%;
@@ -20,7 +23,7 @@
       width: 100%;
       height: var(--van-progress-stroke-width);
       border-radius: calc(var(--van-progress-stroke-width) / 2);
-      background-color: var(--van-progress-bg-track);
+      background-color: var(--van-progress-track-color);
     }
 
     &__inner {
@@ -31,6 +34,7 @@
       height: inherit;
       border-radius: inherit;
       background-color: var(--van-progress-stroke-color);
+      transition: all var(--van-transition-duration);
     }
 
     &__innerText {
@@ -49,6 +53,24 @@
     color: var(--van-progress-text-color);
     line-height: 1;
     font-size: 14px;
+  }
+
+  &.@{N}--circle,
+  &.@{N}--dashboard {
+    display: inline-flex;
+
+    .@{N}__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      transform: translate(0, -50%);
+      text-align: right;
+    }
   }
 
   each(@colors, {

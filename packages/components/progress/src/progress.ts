@@ -1,6 +1,6 @@
 import { PropType } from 'vue'
 export type ProgressStatus = 'success' | 'warning' | 'info' | 'danger'
-type ProgressType = 'line' | 'circle'
+type ProgressType = 'line' | 'circle' | 'dashboard'
 
 type Fn<T> = (percentage: number) => T
 
@@ -32,5 +32,20 @@ export const ProgressProps = {
   textInside: Boolean,
   color: {
     type: [String, Array, Function] as PropType<ProgressColor>
+  },
+  trackColor: {
+    type: [String, Array, Function] as PropType<ProgressColor>
+  },
+  width: {
+    type: Number,
+    default: 126,
+  },
+  strokeLinecap: {
+    type: String as PropType<'round' | 'inherit' | 'butt' | 'square'>,
+    default: 'round'
+  },
+  showText: {
+    type: Boolean,
+    default: true
   }
 }

@@ -34,3 +34,51 @@ progress/internal-percentage
 progress/custom-color
 
 :::
+
+## 环形进度条
+
+:::demo Progress 组件可通过 `type` 属性来指定使用环形进度条，在环形进度条中，还可以通过 `width` 属性来设置其大小。
+
+progress/circular-progress-bar
+
+:::
+
+## 仪表盘形进度条
+
+您也可以指定 `type` 属性到 `dashboard` 使用控制面板进度栏。
+
+:::demo
+
+progress/dashboard-progress-bar
+
+:::
+
+## 自定义内容
+
+:::demo 通过默认插槽添加自定义内容。
+
+progress/customized-content
+
+:::
+
+## Attributes
+
+| 属性名            | 说明                                          | 类型                    | 可选值                       | 默认值   |
+| -------------- | ------------------------------------------- | --------------------- | ------------------------- | ----- |
+| percentage     | 百分比，**必填**                                  | number                | (0-100)                   | 0     |
+| type           | 进度条类型                                       | string                | line/circle/dashboard     | line  |
+| stroke-width   | 进度条的宽度                                      | number                | —                         | 6     |
+| text-inside    | 进度条显示文字内置在进度条内（仅 `type` 为 'line' 时可用）       | boolean               | —                         | false |
+| status         | 进度条当前状态                                     | string                | success/info/warning/danger | —     |
+| color          | 进度条背景色 进度条背景色 （会覆盖 `status` 状态颜色）           | string/function/array | —                         | ''    |
+| track-color          | track背景颜色           | string/function/array | —                         | ''    |
+| width          | 环形进度条画布宽度（只在 type 为 circle 或 dashboard 时可用） | number                | —                         | 126   |
+| show-text      | 是否显示进度条文字内容                                 | boolean               | —                         | true  |
+| stroke-linecap | circle/dashboard 类型路径两端的形状                  | string                | butt/round/square         | round |
+| format         | 指定进度条文字内容                                   | function(percentage)  | —                         | —     |
+
+## Slots
+
+| 名称      | 说明                         |
+| ------- | -------------------------- |
+| default | 自定义内容，参数为 `{ percentage }` |
