@@ -69,7 +69,7 @@ const rows = computed(() => {
       const cellDate = startDate.value.add(count, 'day')
       const text = cellDate.date()
       
-      const disabled = isFunction(datePicker?.disabledDate) && datePicker!.disabledDate!(cellDate.toDate())
+      const disabled = isFunction(datePicker?.disabledDate) && datePicker!.disabledDate(cellDate.toDate())
       
       const isSelected = cellDate.format('YYYY-MM-DD') === datePicker?.date.value.format('YYYY-MM-DD')
       let type: DateCellType = 'normal'

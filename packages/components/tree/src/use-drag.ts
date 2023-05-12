@@ -62,7 +62,7 @@ export const useDrag = (props: TreePropsType, emit: (...args: any[]) => void, ca
         e.stopPropagation()
         dragState.value.dropNode = node
         addClass(e.target as HTMLElement, 'is-dragging', true)
-        if (isFunction(props.allowDrop) && !props.allowDrop!(dragState.value.draggingNode, dragState.value.dropNode, '')) {
+        if (isFunction(props.allowDrop) && !props.allowDrop(dragState.value.draggingNode, dragState.value.dropNode, '')) {
           return false
         }
         dragChange()

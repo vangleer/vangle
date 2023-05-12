@@ -226,7 +226,7 @@ export default defineComponent({
     }
     function filterLabel(data: any) {
       if (isFunction(props.filterNodeMethod)) {
-        return props.filterNodeMethod!(filterValue.value, data)
+        return props.filterNodeMethod(filterValue.value, data)
       }
       return true
     }
@@ -268,7 +268,7 @@ export default defineComponent({
      */
      function renderLabel(node: Node) {
       if (isFunction(props.renderContent)) {
-        return props.renderContent!(h, { node, data: node.data, store: node.store })
+        return props.renderContent(h, { node, data: node.data, store: node.store })
       } else if (slots.default) {
         return slots.default({ node, data: node.data, store: node.store })
       } else {
@@ -304,7 +304,7 @@ export default defineComponent({
           },
           [icon, checkbox, loading, label]
         )
-        const draggable = props.draggable && isFunction(props.allowDrag) && props.allowDrag!(item)
+        const draggable = props.draggable && isFunction(props.allowDrag) && props.allowDrag(item)
         const drages = draggable ? createDragEvents(item) : {}
         if (childNodes.length) {
           child = h(

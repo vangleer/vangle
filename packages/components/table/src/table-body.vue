@@ -26,7 +26,7 @@ export default defineComponent({
     const parent = inject(TableContextKey)
     const getRowClassName = (row: TableData, rowIndex: number) => {
       return props.rowClassName && isFunction(props.rowClassName)
-        ? (props.rowClassName as Function)({ row, rowIndex })
+        ? props.rowClassName({ row, rowIndex })
         : props.rowClassName
     }
     const renderRow = () => {

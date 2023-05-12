@@ -71,7 +71,7 @@ const { n } = createNamespace('progress')
 const iconName = computed(() => iconMap[props.status!] && iconMap[props.status!])
 
 const text = computed(() => {
-  return isFunction(props.format) ? props.format!(props.percentage!) : props.percentage + '%'
+  return isFunction(props.format) ? props.format(props.percentage!) : props.percentage + '%'
 })
 
 const styles = computed(() => {
@@ -150,7 +150,7 @@ function getColor(colorData: typeof props.color, colorKey?: string): CSSProperti
       if (colorItem) style[colorKey] = colorItem.color
 
     } else if (isFunction(colorData)) { // 是函数
-      style[colorKey] = (colorData as Function)(props.percentage)
+      style[colorKey] = colorData(props.percentage!)
     }
   }
 
