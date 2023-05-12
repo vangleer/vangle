@@ -14,10 +14,6 @@
         {
           "link": "/scrollbar",
           "text": "Scrollbar 滚动条"
-        },
-        {
-          "link": "/progress",
-          "text": "Progress"
         }
       ]
     },
@@ -68,6 +64,14 @@
         {
           "link": "/table",
           "text": "Table 表格"
+        },
+        {
+          "link": "/progress",
+          "text": "Progress 进度条"
+        },
+        {
+          "link": "/calendar",
+          "text": "Calendar 日历"
         },
         {
           "link": "/tag",

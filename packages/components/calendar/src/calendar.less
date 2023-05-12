@@ -1,0 +1,70 @@
+@N: van-calendar;
+.@{N} {
+  &__body {
+    flex: 1;
+    .@{N}__table {
+      width: 100%;
+      table-layout: fixed;
+      th {
+        padding: 8px 12px;
+      }
+      &-cell {
+        min-height: 50px;
+        padding: 8px;
+        &.selected {
+          color: var(--van-color-primary);
+          background-color: var(--van-color-primary-9);
+        }
+      }
+      
+      td {
+        cursor: pointer;
+        &:hover {
+          color: var(--van-color-primary);
+        }
+      }
+      .prev-month, .next-month {
+        color: var(--van-disabled-text-color);
+      }
+    
+      .disabled {
+        cursor: not-allowed;
+        background-color: var(--van-disabled-bg-color);
+        &:hover {
+          color: var(--van-disabled-text-color);
+        }
+      }
+    }
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    margin: 12px;
+
+    &-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      text-align: center;
+
+      button {
+        font-size: 16px;
+        padding: 0 6px;
+      }
+    }
+  }
+
+  &__icon-btn {
+    padding: 0 6px;
+
+    :hover {
+      color: var(--van-color-primary);
+    }
+  }
+
+  &__content {
+    position: relative;
+    margin: 15px;
+  }
+}

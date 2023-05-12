@@ -199,6 +199,19 @@ html.dark {
   h2 {
     border-top: 0;
   }
+
+  .van-calendar__table {
+    display: table;
+    tr:nth-child(2n) {
+      background-color: transparent;
+    }
+    th {
+      background-color: transparent;
+    }
+    td {
+      padding: 0;
+    }
+  }
 }
 
 .image-bg {
