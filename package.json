@@ -4,13 +4,13 @@
   "description": "这篇文章会带着你从零搭建一个基于vue3的组件库",
   "main": "index.js",
   "scripts": {
-    "play": "pnpm build && pnpm dev --filter ./play",
+    "play": "pnpm build && pnpm --filter ./play dev",
     "build": "node ./scripts/build.js",
     "release": "pnpm build && node ./scripts/release.js",
     "gen": "node ./scripts/gen.js",
     "del": "node ./scripts/del.js",
-    "docs:dev": "pnpm docs:dev --filter ./packages/docs",
-    "docs:build": "pnpm docs:build --filter ./packages/docs",
+    "docs:dev": "pnpm --filter ./packages/docs docs:dev",
+    "docs:build": "pnpm --filter ./packages/docs docs:build",
     "prettier": "prettier --write .",
     "lint": "eslint --ext .ts packages/*/**.ts",
     "lint:fix": "eslint --ext .ts packages/*/**.ts --fix"
