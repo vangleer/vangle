@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <van-sortable v-model="list">
-      <div v-for="element in list" :key="element.name" class="">{{element.name}}</div>
-    </van-sortable>
-  </div>
+  <div></div>
 </template>
 
 <script lang="ts" setup>

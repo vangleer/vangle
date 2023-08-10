@@ -1,50 +1,52 @@
 <template>
-  <div>
-    <!-- danger here DO NOT USE INLINE SCRIPT TAG -->
-    <p text="sm" v-html="decodedDescription" />
-    <div class="example">
-      <!-- <Example :file="path" :demo="formatPathDemos[path]" /> -->
-      <div class="example-showcase">
-        <component :is="formatPathDemos[path]" v-if="formatPathDemos[path]" />
-      </div>
-
-      <div class="van-divider"></div>
-
-      <div class="op-btns">
-        <VanTooltip content="复制代码" :show-arrow="false">
-          <span class="op-btn" @click="handleCopy">
-            <VanIcon name="document-copy" />
-          </span>
-        </VanTooltip>
-        <VanTooltip content="查看源代码" :show-arrow="false">
-          <span class="op-btn" @click="toggleSourceVisible()">
-            <VanIcon name="arrow-left" />
-            <VanIcon name="arrow-right" style="margin-left: -2px;" />
-          </span>
-        </VanTooltip>
-        <!-- <span class="op-btn" @click="toggleSourceVisible()">查看源代码</span> -->
-      </div>
-
-      <div v-show="sourceVisible"></div>
-
-      <VanCollapseTransition>
-        <div v-show="sourceVisible" class="example-source-wrapper">
-          <div class="example-source language-vue" v-html="decodedSource"></div>
+  <ClientOnly>
+    <div>
+      <!-- danger here DO NOT USE INLINE SCRIPT TAG -->
+      <p text="sm" v-html="decodedDescription" />
+      <div class="example">
+        <!-- <Example :file="path" :demo="formatPathDemos[path]" /> -->
+        <div class="example-showcase">
+          <component :is="formatPathDemos[path]" v-if="formatPathDemos[path]" />
         </div>
-      </VanCollapseTransition>
-      
-      <Transition name="van-fade-in-linear">
-        <div
-          v-show="sourceVisible"
-          class="example-float-control"
-          @click="toggleSourceVisible()"
-        >
-          <VanIcon name="caret-top" />
-          <span style="padding-left: 8px;">隐藏代码</span>
+
+        <div class="van-divider"></div>
+
+        <div class="op-btns">
+          <VanTooltip content="复制代码" :show-arrow="false">
+            <span class="op-btn" @click="handleCopy">
+              <VanIcon name="document-copy" />
+            </span>
+          </VanTooltip>
+          <VanTooltip content="查看源代码" :show-arrow="false">
+            <span class="op-btn" @click="toggleSourceVisible()">
+              <VanIcon name="arrow-left" />
+              <VanIcon name="arrow-right" style="margin-left: -2px;" />
+            </span>
+          </VanTooltip>
+          <!-- <span class="op-btn" @click="toggleSourceVisible()">查看源代码</span> -->
         </div>
-      </Transition>
+
+        <div v-show="sourceVisible"></div>
+
+        <VanCollapseTransition>
+          <div v-show="sourceVisible" class="example-source-wrapper">
+            <div class="example-source language-vue" v-html="decodedSource"></div>
+          </div>
+        </VanCollapseTransition>
+        
+        <Transition name="van-fade-in-linear">
+          <div
+            v-show="sourceVisible"
+            class="example-float-control"
+            @click="toggleSourceVisible()"
+          >
+            <VanIcon name="caret-top" />
+            <span style="padding-left: 8px;">隐藏代码</span>
+          </div>
+        </Transition>
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>
