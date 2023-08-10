@@ -39,9 +39,6 @@ git clone https://gitee.com/vangleer/vangle.git
 ```
 pnpm install
 ```
-
-> pnpm 版本是 6.32.6
-
 ## 命令介绍
 
 ```shell
@@ -61,9 +58,8 @@ pnpm gen ComponentName
 pnpm del ComponentName
 ```
 
-## 快速开始
+## ⚡ 使用说明
 
-### 用法
 
 #### 安装依赖
 
@@ -71,7 +67,7 @@ pnpm del ComponentName
 npm install vangle
 ```
 
-#### 完整引入
+### 全局注册
 
 如果你对打包后的文件大小不是很在乎，那么使用完整导入会更方便。
 
@@ -83,4 +79,65 @@ import Vangle from 'vangle'
 import App from './App.vue'
 
 createApp(App).use(Vangle).mount('#app')
+```
+
+- 使用
+
+```html
+<van-button>Default</van-button>
+<van-button type="primary">Primary</van-button>
+<van-button type="success">Success</van-button>
+<van-button type="info">Info</van-button>
+<van-button type="warning">Warning</van-button>
+<van-button type="danger">Danger</van-button>
+```
+
+### 组件中直接使用
+
+```html
+<template>
+  <VanButton>Default</VanButton>
+</template>
+
+<script setup lang='ts'>
+import { VanButton } from 'vangle'
+</script>
+
+```
+
+### 浏览器直接引入
+
+直接通过浏览器的 HTML 标签导入 vangle，然后就可以使用全局变量 ESDrager 了。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/vangle/dist/style.css">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <van-button>Default</van-button>
+    <van-button type="primary">Primary</van-button>
+    <van-button type="success">Success</van-button>
+    <van-button type="info">Info</van-button>
+    <van-button type="warning">Warning</van-button>
+    <van-button type="danger">Danger</van-button>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vangle"></script>
+  <script>
+    const { createApp } = Vue
+    const app = createApp({})
+    app.use(vangle)
+    app.mount('#app')
+  </script>
+</body>
+</html>
+
 ```
