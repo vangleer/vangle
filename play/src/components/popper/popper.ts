@@ -50,7 +50,6 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
       placement: unref(placement),
       strategy: unref(strategy)
     })
-    console.log(data, 'datadatadata')
     Object.keys(states).forEach(key => {
       (states as any)[key].value = data[key]
     })
@@ -104,7 +103,7 @@ export function useTrigger() {
   })
 
   return {
-    setTriggerRef,
+    setTriggerRef: setTriggerRef as any,
     triggerRef,
     visible,
     noWrap,

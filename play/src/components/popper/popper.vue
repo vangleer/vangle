@@ -2,8 +2,7 @@
   <span v-if="noWrap" ref="triggerRef" class="van-popper__trigger" v-bind="$attrs">
     <slot />
   </span>
-  <component v-else :ref="setTriggerRef" :is="$slots.default" v-bind="$attrs" />
-
+  <component v-else :ref="setTriggerRef" v-bind="$attrs" :is="$slots.default!" />
   <Teleport :to="`#${selector}`">
     <Transition :name="transitionName">
       <div
@@ -28,8 +27,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted, watch, unref, getCurrentInstance } from 'vue'
-import { usePopperContainer, useFloating, useTrigger } from './popper.ts'
+import { computed, ref, PropType, unref } from 'vue'
+import { usePopperContainer, useFloating, useTrigger } from './popper'
 import type { Placement, Strategy } from '@floating-ui/dom'
 import { offset, arrow, shift, flip } from '@floating-ui/dom'
 const props = defineProps({
@@ -77,8 +76,7 @@ const {
   setTriggerRef,
   triggerRef,
   visible,
-  noWrap,
-  trggierSlot
+  noWrap
 } = useTrigger()
 
 const {
