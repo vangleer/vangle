@@ -4,7 +4,7 @@
   "description": "这篇文章会带着你从零搭建一个基于vue3的组件库",
   "main": "index.js",
   "scripts": {
-    "play": "pnpm build && pnpm --filter ./play dev",
+    "play": "pnpm --filter ./play dev",
     "build": "node ./scripts/build.js",
     "release": "pnpm build && node ./scripts/release.js",
     "gen": "node ./scripts/gen.js",
