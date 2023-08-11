@@ -484,10 +484,41 @@ export const useFloating = ({ middleware, placement, strategy }: UseFloatingProp
 
 ![04.gif](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/95042cdc5d0e4a54bd176c9b794ca11b~tplv-k3u1fbpfcp-watermark.image?)
 
+#### 试试插槽日历组件
+
+- 安装 es-calendar
+
+```
+pnpm add es-calendar
+```
+
+```html
+<template>
+  <div class="container">
+    <VanPopper>
+      <span class="demo-btn">Picker</span>
+      <template #content>
+        <ESCalendar />
+      </template>
+    </VanPopper>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import VanPopper from './components/popper/popper.vue'
+import 'es-calendar/lib/style.css'
+import ESCalendar from 'es-calendar'
+</script>
+```
+
+看看效果
+
+![06.gif](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6123e25c777446a4995156d58413b54b~tplv-k3u1fbpfcp-watermark.image?)
+
+嗯！nice
+
 ## 最后
 
 本来是要封装一个date-picker组件的，没想到popper组件写了这么久。那就下次再写吧！
 
 有精力的朋友可以先写写，无非就是把Trigger换成input，content换成日期组件。vangle组件库已经实现了date-picker可供参考
-
-今天就到这吧！如果文章对你有帮助，点个赞再走呗，嘻嘻

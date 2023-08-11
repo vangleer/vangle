@@ -1,18 +1,10 @@
 <template>
   <div class="container">
-    <!-- <Demo /> -->
-
-    <VanPopper
-      effect="dark"
-      content="你好呀！"
-    >
-      noWrap
-    </VanPopper>
-    <VanPopper
-      effect="dark"
-      content="你也好呀！"
-    >
-      <span class="demo-btn">wrap</span>
+    <VanPopper>
+      <span class="demo-btn">Picker</span>
+      <template #content>
+        <ESCalendar />
+      </template>
     </VanPopper>
   </div>
 </template>
@@ -20,6 +12,8 @@
 <script lang="ts" setup>
 import Demo from './components/popper/demo.vue'
 import VanPopper from './components/popper/popper.vue'
+import 'es-calendar/lib/style.css'
+import ESCalendar from 'es-calendar'
 </script>
 
 <style lang="less">

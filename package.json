@@ -56,6 +56,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.2.1",
     "dayjs": "^1.11.7",
+    "es-calendar": "^0.1.1",
     "escape-html": "^1.0.3"
   }
 }
