@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, onMounted } from 'vue'
+import { computed, inject } from 'vue'
 import { createNamespace } from '@vangle/utils'
 import { DatePickerContextKey } from '../date-picker'
 import dayjs, { Dayjs } from 'dayjs'
@@ -61,9 +61,6 @@ function getText(row: number, col: number) {
   return currentYear.value + n - currentNumber.value
 }
 
-onMounted(() => {
-  console.log(props.date.year())
-})
 </script>
 
 <style lang="less">

@@ -41,8 +41,9 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits(['pick'])
-
+// panel 中注入的数据
 const datePicker = inject(DatePickerContextKey)
+// 面板行数
 const tableRows = ref<DateCell[][]>([[], [], [], [], [], []])
 
 const WEEKS_CONSTANT = computed(() => props.date
@@ -51,31 +52,44 @@ const WEEKS_CONSTANT = computed(() => props.date
   .weekdaysShort()
   .map((_) => _.toLowerCase())
 )
+
+// 表头数据
 const WEEKS = computed(() => WEEKS_CONSTANT.value.map(w => w[0].toUpperCase() + w.substring(1)))
+
+// 表格开始日期
 const startDate = computed(() => {
   const startDayOfMonth =  props.date.startOf('month')
   return startDayOfMonth.subtract(startDayOfMonth.day() || 7, 'day')
 })
+
+// 表格数据
 const rows = computed(() => {
   const rows_ = tableRows.value
   const cols = WEEKS.value.length
+
+  // 当前选中的日期
   const cur =  props.date
+  // 当月第一天
   const monthDstartDay = cur.startOf('month').day()
+  // 当月最后一天
   const lastDate = cur.endOf('month').date()
 
   let count = 1
+  // 循环填充表格，6行7列
   for (let row = 0; row < tableRows.value.length; row++) {
     for (let col = 0; col < cols; col++) {
       const cellDate = startDate.value.add(count, 'day')
       const text = cellDate.date()
       
+      // 是否选中
       const disabled = isFunction(datePicker?.disabledDate) && datePicker!.disabledDate(cellDate.toDate())
       
+      // 默认当月日期
       const isSelected = cellDate.format('YYYY-MM-DD') === datePicker?.date.value.format('YYYY-MM-DD')
       let type: DateCellType = 'normal'
-      if (count < monthDstartDay) {
+      if (count < monthDstartDay) { // 上个月日期
         type = 'prev-month'
-      } else if (count - monthDstartDay >= lastDate) {
+      } else if (count - monthDstartDay >= lastDate) { // 下个月日期
         type = 'next-month'
       }
       rows_[row][col] = {

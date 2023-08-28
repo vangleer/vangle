@@ -39,14 +39,18 @@ const emit = defineEmits(['pick'])
 const datePicker = inject(DatePickerContextKey)
 
 const { n } = createNamespace('month-table')
+// 得到所有月份的简写
 const MONTHS = computed(() => props.date.locale('en').localeData().monthsShort())
 
+// 选择对应的月份
 function handlePick(row: number, col: number) {
   const month = getIndex(row, col)
   if (month) {
+    // 拼装cell对象
     const cell = {
       date: dayjs(props.date.set('month', month))
     }
+    // 触发picker事件
     emit('pick', cell)
   }
 }
@@ -55,6 +59,7 @@ function isSelect(row: number, col: number) {
   return datePicker?.date.value.year() === props.date.year() && datePicker?.date.value.format('MMM') === MONTHS.value[getIndex(row, col)]
 }
 
+// 计算索引
 function getIndex(row: number, col: number) {
   return (row - 1) * 4 + col - 1
 }

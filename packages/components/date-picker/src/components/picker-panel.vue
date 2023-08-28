@@ -84,12 +84,14 @@ function handlePick(cell: DateCell) {
   emit('pick', cell)
 }
 
+// 点击shortcut
 function handleClick(item: Shortcut) {
   const d = typeof item.value === 'function' ? item.value() : item.value
   const cell: DateCell = { date: dayjs(d) }
   emit('pick', cell)
 }
 
+// 统一处理日期切换
 function change(type: ManipulateType, num: number) {
   if (props.type === 'year') {
     insertDate.value = dayjs(insertDate.value.toDate()).add(num * 10, type)

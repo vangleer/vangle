@@ -78,24 +78,38 @@ const date = computed<Dayjs>({
   get: () => props.modelValue ? dayjs(props.modelValue) : dayjs(),
   set: (val) => {
     const d = val.toDate()
+    // 格式化日期
     const value = props.valueFormat ? val.format(props.valueFormat) : d
+    // 触发事件
     emit('update:modelValue', value)
     emit('change', value)
+
+    // 关闭弹出层
     nextTick(() => {
       tooltipRef.value.close()
     })
   }
 })
+
 const value = computed({
   get: () => {
     const d = dayjs(props.modelValue)
     return d.isValid() ? d.format(format.value) : ''
   },
   set: (val) => {
-    emit('update:modelValue', val)
+    // 将输入的值转换为dayjs日期
+    const d = dayjs(val)
+
+    // 如果不是合格的日期不做操作
+    if (!d.isValid()) return
+    // 格式化日期
+    const value = props.valueFormat ? d.format(props.valueFormat) : d.toDate()
+    emit('update:modelValue', value)
+    emit('change', value)
   }
 })
 
+// 选择事件监听
 function handlePick(cell: DateCell) {
   date.value = cell.date
 }
