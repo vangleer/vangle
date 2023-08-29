@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <van-sortable>
+    <div v-for="item in list" :data-id="item.order">{{ item.name }}</div>
+  </van-sortable>
 </template>
 
 <script lang="ts" setup>
