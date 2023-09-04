@@ -1,11 +1,11 @@
 .van-sortable {
   color: var(--color-text);
   position: relative;
+  > * {
+    user-select: none;
+  }
   .dragging {
     opacity: 0.5;
     cursor: grabbing;
-  }
-  &-ghost {
-    background-color: blue;
   }
 }
