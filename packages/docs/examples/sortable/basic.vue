@@ -1,43 +1,20 @@
 <template>
-  <van-sortable>
-    <div v-for="item in list" :data-id="item.order">{{ item.name }}</div>
+  <van-sortable ghost-class="blue-background-class">
+    <div v-for="num in 6" class="sort-item">Item {{ num }}</div>
   </van-sortable>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-const list = ref([
-  {
-    "name": "for",
-    "order": 4
-  },
-  {
-    "name": "vue.js 2.0",
-    "order": 5
-  },
-  {
-    "name": "based",
-    "order": 6
-  },
-  {
-    "name": "vue.draggable",
-    "order": 1
-  },
-  {
-    "name": "component",
-    "order": 3
-  },
-  {
-    "name": "on",
-    "order": 7
-  },
-  {
-    "name": "Sortablejs",
-    "order": 8
-  },
-  {
-    "name": "draggable",
-    "order": 2
-  }
-])
-</script>
+<style scoped>
+.sort-item {
+  position: relative;
+  display: block;
+  padding: 6px 15px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.125);
+  color: #000;
+}
+.blue-background-class {
+  background-color: #c8ebfb;
+}
+</style>
