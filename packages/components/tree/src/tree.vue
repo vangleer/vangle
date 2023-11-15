@@ -25,7 +25,7 @@ export default defineComponent({
     const dataProps = computed(() => ({ ...defaultProps, ...props.props }))
     const isLoading = computed(() => props.load && isFunction(props.load))
     const currentNode = ref<Node>()
-    
+
     const store = reactive<TreeStore>({
       childNodes: getNodes(props.data),
       children: props.data
@@ -56,7 +56,7 @@ export default defineComponent({
         }
       })
     }
-    
+
     function handleNodeClick(node: Node) {
       if (node.loading || !props.expandOnClickNode) return
       node.expand = !node.expand
@@ -88,7 +88,7 @@ export default defineComponent({
       checkAll(node, node.checked)
       checkIndeterminate(node.parent!)
     }
-    
+
     function checkIndeterminate(node: Node) {
       if (!node) return
       let root: any = node
@@ -97,7 +97,9 @@ export default defineComponent({
           const checkedChildNodes = root.childNodes.filter((item: Node) => item.checked)
           if (!checkedChildNodes.length) {
             root.checked = false
-            root.indeterminate = false
+            if (root.children.filter((item : Node) => item.indeterminate).length <= 0) {
+              root.indeterminate = false
+            }
           }
           else if (checkedChildNodes.length < root.childNodes.length) {
             break
@@ -117,7 +119,7 @@ export default defineComponent({
       }
       return root
     }
-    
+
     function checkAll(node: Node, value: boolean) {
       if (!hasChild(node)) return
       node.childNodes!.forEach(n => {
@@ -142,7 +144,7 @@ export default defineComponent({
         const keyValue = item[nodeKey] || seedId++
         const checked = props.defaultCheckedKeys.includes(keyValue)
         const expand = !!props.defaultExpandAll || props.defaultExpandedKeys.includes(keyValue)
-        
+
         const node: Node = {
           [nodeKey]: keyValue,
           data: item,
@@ -194,7 +196,7 @@ export default defineComponent({
       const nodes = getNode(store.childNodes!)
       return nodes.map(node => (node as any)[props.nodeKey])
     }
-    
+
     function getNode(childNodes: Node[]): Node[] {
       if (!childNodes) return []
       let results: Node[] = []
@@ -242,7 +244,7 @@ export default defineComponent({
     }
 
     function forEachTree(nodes: Node[], callback: (node: Node) => void) {
-      if (!nodes) return 
+      if (!nodes) return
       nodes.forEach(node => {
         callback(node)
         if (hasChild(node)) {
