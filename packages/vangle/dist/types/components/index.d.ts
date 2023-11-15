@@ -17,3 +17,6 @@ export * from './tree';
 export * from './table';
 export * from './tag';
 export * from './date-picker';
+export * from './progress';
+export * from './calendar';
+export * from './sortable';
