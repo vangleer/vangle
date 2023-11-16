@@ -97,7 +97,7 @@ export default defineComponent({
           const checkedChildNodes = root.childNodes.filter((item: Node) => item.checked)
           if (!checkedChildNodes.length) {
             root.checked = false
-            if (root.children.filter((item : Node) => item.indeterminate).length <= 0) {
+            if (root.childNodes.filter((item : Node) => item.indeterminate).length <= 0) {
               root.indeterminate = false
             }
           }
