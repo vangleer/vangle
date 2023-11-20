@@ -75,7 +75,7 @@ export default defineComponent({
       emit('node-click', node)
     }
     function handleContextMenu(e: Event, node: Node) {
-      emit('check-contextmenu', e, node.data, node)
+      emit('node-contextmenu', e, node.data, node)
     }
     function handleChecked(node: Node, value: boolean) {
       node.checked = node.indeterminate ? true : value

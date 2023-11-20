@@ -2989,7 +2989,7 @@ const Ls = 18, Bs = {
       }), n.value && !w.loaded && (w.loading = !0, f(w)), s(w.expand ? "node-expand" : "node-collapse", w.data, w), s("node-click", w));
     }
     function z(w, y) {
-      s("check-contextmenu", w, y.data, y);
+      s("node-contextmenu", w, y.data, y);
     }
     function _(w, y) {
       w.checked = w.indeterminate ? !0 : y, w.indeterminate && (w.indeterminate = !1), s("check-change", w, y, w.indeterminate), m(w, w.checked), h(w.parent);
@@ -3002,7 +3002,7 @@ const Ls = 18, Bs = {
         if (g(y)) {
           const N = y.childNodes.filter((P) => P.checked);
           if (!N.length)
-            y.checked = !1, y.children.filter((P) => P.indeterminate).length <= 0 && (y.indeterminate = !1);
+            y.checked = !1, y.childNodes.filter((P) => P.indeterminate).length <= 0 && (y.indeterminate = !1);
           else {
             if (N.length < y.childNodes.length)
               break;
